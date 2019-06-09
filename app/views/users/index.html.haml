@@ -1,0 +1,25 @@
+.row
+  .col-md-12
+    .page-header
+      %h1 
+        User
+        %small List
+
+.row
+  .col-md-12
+    = link_to new_user_path, class: "btn btn-primary" do
+      %span.fa.fa-plus
+      New User
+.row
+  .col-md-12
+    %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
+      %thead
+        %tr
+          %th Name
+          %th System Role
+      %tbody
+        - @users.each do |user|
+          %tr
+            %td= user.full_name
+            %td= user.user_role
+        

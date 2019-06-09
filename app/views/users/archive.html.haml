@@ -1,0 +1,81 @@
+.row
+  .col-md-12
+    .page-header
+      %h1 
+        Inactive User
+        %small List
+        .pull-right
+          = link_to users_path, :class => "btn btn-default" do
+            %span.fa.fa-list
+              Back to User List
+
+.row
+  .col-md-12
+    = form_for :user, url: batch_activate_users_path, method: :post do |f|
+      %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
+        %thead
+          %tr
+            %th.no-sort
+              %input.checkbox#check_all{type: "checkbox", title: "Select All"}
+            %th Name
+            %th Username
+            %th System Role
+            %th.no-sort Action
+        %tbody
+          - @users.each do |user|
+            %tr
+              %td
+                - if can? :activate, user
+                  %input.checkbox.checkerbox{type: "checkbox", value: user.id, name: "user_ids[]", id: "user_ids_"}
+              %td= user.full_name
+              %td= user.username
+              %td= user.user_role
+              %td= basic_actions_dropdown(user, user.full_name)
+      - if can? :batch_activate, User
+        = f.submit I18n.t('activate_selected_users'), class: "btn btn-primary", id: "activate_button", :data => { :confirm => "#{I18n.t(:'alert.batch_activate', :object_name => "user")}", :note => "#{I18n.t(:'alert.batch_activate_user_note')}", :action => I18n.t('activate_selected_users'), :"action-type" => I18n.t('confirm_batch_activate'), :dismiss => I18n.t('cancel') } 
+
+%script{"type" => "text/javascript"}
+  :plain
+    var toggleBatchActivateButton;
+
+    $( document ).ready(function() {
+      toggleBatchActivateButton();
+    });
+
+    $(document).on("click", "#check_all", function(){
+      if ($(this).prop("checked")){
+        $(".checkerbox").each(function(){
+          if(!($(this).prop("checked"))){
+            $(this).trigger("click");
+          }
+        });
+      }
+      else{
+        $(".checkerbox").each(function(){
+          if($(this).prop("checked")){
+            $(this).trigger("click");
+          }
+        });
+      }
+    });
+
+    $(document).on("click", ".checkerbox", function(){
+      toggleBatchActivateButton();
+    });
+
+    toggleBatchActivateButton = function() {
+      var checkedAtLeastOne = false;
+      $('.checkerbox').each(function() {
+          if ($(this).prop("checked")) {
+            checkedAtLeastOne = true;
+            return;
+          }
+      });
+
+      if( checkedAtLeastOne ) {
+        $('#activate_button').prop('disabled', false)
+      }
+      else{
+        $('#activate_button').prop('disabled', true)
+      }
+    };

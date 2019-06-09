@@ -1,0 +1,12 @@
+.col-md-12.center
+  .authform
+    = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      %h2 Sign in
+      .form-inputs
+        = f.input :email, autofocus: true
+        = f.input :password, autocomplete: "off"
+        = render "devise/shared/links"
+        - if devise_mapping.rememberable?
+          = f.input :remember_me, as: :boolean
+      .form-actions
+        = f.submit "Log in", :class => "btn btn-primary"

@@ -1,0 +1,132 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  hello: "Hello world"
+  alert:
+    deactivate: "Are you sure you want to deactivate %{object_name}?"
+    batch_deactivate: "Are you sure you want to deactivate all selected %{object_name}s?"
+    destroy: "Are you sure you want to delete %{object_name}?"
+    activate: "Are you sure you want to activate %{object_name}?"
+    activate_user_note: "This user will be available to the system. All deactivated schedules and reports by this user will also be activated."    
+    batch_activate_user_note: "The selected users will be available to the system. All deactivated schedules and reports by these users will also be activated."       
+    batch_activate: "Are you sure you want to activate all selected %{object_name}s?"
+
+    reset_password: "Are you sure you want to reset the password of %{object_name}?"
+    reset_password_user_note: "This action will change the user's password to a system generated password. This is irreversible." 
+
+  header:
+    home: "Home"
+    system_settings: "System Settings"
+    folder_uploads: "Folder Uploads"
+
+  users: "User"
+
+  was_updated: " was successfully updated."
+  was_created: " was successfully created."
+  was_destroyed: " was successfully destroyed."
+  was_deactivated: " was successfully deactivated."
+  was_activated: " was successfully activated."
+  create: "Create"
+  cancel: "Cancel"
+  new: "New"
+  list: "List"
+  edit: "Edit"
+  delete: "Delete"
+  deactivate: "Deactivate"
+  activate: "Activate"
+  show: "Show"
+  details: "Details"
+  back: "Back"
+  action: "Action"
+  access_denied: "Access denied."
+  ok: "OK"
+  code: "Code"
+  reset_password: "Reset Password"
+  activate_selected_users: "Activate Selected Users"
+  deactivate_selected_users: "Deactivate Selected Users"
+
+  sEmptyTable: "No data available in table"
+  sInfo: "Showing _START_ to _END_ of _TOTAL_ entries"
+  sInfoEmpty: "Showing 0 to 0 of 0 entries"
+  sInfoFiltered: "(filtered from _MAX_ total entries)"
+  sInfoPostFix: ""
+  sInfoThousands: ","
+  sLengthMenu: "Show _MENU_ entries"
+  sLoadingRecords: "Loading..."
+  sProcessing: "Processing..."
+  sSearch: "Search:"
+  sZeroRecords: "No matching records found"
+  oPaginate: 
+    sFirst: "First"
+    sLast: "Last"
+    sNext: "Next"
+    sPrevious: "Previous"
+  oAria: 
+    sSortAscending: ": activate to sort column ascending"
+    sSortDescending: ": activate to sort column descending"
+
+  user: 
+    user: "User"  
+    edit_profile: "Edit Profile"
+    change_password: "Change Password"
+    logout: "Logout"
+    log_in: "Log in"
+    sign_up: "Sign up"
+    employee_number: "Employee Number"
+    username: "Username"
+    full_name: "Full Name"
+    email: "Email"
+    department: "Department"
+    branch: "Branch"
+    role:  "Role"
+    language:  "Preferred Language"
+    system_generated_password: "System Generated Password"
+    create_user: "Create User"
+    archived_user_list: "Archived User List"
+    archived_user: "Archived User"
+    deactivate_user: "Deactivate Selected Users"
+    activate_user: "Activate Selected Users"
+    back_user_list: "Back to User List"
+    update_user: "Update User"
+    change_language: "Change Language"
+    change_system_language: "Change System Language"
+
+  password:
+    edit_user_password: "Edit User Password"
+    user_password: "User Password"
+    current_password_info: "we need your current password to confirm your changes"
+    change_my_password: "Change my password"
+    current_password: "Current password"
+    password: "Password"
+    password_confirmation: "Password confirmation"
+    update_password_successfully: "Your password has been changed successfully."
+

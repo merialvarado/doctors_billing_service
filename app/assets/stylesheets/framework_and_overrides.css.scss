@@ -200,6 +200,9 @@ html {
 #error_explanation h2 {
   font-size: 16px;
 }
+.invalid-feedback {
+  @extend .alert-danger;
+}
 .button-xs {
   @extend .btn;
   @extend .btn-primary;

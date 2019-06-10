@@ -1,0 +1,29 @@
+.panel-body
+  = simple_form_for @patient do |f|
+    .form-inputs
+      .col-md-3
+        = f.input :first_name, label: I18n.t('patient.first_name')
+      .col-md-3
+        = f.input :middle_name, label: I18n.t('patient.middle_name')
+      .col-md-3
+        = f.input :surname, label: I18n.t('patient.surname')
+      .col-md-3
+        = f.input :patient_num, label: I18n.t('patient.patient_num')
+    .form-inputs
+      .col-md-3
+        = f.input :date_admitted, label: I18n.t('patient.date_admitted'), :as => :date_picker
+      .col-md-3
+        = f.input :procedure, label: I18n.t('patient.procedure')
+      .col-md-3
+        = f.input :hmo, label: I18n.t('patient.hmo')
+      .col-md-3
+        = f.input :contact_num, label: I18n.t('patient.contact_num')
+
+    .col-md-12
+      .form-actions
+        - if @patient.new_record?
+          = f.button :submit, I18n.t('actions.create_patient'), :class => "btn btn-primary"
+          = link_to 'Cancel', patients_path, :class => "btn btn-default"
+        - else
+          = f.button :submit, I18n.t('actions.update_patient'), :class => "btn btn-primary"
+          = link_to 'Cancel', patient_path(@patient), :class => "btn btn-default"

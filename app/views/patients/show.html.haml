@@ -1,0 +1,55 @@
+%h1.page-header
+  = I18n.t('patient.patient')
+  %small= I18n.t('details')
+.panel.panel-primary
+  .panel-heading
+    = @patient.full_name
+
+  .panel-body
+    %table.table.table-striped.table-bordered.table-hover
+      %tbody
+        %tr
+          %th
+            = I18n.t('patient.full_name')
+          %td
+            = @patient.full_name
+        %tr
+          %th
+            = I18n.t('patient.patient_num')
+          %td
+            = @patient.patient_num
+        %tr
+          %th
+            = I18n.t('patient.date_admitted')
+          %td
+            = @patient.date_admitted
+        %tr
+          %th
+            = I18n.t('patient.procedure')
+          %td
+            = @patient.procedure
+        %tr
+          %th
+            = I18n.t('patient.hmo')
+          %td
+            = @patient.hmo
+        %tr
+          %th
+            = I18n.t('patient.contact_num')
+          %td
+            = @patient.contact_num
+
+
+- if can? :edit, @patient
+  = link_to edit_patient_path(@patient), :class => "btn btn-primary" do
+    %span.fa.fa-pencil
+    = I18n.t('edit')
+- if ((URI(request.referer).path.split('/').last == 'new') || (URI(request.referer).path.split('/').last == 'edit'))
+  = link_to patients_path, :class => "btn btn-default" do
+    %span.fa.fa-list
+    = I18n.t('back')
+- else
+  = link_to :back, :class => "btn btn-default" do
+    %span.fa.fa-list
+    = I18n.t('back')
+

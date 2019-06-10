@@ -42,9 +42,12 @@ gem 'haml-rails'
 gem 'cancancan'
 gem 'simple_form'
 gem 'bootstrap-sass'
+gem 'bootstrap-datepicker-rails'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
+#gem 'webpacker'
+gem 'react-rails'
 
 
 group :development, :test do

@@ -1,0 +1,22 @@
+%h1.page-header
+  Payment for Patient: #{@patient.full_name}
+.panel.panel-default
+  .panel-heading Payment Details
+  .panel-body
+    = simple_form_for @payment, url: pay_patients_path, method: :post do |f|
+      .form-inputs
+        .col-md-6
+          = f.input :patient_id, as: :hidden
+          = f.input :check_num, label: I18n.t('payment.check_num')
+        .col-md-6
+          = f.input :check_date, label: I18n.t('payment.check_date'), as: :date_picker
+      .form-inputs
+        .col-md-6
+          = f.input :bank, label: I18n.t('payment.bank')
+        .col-md-6
+          = f.input :amount, label: I18n.t('payment.amount')
+
+      .col-md-12
+        .form-actions
+          = f.button :submit, I18n.t('actions.make_payment'), :class => "btn btn-primary"
+          = link_to 'Cancel', patients_path, :class => "btn btn-default"

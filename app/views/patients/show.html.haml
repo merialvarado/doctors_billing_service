@@ -13,22 +13,32 @@
             = I18n.t('patient.doctor')
           %td
             = @patient.doctor.full_name rescue nil
-        %tr
           %th
             = I18n.t('patient.hospital')
-          %td
+          %td{colspan: 3}
             = @patient.hospital.name rescue nil
+        %tr
+          %th
+            = I18n.t('patient.billing_amount')
+          %td
+            = @patient.billing_amount
+          %th
+            = I18n.t('patient.balance')
+          %td
+            = @patient.balance
+          %th
+            = I18n.t('patient.payment_status')
+          %td
+            = @patient.payment_status.upcase rescue nil
         %tr
           %th
             = I18n.t('patient.patient_num')
           %td
             = @patient.patient_num
-        %tr
           %th
             = I18n.t('patient.date_admitted')
           %td
             = @patient.date_admitted
-        %tr
           %th
             = I18n.t('patient.procedure')
           %td
@@ -36,9 +46,8 @@
         %tr
           %th
             = I18n.t('patient.hmo')
-          %td
+          %td{colspan: 3}
             = @patient.hmo
-        %tr
           %th
             = I18n.t('patient.contact_num')
           %td
@@ -49,7 +58,7 @@
   = link_to edit_patient_path(@patient), :class => "btn btn-primary" do
     %span.fa.fa-pencil
     = I18n.t('edit')
-- if ((URI(request.referer).path.split('/').last == 'new') || (URI(request.referer).path.split('/').last == 'edit'))
+- if ((URI(request.referer).path.split('/').last == 'new') || (URI(request.referer).path.split('/').last == 'edit') || (URI(request.referer).path.split('/').last == 'make_payment'))
   = link_to patients_path, :class => "btn btn-default" do
     %span.fa.fa-list
     = I18n.t('back')

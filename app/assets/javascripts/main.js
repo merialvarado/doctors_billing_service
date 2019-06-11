@@ -17,8 +17,8 @@ $.rails.showConfirmDialog = function(link) {
   message_header = link.attr('data-action-type');
   message = link.attr('data-confirm');
   note = link.attr('data-note') ? "<strong>Note: </strong>" + link.attr('data-note') : "" ;
-  confirmation_button = link.attr('data-action');
-  cancel_button = link.attr('data-dismiss');
+  confirmation_button = link.attr('data-action') || "Confirm";
+  cancel_button = link.attr('data-dismiss') || "Cancel";
 
   html = "<div class=\"modal\" id=\"confirmationDialog\">\n  <div class=\"modal-dialog\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header bg-primary\">\n        <a class=\"close\" data-dismiss=\"modal\"><h4><strong>×</strong></h4></a>\n        <h4><strong>" + message_header + "</strong></h4>\n      </div>\n      <div class=\"modal-body\">\n        <h4>" + message + "</h4>\n        <br><h5>" + note + "</h5>\n      </div>\n      <div class=\"modal-footer\">\n        <a data-dismiss=\"modal\" class=\"btn cancel\">" + cancel_button + "</a>\n        <a data-dismiss=\"modal\" class=\"btn btn-danger confirm\">" + confirmation_button + "</a>\n      </div>\n    </div>\n  </div>\n</div>";
 

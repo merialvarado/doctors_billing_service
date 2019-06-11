@@ -13,16 +13,32 @@
       %thead
         %tr
           %th Name
-          %th Patient No
-          %th Date Admitted
           %th Attending Doctor
           %th Hospital
+          %th Payment Status
+          %th Billing Amount
+          %th Balance
+          %th Date Admitted
+          %th Patient No
+          %th Actions
+          
       %tbody
         - @patients.each do |patient|
           %tr
             %td= patient.full_name
-            %td= patient.patient_num
-            %td= patient.date_admitted
             %td= patient.doctor.full_name rescue nil
             %td= patient.hospital.name rescue nil
+            %td= payment_status_viewer(patient.payment_status)
+            %td= patient.billing_amount
+            %td= patient.balance
+            %td= patient.date_admitted
+            %td= patient.patient_num
+            %td
+              - if patient.is_check_waiting?
+                = link_to "Mark Check Available", check_available_patient_path(patient), method: :put, class: "btn btn-sm btn-primary", data: { confirm: "Are you sure you want to mark the payment status of Patient: #{patient.full_name} as CHECK AVAILABLE?", "action-type": "Check Available" }
+              - if patient.is_check_available?
+                = link_to "Make Payment", make_payment_patients_path(id: patient.id), method: :get, class: "btn btn-sm btn-primary"
+
+
+            
         

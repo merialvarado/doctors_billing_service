@@ -99,6 +99,7 @@ en:
     create_patient: "Create Patient"
     update_hospital: "Update Hospital"
     create_hospital: "Create Hospital"
+    make_payment: "Make Payment"
 
   user: 
     user: "User"  
@@ -150,6 +151,9 @@ en:
     contact_num: "Contact No."
     doctor: "Attending Doctor"
     hospital: "Hospital"
+    billing_amount: "Billing Amount"
+    payment_status: "Payment Status"
+    balance: "Balance"
 
   hospital: 
     hospital: "Hospital"  
@@ -159,3 +163,9 @@ en:
     name: "Name"
     address: "Address"
     contact_num: "Contact No."
+
+  payment:
+    check_num: "Check No."
+    check_date: "Date Issued"
+    bank: "Bank"
+    amount: "Issued Amount"

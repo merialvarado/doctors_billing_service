@@ -23,6 +23,8 @@
         = f.input :hospital_id, label: I18n.t('patient.hospital'), collection: Hospital.order(:name)
       .col-md-6
         = f.input :doctor_id, label: I18n.t('patient.doctor'), collection: User.doctors.order(:full_name), label_method: :full_name
+      .col-md-6
+        = f.input :billing_amount, label: I18n.t('patient.billing_amount')
 
     .col-md-12
       .form-actions

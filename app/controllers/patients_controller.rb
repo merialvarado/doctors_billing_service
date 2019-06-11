@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-	before_action :set_patient, only: [:show, :edit, :update, :destroy]
+	before_action :set_patient, only: [:show, :edit, :update, :destroy, :check_available, :make_payment]
   load_and_authorize_resource only: [:index, :archive, :show, :new, :create, :edit, :update, :destroy]
 
   # Loads a list of all active patient records.
@@ -31,6 +31,8 @@ class PatientsController < ApplicationController
   #   POST /patients.json
   def create
     @patient = Patient.new(patient_params)
+    @patient.payment_status = "CHECK WAITING"
+    @patient.balance = @patient.billing_amount
 
     respond_to do |format|
       if @patient.save
@@ -49,6 +51,7 @@ class PatientsController < ApplicationController
   def update
     respond_to do |format|
       if @patient.update(patient_params)
+        # TODO: Update the balance field based on the billing amount less payments
         format.html { redirect_to @patient, notice: 'Patient was updated' }
         format.json { render :show, status: :ok, location: @patient }
       else
@@ -76,6 +79,38 @@ class PatientsController < ApplicationController
     end
   end
 
+  def check_available
+    @patient.check_available!
+
+    respond_to do |format|
+      format.html { redirect_to patients_url, notice: "Check is AVAILABLE in the hospital #{@patient.hospital.name rescue nil} for Patient: #{@patient.full_name}" }
+      format.json { head :no_content }
+    end 
+  end
+
+  def make_payment
+    @payment = @patient.payments.build
+  end
+
+  def pay
+    payment = Payment.new(payment_params)
+    @patient = payment.patient
+
+    respond_to do |format|
+      if payment.save
+        @patient.update_attribute(:balance, @patient.balance - payment.amount )
+        @patient.update_payment_status
+
+        format.html { redirect_to patient_path(payment.patient), notice: 'Payment was successfully created.' }
+        format.json { render :show, status: :created, location: @patient }
+      else
+        @payment = @patient.payments.build
+        format.html { render :make_payment }
+        format.json { render json: payment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_patient
@@ -94,7 +129,18 @@ class PatientsController < ApplicationController
         :hmo,
         :contact_num,
         :hospital_id,
-        :doctor_id
+        :doctor_id,
+        :billing_amount
+      )
+    end
+
+    def payment_params
+      params.require(:payment).permit(
+       :check_num,
+       :check_date,
+       :bank,
+       :patient_id,
+       :amount
       )
     end
 end

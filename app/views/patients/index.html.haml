@@ -4,12 +4,9 @@
       %h1 
         Patient
         %small List
-
-.row
-  .col-md-12
-    = link_to new_patient_path, class: "btn btn-primary" do
-      %span.fa.fa-plus
-      New Patient
+        = link_to new_patient_path, class: "btn btn-primary" do
+          %span.fa.fa-plus
+          New Patient
 .row
   .col-md-12
     %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
@@ -19,11 +16,13 @@
           %th Patient No
           %th Date Admitted
           %th Attending Doctor
+          %th Hospital
       %tbody
         - @patients.each do |patient|
           %tr
             %td= patient.full_name
             %td= patient.patient_num
             %td= patient.date_admitted
-            %td= "WIP: DOCTOR INFO"
+            %td= patient.doctor.full_name rescue nil
+            %td= patient.hospital.name rescue nil
         

@@ -1,0 +1,19 @@
+.panel-body
+  = simple_form_for @hospital do |f|
+    .form-inputs
+      .col-md-6
+        = f.input :name, label: I18n.t('hospital.name')
+      .col-md-6
+        = f.input :contact_num, label: I18n.t('hospital.contact_num')
+    .form-inputs
+      .col-md-12
+        = f.input :address, label: I18n.t('hospital.address'), as: :text
+
+    .col-md-12
+      .form-actions
+        - if @hospital.new_record?
+          = f.button :submit, I18n.t('actions.create_hospital'), :class => "btn btn-primary"
+          = link_to 'Cancel', patients_path, :class => "btn btn-default"
+        - else
+          = f.button :submit, I18n.t('actions.update_hospital'), :class => "btn btn-primary"
+          = link_to 'Cancel', hospital_path(@hospital), :class => "btn btn-default"

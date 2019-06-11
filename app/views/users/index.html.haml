@@ -4,12 +4,9 @@
       %h1 
         User
         %small List
-
-.row
-  .col-md-12
-    = link_to new_user_path, class: "btn btn-primary" do
-      %span.fa.fa-plus
-      New User
+        = link_to new_user_path, class: "btn btn-primary" do
+          %span.fa.fa-plus
+          New User
 .row
   .col-md-12
     %table.table.dataTable.table-bordered.table-hover.table-striped.index-table

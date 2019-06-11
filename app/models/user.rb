@@ -3,6 +3,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
+  has_many :patients
+
   validates_uniqueness_of    :email, :case_sensitive => false, unless: proc{ |user| user.email.blank? }
   validates_format_of        :email, :with  => Devise.email_regexp, unless: proc{ |user| user.email.blank? }
 
@@ -17,6 +19,8 @@ class User < ApplicationRecord
 
   validates_presence_of      :user_role
   validate :user_role_value_is_in_range
+
+  scope :doctors, -> { where(:user_role => "Doctor") }
 
    # The available roles that can be assigned to the users of the system. 
   ROLES = ["Administrator", "Encoder", "Doctor"]

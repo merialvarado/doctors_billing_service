@@ -97,6 +97,8 @@ en:
   actions:
     update_patient: "Update Patient"
     create_patient: "Create Patient"
+    update_hospital: "Update Hospital"
+    create_hospital: "Create Hospital"
 
   user: 
     user: "User"  
@@ -146,4 +148,14 @@ en:
     procedure: "Procedure"
     hmo: "HMO"
     contact_num: "Contact No."
+    doctor: "Attending Doctor"
+    hospital: "Hospital"
 
+  hospital: 
+    hospital: "Hospital"  
+    edit_hospital: "Edit Hospital"
+    back_hospital_list: "Back to Hospital List"
+    update_hosptal: "Update Hospital"
+    name: "Name"
+    address: "Address"
+    contact_num: "Contact No."

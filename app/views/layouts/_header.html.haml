@@ -26,6 +26,11 @@
             %li
               = link_to I18n.t('patient.patient'), patients_path
 
+        %ul.nav.navbar-nav
+          - if can? :index, Hospital
+            %li
+              = link_to I18n.t('hospital.hospital'), hospitals_path
+
         %ul.nav.navbar-nav.navbar-right
           %li.user-profile
             %a{:href => user_path(current_user)}

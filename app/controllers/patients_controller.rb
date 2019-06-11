@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-	before_action :set_patient, only: [:show, :edit, :update, :destroy, :reset_password]
+	before_action :set_patient, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource only: [:index, :archive, :show, :new, :create, :edit, :update, :destroy]
 
   # Loads a list of all active patient records.
@@ -92,7 +92,9 @@ class PatientsController < ApplicationController
         :date_admitted,
         :procedure,
         :hmo,
-        :contact_num
+        :contact_num,
+        :hospital_id,
+        :doctor_id
       )
     end
 end

@@ -10,9 +10,14 @@
       %tbody
         %tr
           %th
-            = I18n.t('patient.full_name')
+            = I18n.t('patient.doctor')
           %td
-            = @patient.full_name
+            = @patient.doctor.full_name rescue nil
+        %tr
+          %th
+            = I18n.t('patient.hospital')
+          %td
+            = @patient.hospital.name rescue nil
         %tr
           %th
             = I18n.t('patient.patient_num')

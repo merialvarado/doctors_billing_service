@@ -1,0 +1,35 @@
+%h1.page-header
+  = I18n.t('hospital.hospital')
+  %small= I18n.t('details')
+.panel.panel-primary
+  .panel-heading
+    = @hospital.name
+
+  .panel-body
+    %table.table.table-striped.table-bordered.table-hover
+      %tbody
+        %tr
+          %th
+            = I18n.t('hospital.contact_num')
+          %td
+            = @hospital.contact_num
+        %tr
+          %th
+            = I18n.t('hospital.address')
+          %td
+            = @hospital.address
+
+
+- if can? :edit, @hospital
+  = link_to edit_hospital_path(@hospital), :class => "btn btn-primary" do
+    %span.fa.fa-pencil
+    = I18n.t('edit')
+- if ((URI(request.referer).path.split('/').last == 'new') || (URI(request.referer).path.split('/').last == 'edit'))
+  = link_to hospitals_path, :class => "btn btn-default" do
+    %span.fa.fa-list
+    = I18n.t('back')
+- else
+  = link_to :back, :class => "btn btn-default" do
+    %span.fa.fa-list
+    = I18n.t('back')
+

@@ -1,0 +1,26 @@
+.row
+  .col-md-12
+    .page-header
+      %h1 
+        Hospital
+        %small List
+        = link_to new_hospital_path, class: "btn btn-primary" do
+          %span.fa.fa-plus
+          New Hospital
+.row
+  .col-md-12
+    %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
+      %thead
+        %tr
+          %th Name
+          %th Contact No
+          %th Address
+          %th For Collection Amount
+      %tbody
+        - @hospitals.each do |hospital|
+          %tr
+            %td= hospital.name
+            %td= hospital.contact_num
+            %td= hospital.address
+            %td= "WIP: Collection Amount"
+        

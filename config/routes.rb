@@ -1,11 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
-  devise_scope :user do
-    get '/login' => 'devise/sessions#new'
-    get '/logout' => 'devise/sessions#destroy'
-  end
+  devise_for :users, :skip => [:registrations]
 
-  resources :users, :controller => "users"
+  resources :users
   authenticated :user do
     root :to => 'users#index', :as => :authenticated_root
   end

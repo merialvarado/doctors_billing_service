@@ -10,11 +10,6 @@
       %tbody
         %tr
           %th
-            = I18n.t('user.username')
-          %td
-            = @user.username
-        %tr
-          %th
             = I18n.t('user.full_name')
           %td
             = @user.full_name
@@ -39,9 +34,6 @@
   = link_to edit_user_path(@user), :class => "btn btn-primary" do
     %span.fa.fa-pencil
     = I18n.t('edit')
-- if can? :reset_password, @user
-  = link_to url_for(:controller => 'users', :action => 'reset_password', :id => @user.id), :method => :put, :data => { :confirm => "#{I18n.t(:'alert.reset_password', :object_name => @user.full_name)}", :note => "#{I18n.t(:'alert.reset_password_user_note')}", :action => I18n.t('reset_password'), :"action-type" => I18n.t('confirm_reset_password'), :dismiss => I18n.t('cancel') }, :class => "btn btn-primary"  do
-    = I18n.t('reset_password')
 - if ((URI(request.referer).path.split('/').last == 'new') || (URI(request.referer).path.split('/').last == 'edit'))
   = link_to users_path, :class => "btn btn-default" do
     %span.fa.fa-list

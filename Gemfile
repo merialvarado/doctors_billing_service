@@ -50,6 +50,7 @@ gem 'jquery-turbolinks'
 #gem 'webpacker'
 gem 'react-rails'
 gem 'will_paginate', '>= 3.1'
+gem 'rails_12factor', group: :production
 
 
 group :development, :test do

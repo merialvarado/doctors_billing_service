@@ -6,7 +6,21 @@ class PatientsController < ApplicationController
   #   GET /patients
   #   GET /patients.json
   def index
-    @patients = Patient.all
+    @patients = Patient
+    if params[:search_patients].nil?
+      @patients = @patients.all
+    else
+      if !(from_date = params[:search_patients][:from_date]).blank?
+        @patients = @patients.where("date_admitted >= ?", from_date )
+      end
+      if !(to_date = params[:search_patients][:to_date]).blank?
+        @patients = @patients.where("date_admitted <= ?", to_date )
+      end
+
+      if (from_date = params[:search_patients][:from_date]).blank? && (to_date = params[:search_patients][:to_date]).blank?
+        @patients = @patients.all
+      end
+    end
   end
 
   # Loads the details of a patient record.

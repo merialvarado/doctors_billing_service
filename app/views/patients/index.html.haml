@@ -4,9 +4,14 @@
       %h1 
         Patient
         %small List
+
         = link_to new_patient_path, class: "btn btn-primary" do
           %span.fa.fa-plus
           New Patient
+
+.row
+  .col-md-12
+    = render "form_filter"
 .row
   .col-md-12
     %table.table.dataTable.table-bordered.table-hover.table-striped.index-table

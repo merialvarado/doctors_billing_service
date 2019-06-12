@@ -32,6 +32,7 @@
 en:
   hello: "Hello world"
   welcome: "Welcome"
+  clear: "Clear"
   alert:
     deactivate: "Are you sure you want to deactivate %{object_name}?"
     batch_deactivate: "Are you sure you want to deactivate all selected %{object_name}s?"

@@ -1,0 +1,13 @@
+.panel.panel-default
+	/ .panel-heading
+	/ 	Search Patients
+	.panel-body
+		= simple_form_for :search_patients, url: patients_path, method: :get do |f|
+			.col-md-2
+				= f.input :from_date, as: :date_picker, label: false, required: false, input_html: {placeholder: "From Date"}, value: (params[:search_patients][:from_date] rescue "")
+			.col-md-2
+				= f.input :thru_date, as: :date_picker, label: false, required: false, input_html: {placeholder: "To Date"}, value: (params[:search_patients][:thru_date] rescue "")
+			.col-md-2
+				= f.button :submit, "Seach Patients", class: "btn btn-primary"
+				= link_to patients_path, :class => "btn btn-default" do
+					= I18n.t('clear')

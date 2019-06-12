@@ -47,6 +47,6 @@
               - if patient.is_check_available?
                 = link_to "Make Payment", make_payment_patients_path(id: patient.id), method: :get, class: "btn btn-sm btn-primary btn-outline btn-sm"
 
-
+= will_paginate @patients
 
         

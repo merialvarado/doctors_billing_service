@@ -21,6 +21,7 @@ class PatientsController < ApplicationController
         @patients = @patients.all
       end
     end
+    @patients = @patients.paginate(page: params[:page], per_page: 10)
   end
 
   # Loads the details of a patient record.

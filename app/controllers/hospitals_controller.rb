@@ -6,7 +6,7 @@ class HospitalsController < ApplicationController
   #   GET /hospitals
   #   GET /hospitals.json
   def index
-    @hospitals = Hospital.all
+    @hospitals = Hospital.all.paginate(page: params[:page], per_page: 10)
   end
 
   # Loads the details of a hospital record.

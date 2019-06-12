@@ -49,6 +49,7 @@ gem 'jquery-rails'
 gem 'jquery-turbolinks'
 #gem 'webpacker'
 gem 'react-rails'
+gem 'will_paginate', '>= 3.1'
 
 
 group :development, :test do

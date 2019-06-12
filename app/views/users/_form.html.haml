@@ -1,5 +1,5 @@
 .panel-body
-  = simple_form_for @user, controller: "users", method: :post do |f|
+  = simple_form_for @user do |f|
     .form-inputs
       .col-md-6
         = f.input :full_name, label: I18n.t('user.full_name'), autocomplete: "on" 

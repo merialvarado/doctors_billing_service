@@ -14,9 +14,12 @@
         %tr
           %th Name
           %th System Role
+          %th Action
       %tbody
         - @users.each do |user|
           %tr
             %td= user.full_name
             %td= user.user_role
+            %td
+              = link_to "Edit", edit_user_path(user), class: "btn btn-primary btn-outline btn-sm"
         

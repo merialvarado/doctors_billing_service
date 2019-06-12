@@ -15,7 +15,8 @@
           %th Name
           %th Contact No
           %th Address
-          %th For Collection Amount
+          %th For Collection 
+          %th Actions
       %tbody
         - @hospitals.each do |hospital|
           %tr
@@ -23,4 +24,6 @@
             %td= hospital.contact_num
             %td= hospital.address
             %td= "WIP: Collection Amount"
+            %td
+              = link_to "Edit", edit_hospital_path(hospital), class: "btn btn-primary btn-outline btn-sm"
         

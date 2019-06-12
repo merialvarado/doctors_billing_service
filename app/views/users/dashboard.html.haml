@@ -1,1 +1,42 @@
-%h1= I18n.t('welcome') + ", #{@user.full_name}!"
+.page-header
+	%h1= I18n.t('welcome') + ", #{@user.full_name}!"
+
+#dashboard
+	.row
+		.col-md-4
+		.col-md-4.center
+			.panel.panel-primary
+				.panel-body
+					%span.icon-stat
+						.fa.fa-user.icon-stat
+						.icon-stat-number
+							- if current_user.is_role?("Doctor")
+								= current_user.patients.count
+							- else
+								= Patient.count
+
+	.row
+		.col-md-4
+		.col-md-4
+			.panel.panel-primary
+				.panel-body
+					%span.icon-stat 
+						&#8369
+						.icon-stat-number
+							- if current_user.is_role?("Doctor")
+								= number_to_currency( current_user.patients.get_total_billing_amount, precision:  2, unit: "" )
+							- else
+								= number_to_currency( Patient.get_total_billing_amount, precision:  2, unit: "" )
+
+	.row
+		.col-md-4
+		.col-md-4
+			.panel.panel-primary
+				.panel-body
+					%span.icon-stat
+						.fa.fa-university
+						.icon-stat-number
+							- if current_user.is_role?("Doctor")
+								= number_to_currency( current_user.patients.get_total_balance, precision: 2, unit: "" )
+							- else
+								= number_to_currency( Patient.get_total_balance, precision: 2, unit: "" )

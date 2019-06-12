@@ -43,6 +43,7 @@ gem 'cancancan'
 gem 'simple_form'
 gem 'bootstrap-sass'
 gem 'bootstrap-datepicker-rails'
+gem 'font-awesome-sass'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'jquery-turbolinks'

@@ -1,6 +1,8 @@
 // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 // make all images responsive by default
 img {
@@ -404,4 +406,16 @@ th, td {
 .btn-outline {
   background-color: transparent;
   color: inherit;
+}
+
+.icon-stat{
+  color: #337ab7;
+  font-size: 4vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-stat-number{
+  margin-left: 2vw;
 }

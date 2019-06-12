@@ -31,8 +31,8 @@
             %td= patient.doctor.full_name.titleize rescue nil
             %td= patient.hospital.name rescue nil
             %td= payment_status_viewer(patient.payment_status)
-            %td= patient.billing_amount
-            %td= patient.balance
+            %td= number_to_currency( patient.billing_amount, precision: 2, unit: "")
+            %td= number_to_currency( patient.balance, precision: 2, unit: "")
             %td= patient.date_admitted
             %td= patient.patient_num
             %td

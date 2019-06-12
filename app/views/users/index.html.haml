@@ -13,13 +13,17 @@
       %thead
         %tr
           %th Name
+          %th Email
           %th System Role
+          %th System Generated Password
           %th Action
       %tbody
         - @users.each do |user|
           %tr
             %td= user.full_name
+            %td= user.email
             %td= user.user_role
+            %td= user.system_generated_password
             %td
               = link_to "Edit", edit_user_path(user), class: "btn btn-primary btn-outline btn-sm"
         

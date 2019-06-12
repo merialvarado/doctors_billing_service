@@ -30,4 +30,12 @@ class Patient < ApplicationRecord
 			self.update_attribute(:payment_status, "FULLY PAID") 
 		end
 	end
+
+	def self.get_total_billing_amount
+		Patient.sum(:billing_amount)
+	end
+
+	def self.get_total_balance
+		Patient.sum(:balance)
+	end
 end

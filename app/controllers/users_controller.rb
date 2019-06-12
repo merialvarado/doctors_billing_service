@@ -34,13 +34,9 @@ class UsersController < ApplicationController
     Rails.logger.info "PASOK DITO!========="
     @user = User.new(user_params)
 
-    Rails.logger.info "PASOK DITO2!========="
-
     generated_password = Devise.friendly_token.first(8)    
     @user.system_generated_password = generated_password
     @user.password = generated_password
-
-    Rails.logger.info "PASOK DITO3!========="
 
     respond_to do |format|
       if @user.save!

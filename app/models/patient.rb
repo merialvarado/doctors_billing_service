@@ -3,8 +3,9 @@ class Patient < ApplicationRecord
 	belongs_to :hospital
 	belongs_to :doctor, class_name: "User", foreign_key: "doctor_id"
 	has_many :payments
+	belongs_to :hmo
 
-	validates :first_name, :surname, :patient_num, :date_admitted, :procedure, :contact_num, :hospital_id, :doctor_id, presence: true
+	validates :first_name, :surname, :patient_num, :date_admitted, :procedure, :contact_num, :hospital_id, :doctor_id, :hmo_id, presence: true
 	validates :billing_amount, numericality: { greater_than: 0 }
 
 	def full_name

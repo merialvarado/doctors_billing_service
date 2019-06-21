@@ -15,7 +15,7 @@
       .col-md-3
         = f.input :procedure, label: I18n.t('patient.procedure')
       .col-md-3
-        = f.input :hmo, label: I18n.t('patient.hmo')
+        = f.input :hmo_id, label: I18n.t('patient.hmo'), collection: Hmo.order(:name)
       .col-md-3
         = f.input :contact_num, label: I18n.t('patient.contact_num')
     .form-inputs

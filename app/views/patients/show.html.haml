@@ -47,7 +47,7 @@
           %th
             = I18n.t('patient.hmo')
           %td{colspan: 3}
-            = @patient.hmo
+            = @patient.hmo.name rescue ""
           %th
             = I18n.t('patient.contact_num')
           %td

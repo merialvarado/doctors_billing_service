@@ -54,7 +54,7 @@
               %th
                 = I18n.t('patient.hmo')
               %td
-                = patient.hmo
+                = patient.hmo.name rescue ""
             %tr
               %th
                 = I18n.t('patient.contact_num')

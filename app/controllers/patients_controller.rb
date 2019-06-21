@@ -141,7 +141,7 @@ class PatientsController < ApplicationController
         :patient_num,
         :date_admitted,
         :procedure,
-        :hmo,
+        :hmo_id,
         :contact_num,
         :hospital_id,
         :doctor_id,

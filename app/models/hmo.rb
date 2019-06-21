@@ -1,0 +1,2 @@
+class Hmo < ApplicationRecord
+end

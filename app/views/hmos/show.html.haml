@@ -1,0 +1,40 @@
+%h1.page-header
+  = I18n.t('hmo.hmo')
+  %small= I18n.t('details')
+.panel.panel-primary
+  .panel-heading
+    = @hmo.name
+
+  .panel-body
+    %table.table.table-striped.table-bordered.table-hover
+      %tbody
+        %tr
+          %th
+            = I18n.t('hmo.contact_num')
+          %td
+            = @hmo.contact_num
+        %tr
+          %th
+            = I18n.t('hmo.contact_person')
+          %td
+            = @hmo.contact_person
+        %tr
+          %th
+            = I18n.t('hmo.address')
+          %td
+            = @hmo.address
+
+
+- if can? :edit, @hmo
+  = link_to edit_hmo_path(@hmo), :class => "btn btn-primary" do
+    %span.fa.fa-pencil
+    = I18n.t('edit')
+- if ((URI(request.referer).path.split('/').last == 'new') || (URI(request.referer).path.split('/').last == 'edit'))
+  = link_to hmos_path, :class => "btn btn-default" do
+    %span.fa.fa-list
+    = I18n.t('back')
+- else
+  = link_to :back, :class => "btn btn-default" do
+    %span.fa.fa-list
+    = I18n.t('back')
+

@@ -12,6 +12,21 @@
     - if user_signed_in?
       #example-navbar-collapse.collapse.navbar-collapse
         %ul.nav.navbar-nav
+          - if can? :index, Patient
+            %li
+              = link_to I18n.t('patient.patient'), patients_path\
+
+        %ul.nav.navbar-nav
+          - if can? :index, Hmo
+            %li
+              = link_to I18n.t('hmo.hmo'), hmos_path
+
+        %ul.nav.navbar-nav
+          - if can? :index, Hospital
+            %li
+              = link_to I18n.t('hospital.hospital'), hospitals_path
+
+        %ul.nav.navbar-nav
           - if ( can? :index, User )
             %li.dropdown
               %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
@@ -21,16 +36,6 @@
                 - if can? :index, User
                   %li
                     = link_to I18n.t('user.user'), users_path
-
-        %ul.nav.navbar-nav
-          - if can? :index, Patient
-            %li
-              = link_to I18n.t('patient.patient'), patients_path
-
-        %ul.nav.navbar-nav
-          - if can? :index, Hospital
-            %li
-              = link_to I18n.t('hospital.hospital'), hospitals_path
 
         %ul.nav.navbar-nav.navbar-right
           %li.user-profile

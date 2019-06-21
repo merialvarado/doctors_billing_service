@@ -101,6 +101,8 @@ en:
     create_patient: "Create Patient"
     update_hospital: "Update Hospital"
     create_hospital: "Create Hospital"
+    update_hmo: "Update HMO"
+    create_hmo: "Create HMO"
     make_payment: "Make Payment"
 
   user: 
@@ -165,6 +167,16 @@ en:
     name: "Name"
     address: "Address"
     contact_num: "Contact No."
+
+  hmo: 
+    hmo: "HMO"  
+    edit_hmo: "Edit HMO"
+    back_hmo_list: "Back to HMO List"
+    update_hmo: "Update HMO"
+    name: "Name"
+    address: "Address"
+    contact_num: "Contact No."
+    contact_person: "Contact Person"
 
   payment:
     check_num: "Check No."

@@ -1,0 +1,32 @@
+.row
+  .col-md-12
+    .page-header
+      %h1 
+        HMO
+        %small List
+        = link_to new_hmo_path, class: "btn btn-primary" do
+          %span.fa.fa-plus
+          New Hmo
+.row
+  .col-md-12
+    %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
+      %thead
+        %tr
+          %th Name
+          %th Contact No
+          %th Contact Person 
+          %th Address
+          %th For Collection 
+          %th Actions
+      %tbody
+        - @hmos.each do |hmo|
+          %tr
+            %td= hmo.name
+            %td= hmo.contact_num
+            %td= hmo.contact_person.titleize rescue ""
+            %td= hmo.address
+            %td= "WIP: Collection Amount"
+            %td
+              = link_to "Edit", edit_hmo_path(hmo), class: "btn btn-primary btn-outline btn-sm"
+
+= will_paginate @hmos

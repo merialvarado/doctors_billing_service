@@ -18,4 +18,5 @@ Rails.application.routes.draw do
     end
   end
   resources :hospitals
+  resources :hmos
 end

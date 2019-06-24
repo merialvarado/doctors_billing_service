@@ -6,13 +6,15 @@ class Ability
   def initialize(user)
     user ||= User.new # guest user (not logged in)
 
-    # if user.is_role? "Administrator"
+    if user.is_role? "Administrator"
       can [:read, :create, :update, :destroy], :all
       can [:reset_password], User
 
       cannot [:destroy], User do |user_object|
         user_object == user || user_object.is_last_admin? || !user_object.is_active?
       end
-    # end
+
+      can [:hmo_patients_index], Hmo
+    end
   end
 end

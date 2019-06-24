@@ -12,9 +12,17 @@
     - if user_signed_in?
       #example-navbar-collapse.collapse.navbar-collapse
         %ul.nav.navbar-nav
-          - if can? :index, Patient
-            %li
-              = link_to I18n.t('patient.patient'), patients_path\
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              = I18n.t("header.patient")
+              %b.caret
+            %ul.dropdown-menu
+              - if can? :index, Patient
+                %li
+                  = link_to I18n.t('patient.patient'), patients_path
+              - if can? :hmo_patients_index, Hmo
+                %li
+                  = link_to I18n.t('patient.pss_report'), hmo_patients_index_hmos_path
 
         %ul.nav.navbar-nav
           - if can? :index, Hmo

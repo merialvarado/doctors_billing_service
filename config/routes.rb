@@ -18,5 +18,9 @@ Rails.application.routes.draw do
     end
   end
   resources :hospitals
-  resources :hmos
+  resources :hmos do
+    collection do
+      get :hmo_patients_index
+    end
+  end
 end

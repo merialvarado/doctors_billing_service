@@ -14,11 +14,12 @@ body {
   margin-bottom: 40px;
 }
 .navbar-default {
- border-top: 7px solid #fff; background: #fff;
+ border-top: 7px solid #f8f8f8; background: #f8f8f8;
 }
 
 .navbar-default .navbar-nav > li > a {
   color: #000;
+  border-color: #B9D3EE;
 }
 
 .navbar-default .navbar-brand {
@@ -35,9 +36,9 @@ body {
 }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-  background: #fafafa;
+  background: #DCDCDC;
   color: #337ab7;
-  border: 1 solid #5FB0E4;
+  border-bottom: 4px solid #5FB0E4;
 }
 .navbar-default .navbar-nav > li > .dropdown-menu {
   background-color: #fff;
@@ -58,7 +59,7 @@ body {
 }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
   color: #000;
-  background-color: fafafa;
+  background-color: #DCDCDC;
 }
 .navbar-default .navbar-toggle {
   border-color: red;

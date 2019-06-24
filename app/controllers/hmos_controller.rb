@@ -9,6 +9,10 @@ class HmosController < ApplicationController
     @hmos = Hmo.all.paginate(page: params[:page], per_page: 10)
   end
 
+  def hmo_patients_index
+    @hmos = Hmo.all.paginate(page: params[:page], per_page: 10)
+  end
+
   # Loads the details of a hmo record.
   #   GET /hmos/1
   #   GET /hmos/1.json

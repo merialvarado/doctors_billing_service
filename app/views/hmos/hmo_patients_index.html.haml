@@ -1,0 +1,22 @@
+.row
+  .col-md-12
+    .page-header
+      %h1 
+        PSS Tracking Report
+
+.row
+  .col-md-12
+    / = render "form_filter"
+
+.row
+  .col-md-12
+    .panel-group#accordion-hmo
+      - @hmos.each do |hmo|
+        .panel.panel-default
+          .panel-heading
+            %h4.panel-title
+              = link_to hmo.name, "#collapse-#{hmo.id}", "data-toggle":"collapse", "data-parent":"#accordion-hmo"
+              %span{"style" => "color:red"}= "( #{number_to_currency( hmo.total_balance_amount, precision: 2, unit: "Php ")} )"
+          %div{id: "collapse-#{hmo.id}", class: "panel-collapse collapse"}
+            .panel-body 
+              = render partial: 'hmo_patients', locals: {hmo: hmo}

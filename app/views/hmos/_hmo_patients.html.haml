@@ -1,0 +1,16 @@
+%table.table.dataTable.table-bordered.table-hover.index-table.compact
+  %thead
+    %tr
+      %th Patient Name
+      %th Procedure Date
+      %th Surgeon
+      %th Procedure
+      %th Amount
+  %tbody
+    - hmo.patients.where.not(:balance => 0).each do |patient|
+      %tr
+        %td= patient.full_name.titleize
+        %td= patient.date_admitted
+        %td= "[WIP] Surgeon"
+        %td= patient.procedure
+        %td= number_to_currency( patient.balance, precision: 2, unit: "")

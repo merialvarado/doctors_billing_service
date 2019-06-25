@@ -11,6 +11,8 @@
         - else
           = f.input :user_role, label: I18n.t('user.role'), :collection => User::ROLES, :include_blank => false, disabled: true
           = f.hidden_field :user_role
+        #hospital_id_div
+          = f.input :hospital_id, label: I18n.t('user.hospital_id'), collection: Hospital.order(:name)
 
     .col-md-12
       .form-actions
@@ -20,3 +22,17 @@
         - else
           = f.button :submit, I18n.t('user.update_user'), :class => "btn btn-primary"
           = link_to 'Cancel', user_path(@user), :class => "btn btn-default"
+
+
+%script{"type" => "text/javascript"}
+  :plain
+    $("#user_user_role").change(function() {
+      if($(this).val() == "Doctor"){
+        $("#hospital_id_div").show();
+        $("#user_hospital_id").attr("disabled", false);
+      }
+      else{
+        $("#hospital_id_div").hide();
+        $("#user_hospital_id").attr("disabled", true);
+      }
+    }).change();

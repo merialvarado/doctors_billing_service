@@ -23,6 +23,12 @@
             = I18n.t('user.role')
           %td
             = @user.user_role
+        - if @user.is_role?("Doctor")
+          %tr
+            %th
+              = I18n.t('user.hospital_id')
+            %td
+              = @user.hospital.name rescue ""
         %tr
           %th
             = I18n.t('user.system_generated_password')

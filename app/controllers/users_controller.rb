@@ -31,7 +31,6 @@ class UsersController < ApplicationController
   #   POST /users
   #   POST /users.json
   def create
-    Rails.logger.info "PASOK DITO!========="
     @user = User.new(user_params)
 
     generated_password = Devise.friendly_token.first(8)    
@@ -39,7 +38,7 @@ class UsersController < ApplicationController
     @user.password = generated_password
 
     respond_to do |format|
-      if @user.save!
+      if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -194,7 +193,8 @@ class UsersController < ApplicationController
         :email, 
         :password, 
         :password_confirmation,
-        :current_password 
+        :current_password,
+        :hospital_id
       )
     end
 end

@@ -4,11 +4,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
   has_many :patients, foreign_key: :doctor_id
+  belongs_to :hospital
 
   validates_uniqueness_of    :email, :case_sensitive => false, unless: proc{ |user| user.email.blank? }
   validates_format_of        :email, :with  => Devise.email_regexp, unless: proc{ |user| user.email.blank? }
 
-  validates_presence_of      :full_name
+  validates_presence_of      :full_name, :email
 
   validates_presence_of      :password, :on => :create
   validates_confirmation_of  :password, :on => :create
@@ -19,6 +20,8 @@ class User < ApplicationRecord
 
   validates_presence_of      :user_role
   validate :user_role_value_is_in_range
+
+  validates_presence_of      :hospital_id, if: proc{ |user| user.user_role == "Doctor" }
 
   scope :doctors, -> { where(:user_role => "Doctor") }
 

@@ -120,6 +120,7 @@ en:
     department: "Department"
     branch: "Branch"
     role:  "Role"
+    hospital_id: "Resident Hospital"
     language:  "Preferred Language"
     system_generated_password: "System Generated Password"
     create_user: "Create User"

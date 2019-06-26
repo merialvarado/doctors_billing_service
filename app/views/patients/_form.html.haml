@@ -1,31 +1,61 @@
 .panel-body
   = simple_form_for @patient do |f|
-    .form-inputs
-      .col-md-3
-        = f.input :first_name, label: I18n.t('patient.first_name')
-      .col-md-3
-        = f.input :middle_name, label: I18n.t('patient.middle_name')
-      .col-md-3
-        = f.input :surname, label: I18n.t('patient.surname')
-      .col-md-3
-        = f.input :patient_num, label: I18n.t('patient.patient_num')
-    .form-inputs
-      .col-md-3
-        = f.input :date_admitted, label: I18n.t('patient.date_admitted'), :as => :date_picker
-      .col-md-3
-        = f.input :procedure, label: I18n.t('patient.procedure')
-      .col-md-3
-        = f.input :hmo_id, label: I18n.t('patient.hmo'), collection: Hmo.order(:name)
-      .col-md-3
-        = f.input :contact_num, label: I18n.t('patient.contact_num')
-    .form-inputs
-      .col-md-6
-        = f.input :hospital_id, label: I18n.t('patient.hospital'), collection: Hospital.order(:name)
-      .col-md-6
-        = f.input :doctor_id, label: I18n.t('patient.doctor'), collection: User.doctors.order(:full_name), label_method: :full_name
-      .col-md-6
-        = f.input :billing_amount, label: I18n.t('patient.billing_amount')
+    - if f.object.state == "picture_uploaded"
+      .form-inputs
+        .col-md-12
+          = f.input :patient_picture, label: I18n.t('patient.patient_picture'), as: :file, input_html: {accept: "image/*", capture: "camera"}
+        .col-md-12
+          %img{id:"img_prev", src:"#", alt:"Patient Record"}
+      .form-iputs
+        .col-md-12
+          = f.input :procedure, label: I18n.t('patient.procedure')
+      .form-iputs
+        .col-md-12
+          = f.input :surgeon, label: I18n.t('patient.surgeon')
+      .form-inputs
+        .col-md-12
+          = f.input :remarks, label: I18n.t('patient.remarks')
+      = f.input :state, as: :hidden
+      = f.input :doctor_id, as: :hidden
 
+    - else
+      .well
+        = link_to download_image_patient_path(@patient), class: "btn btn-outline btn-primary btn-sm" do
+          %span
+            .fa.fa-download
+            Download
+        = image_tag @patient.patient_picture.url, height: 900, width: 700
+        
+      %br/
+
+      .form-inputs
+        .col-md-3
+          = f.input :first_name, label: I18n.t('patient.first_name')
+        .col-md-3
+          = f.input :middle_name, label: I18n.t('patient.middle_name')
+        .col-md-3
+          = f.input :surname, label: I18n.t('patient.surname')
+        .col-md-3
+          = f.input :patient_num, label: I18n.t('patient.patient_num')
+      .form-inputs
+        .col-md-3
+          = f.input :date_admitted, label: I18n.t('patient.date_admitted'), :as => :date_picker
+        .col-md-3
+          = f.input :procedure, label: I18n.t('patient.procedure')
+        .col-md-3
+          = f.input :hmo_id, label: I18n.t('patient.hmo'), collection: Hmo.order(:name)
+        .col-md-3
+          = f.input :contact_num, label: I18n.t('patient.contact_num')
+      .form-inputs
+        .col-md-6
+          = f.input :hospital_id, label: I18n.t('patient.hospital'), collection: Hospital.order(:name)
+        .col-md-6
+          = f.input :billing_amount, label: I18n.t('patient.billing_amount')
+      .form-inputs
+        .col-md-12
+          = f.input :remarks, input_html: {disabled: true}
+
+        = f.input :state, as: :hidden
     .col-md-12
       .form-actions
         - if @patient.new_record?
@@ -34,3 +64,21 @@
         - else
           = f.button :submit, I18n.t('actions.update_patient'), :class => "btn btn-primary"
           = link_to 'Cancel', patient_path(@patient), :class => "btn btn-default"
+
+%script{"type" => "text/javascript"}
+  :plain
+    $("#patient_patient_picture").change(function() {
+      input = $(this);
+      if (input.prop('files') && input.prop('files')[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $('#img_prev')
+            .attr('src', e.target.result)
+            .width(300)
+            .height(400);
+        };
+
+        reader.readAsDataURL(input.prop('files')[0]);
+      }
+    }).change();

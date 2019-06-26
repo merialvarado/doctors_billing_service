@@ -7,6 +7,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
 
     if user.is_role? "Administrator"
+      can [:manage], :all
       can [:read, :create, :update, :destroy], :all
       can [:reset_password], User
 
@@ -14,6 +15,22 @@ class Ability
         user_object == user || user_object.is_last_admin? || !user_object.is_active?
       end
 
+      can [:hmo_patients_index], Hmo
+    end
+
+    if user.is_role? "Doctor"
+      can [:show], User do |user_object|
+        user_object == user
+      end
+      can [:create, :destroy, :uploaded_patients_index, :read, :download_image], Patient
+      can [:hmo_patients_index], Hmo
+    end
+
+    if user.is_role? "Encoder"
+      can [:show], User do |user_object|
+        user_object == user
+      end
+      can [:update, :make_payment, :check_available, :uploaded_patients_index, :read, :download_image], Patient
       can [:hmo_patients_index], Hmo
     end
   end

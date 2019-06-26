@@ -1,12 +1,17 @@
 class PatientsController < ApplicationController
 	before_action :set_patient, only: [:show, :edit, :update, :destroy, :check_available, :make_payment]
-  load_and_authorize_resource only: [:index, :archive, :show, :new, :create, :edit, :update, :destroy]
+  load_and_authorize_resource only: [:index, :archive, :show, :new, :create, :edit, :update, :destroy, :uploaded_patients_index]
 
   # Loads a list of all active patient records.
   #   GET /patients
   #   GET /patients.json
   def index
-    @patients = Patient
+    @patients = Patient.where("state IS NULL or state != 'picture_uploaded'")
+
+    if current_user.is_role?("Doctor")
+      @patients = @patients.where(doctor_id: current_user.id)
+    end
+
     if params[:search_patients].nil?
       @patients = @patients.all
     else
@@ -21,6 +26,12 @@ class PatientsController < ApplicationController
         @patients = @patients.all
       end
     end
+    @patients = @patients.order("created_at desc").paginate(page: params[:page], per_page: 10)
+  end
+
+  def uploaded_patients_index
+    @patients = Patient.where(state: "picture_uploaded")
+
     @patients = @patients.paginate(page: params[:page], per_page: 10)
   end
 
@@ -34,11 +45,14 @@ class PatientsController < ApplicationController
   #   GET /patients/new
   def new
     @patient = Patient.new
+    @patient.state = "picture_uploaded"
+    @patient.doctor_id = current_user.id
   end
 
   # Loads the form for editing details of an existing patient record.
   #   GET /patients/1/edit
   def edit
+    @patient.state = "record_created"
   end
 
   # Creates a new patient record.
@@ -46,14 +60,14 @@ class PatientsController < ApplicationController
   #   POST /patients.json
   def create
     @patient = Patient.new(patient_params)
-    @patient.payment_status = "CHECK WAITING"
-    @patient.balance = @patient.billing_amount
 
     respond_to do |format|
       if @patient.save
         format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
         format.json { render :show, status: :created, location: @patient }
       else
+        @patient.state = "picture_uploaded"
+        @patient.doctor_id = current_user.id
         format.html { render :new }
         format.json { render json: @patient.errors, status: :unprocessable_entity }
       end
@@ -64,12 +78,16 @@ class PatientsController < ApplicationController
   #   PATCH/PUT /patients/1
   #   PATCH/PUT /patients/1.json
   def update
+    @patient.payment_status = "CHECK WAITING"
+
     respond_to do |format|
       if @patient.update(patient_params)
-        # TODO: Update the balance field based on the billing amount less payments
+        @patient.update_attribute(:balance, @patient.billing_amount - @patient.total_payments)
+
         format.html { redirect_to @patient, notice: 'Patient was updated' }
         format.json { render :show, status: :ok, location: @patient }
       else
+        @patient.state = "record_created"
         format.html { render :edit }
         format.json { render json: @patient.errors, status: :unprocessable_entity }
       end
@@ -126,6 +144,14 @@ class PatientsController < ApplicationController
     end
   end
 
+  def download_image
+    @patient = Patient.find(params[:id])
+    send_file(
+      @patient.patient_picture.path,
+      filename: "Patient_#{@patient.id}_picture"
+    )
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_patient
@@ -145,7 +171,11 @@ class PatientsController < ApplicationController
         :contact_num,
         :hospital_id,
         :doctor_id,
-        :billing_amount
+        :billing_amount,
+        :patient_picture,
+        :surgeon,
+        :remarks,
+        :state
       )
     end
 

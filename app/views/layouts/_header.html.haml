@@ -17,6 +17,9 @@
               = I18n.t("header.patient")
               %b.caret
             %ul.dropdown-menu
+              - if can? :uploaded_patients_index, Patient
+                %li
+                  = link_to I18n.t('patient.uploaded_patient'), uploaded_patients_index_patients_path
               - if can? :index, Patient
                 %li
                   = link_to I18n.t('patient.patient'), patients_path

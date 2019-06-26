@@ -152,7 +152,7 @@ en:
     full_name: "Name"
     patient_num: "Patient No."
     date_admitted: "Date Admitted"
-    procedure: "Procedure"
+    procedure: "Type of Procedure"
     hmo: "HMO"
     contact_num: "Contact No."
     doctor: "Attending Doctor"
@@ -161,6 +161,11 @@ en:
     payment_status: "Payment Status"
     balance: "Balance"
     pss_report: "PSS Report"
+    patient_picture: "Patient Picture"
+    surgeon: "Surgeon"
+    remarks: "Remarks"
+    patient_upload: "Patient Upload"
+    uploaded_patient: "Uploaded Patient"
 
   hospital: 
     hospital: "Hospital"  

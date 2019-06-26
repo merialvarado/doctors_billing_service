@@ -1,0 +1,43 @@
+.row
+  .col-md-12
+    .page-header
+      %h1 
+        Uploaded Patient
+        %small List
+
+        - if can? :create, Patient
+          = link_to new_patient_path, class: "btn btn-primary" do
+            %span.fa.fa-plus
+            New Patient
+
+.row
+  .col-md-12
+    %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
+      %thead
+        %tr
+          %th Upload Date
+          - if !current_user.is_role?("Doctor")
+            %th Doctor
+          %th Type of Procedure
+          %th Surgeon
+          %th Remarks
+          %th Actions
+          
+      %tbody
+        - @patients.each do |patient|
+          %tr
+            %td= patient.created_at
+            - if !current_user.is_role?("Doctor")
+              %td= patient.doctor.full_name rescue ""
+            %td= patient.procedure
+            %td= patient.surgeon
+            %td= patient.remarks
+            %td
+              = link_to patient_path(patient), class: "btn btn-sm btn-primary btn-outline", title: "Make Payment", "data-toggle": "tooltip"  do
+                %span.fa.fa-eye
+              %span
+              = edit_patient_buttons_helper(patient)
+
+= will_paginate @patients
+
+        

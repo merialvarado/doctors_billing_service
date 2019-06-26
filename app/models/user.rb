@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
   has_many :patients, foreign_key: :doctor_id
-  belongs_to :hospital
+  belongs_to :hospital, optional: true
 
   validates_uniqueness_of    :email, :case_sensitive => false, unless: proc{ |user| user.email.blank? }
   validates_format_of        :email, :with  => Devise.email_regexp, unless: proc{ |user| user.email.blank? }

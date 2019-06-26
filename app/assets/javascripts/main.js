@@ -88,3 +88,7 @@ $( document ).ready(function() {
 $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
   $(this).datepicker({"format": "MM dd, yyyy", "weekStart": 1, "forceParse":false, "autoclose":true, "defaultViewDate":"today", "orientation": "bottom"});
 });
+
+$(document).on("mouseover", "[data-toggle='tooltip']", function(e){
+  $(this).tooltip();
+});

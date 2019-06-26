@@ -7,6 +7,12 @@
             &times
         %h4{class: "modal-title", id: "myModalLabel"}
           = "Patient Record: #{patient.full_name.upcase}"
+          .pull-right
+            = link_to download_image_patient_path(patient), class: "btn btn-outline btn-primary btn-sm" do
+              %span
+                .fa.fa-download
+                Download Picture
+            &nbsp;&nbsp;
       .modal-body
         %table.table.table-striped.table-bordered.table-hover
           %tbody
@@ -52,6 +58,11 @@
                 = patient.procedure
             %tr
               %th
+                = I18n.t('patient.surgeon')
+              %td
+                = patient.surgeon
+            %tr
+              %th
                 = I18n.t('patient.hmo')
               %td
                 = patient.hmo.name rescue ""
@@ -60,6 +71,11 @@
                 = I18n.t('patient.contact_num')
               %td
                 = patient.contact_num
+            %tr
+              %th
+                = I18n.t('patient.remarks')
+              %td
+                = patient.remarks
 
         .row
           .col-md-12

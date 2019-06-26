@@ -1,12 +1,14 @@
 class Patient < ApplicationRecord
+	mount_uploader :patient_picture, PatientPictureUploader
 
-	belongs_to :hospital
+	belongs_to :hospital, optional: true
 	belongs_to :doctor, class_name: "User", foreign_key: "doctor_id"
 	has_many :payments
-	belongs_to :hmo
+	belongs_to :hmo, optional: true
 
-	validates :first_name, :surname, :patient_num, :date_admitted, :procedure, :contact_num, :hospital_id, :doctor_id, :hmo_id, presence: true
-	validates :billing_amount, numericality: { greater_than: 0 }
+	validates :patient_picture, :procedure, :surgeon, :remarks, :doctor_id, presence: true, if: lambda{|o| o.state == "picture_uploaded" }
+	validates :first_name, :surname, :patient_num, :date_admitted, :contact_num, :hospital_id, :hmo_id, presence: true, if: lambda{|o| o.state == "record_created" }
+	#validates :billing_amount, numericality: { greater_than: 0 }
 
 	def full_name
 		"#{first_name} #{middle_name} #{surname}"
@@ -30,6 +32,10 @@ class Patient < ApplicationRecord
 		elsif self.balance.zero?
 			self.update_attribute(:payment_status, "FULLY PAID") 
 		end
+	end
+
+	def total_payments
+		self.payments.sum(:amount)
 	end
 
 	def self.get_total_billing_amount

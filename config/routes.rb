@@ -11,10 +11,12 @@ Rails.application.routes.draw do
   resources :patients do
   	member do
   		put :check_available
+      get :download_image
   	end
     collection do
       get :make_payment
       post :pay
+      get :uploaded_patients_index
     end
   end
   resources :hospitals

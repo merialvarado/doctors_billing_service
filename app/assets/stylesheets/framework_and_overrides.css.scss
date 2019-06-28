@@ -513,6 +513,12 @@ h1{
 .form-group {
     margin-bottom: 5px;
 }
-.table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
-  padding: 5px;
+
+/**** Override to fix datepicker styling *****/
+.datepicker .table-condensed > thead > tr > th{
+  padding: 1px;
+}
+.datepicker {
+  z-index: 10000 !important;
+  margin-top: 70px;
 }

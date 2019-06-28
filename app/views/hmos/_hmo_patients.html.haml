@@ -5,12 +5,12 @@
       %th Procedure Date
       %th Surgeon
       %th Procedure
-      %th Amount
+      %th Balance
   %tbody
     - hmo.patients.where.not(:balance => 0).each do |patient|
       %tr
         %td= patient.full_name.titleize
         %td= patient.date_admitted
-        %td= "[WIP] Surgeon"
+        %td= patient.surgeon
         %td= patient.procedure
         %td= number_to_currency( patient.balance, precision: 2, unit: "")

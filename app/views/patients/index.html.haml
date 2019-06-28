@@ -21,6 +21,7 @@
           %th Name
           %th Attending Doctor
           %th Hospital
+          %th Payment Method
           %th Payment Status
           %th Billing Amount
           %th Balance
@@ -36,6 +37,7 @@
               = render partial: 'show_modal', locals: {patient: patient}
             %td= patient.doctor.full_name.titleize rescue nil
             %td= patient.hospital.name rescue nil
+            %td= patient.hmo.name rescue nil
             %td= payment_status_viewer(patient.payment_status)
             %td= number_to_currency( patient.billing_amount, precision: 2, unit: "")
             %td= number_to_currency( patient.balance, precision: 2, unit: "")

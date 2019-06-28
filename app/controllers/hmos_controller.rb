@@ -10,7 +10,24 @@ class HmosController < ApplicationController
   end
 
   def hmo_patients_index
-    @hmos = Hmo.all.paginate(page: params[:page], per_page: 10)
+    @hospitals = current_user.is_role?("Doctor") ? Hospital.where(:id => Patient.where(:doctor_id => current_user).pluck(:hospital_id)).order(:name) : Hospital.order(:name)
+    @hmos = Hmo
+    hospital_ids = []
+    date = Date.today
+
+    if params[:search].present?
+      hospital_ids = [params[:search][:hospital]] unless params[:search][:hospital].blank?
+      date = params[:search][:date] unless params[:search][:date].blank?
+    end
+
+    if hospital_ids.empty?
+      hospital_ids = current_user.is_role?("Doctor") ? [current_user.hospital_id] : Hospital.pluck(:id)
+    end
+
+    hmo_ids = Patient.where("hospital_id IN (?) AND balance >= ? AND date_admitted <= ?", hospital_ids, BigDecimal.new("0.0"), date).pluck(:hmo_id)
+    @hmos = Hmo.where(id: hmo_ids).order(:name)
+
+    @hmos.paginate(page: params[:page], per_page: 10)
   end
 
   # Loads the details of a hmo record.

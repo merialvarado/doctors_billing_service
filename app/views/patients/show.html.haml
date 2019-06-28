@@ -102,9 +102,9 @@
             %td
               = @patient.surgeon
             %th
-              = I18n.t('patient.hmo')
+              = I18n.t('patient.payment_method')
             %td
-              = @patient.hmo.name rescue ""
+              = @patient.payment_method_with_details
             %th
               = I18n.t('patient.contact_num')
             %td

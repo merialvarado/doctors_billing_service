@@ -175,7 +175,8 @@ class PatientsController < ApplicationController
         :patient_picture,
         :surgeon,
         :remarks,
-        :state
+        :state,
+        :payment_method
       )
     end
 

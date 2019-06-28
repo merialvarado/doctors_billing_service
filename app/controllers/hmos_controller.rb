@@ -23,11 +23,23 @@ class HmosController < ApplicationController
     if hospital_ids.empty?
       hospital_ids = current_user.is_role?("Doctor") ? [current_user.hospital_id] : Hospital.pluck(:id)
     end
-
-    hmo_ids = Patient.where("hospital_id IN (?) AND balance >= ? AND date_admitted <= ?", hospital_ids, BigDecimal.new("0.0"), date).pluck(:hmo_id)
+    patients = Patient.where("hospital_id IN (?) AND balance >= ? AND date_admitted <= ?", hospital_ids, BigDecimal.new("0.0"), date)
+    
+    # HMO 
+    hmo_ids = patients.pluck(:hmo_id)
     @hmos = Hmo.where(id: hmo_ids).order(:name)
+    @hmo_total_balance= patients.where(payment_method: "HMO").sum(:balance)
+    @hmos.paginate(page: params[:page], per_page: 1)
 
-    @hmos.paginate(page: params[:page], per_page: 10)
+    #PHILHEALTH
+    @philhealth_patients = patients.where(payment_method: "Philhealth")
+    @philhealth_total_balance= @philhealth_patients.sum(:balance)
+    @philhealth_patients.paginate(page: params[:page], per_page: 10)
+
+    #PROMISSORY NOTE
+    @promissory_note_patients = patients.where(payment_method: "Promissory Note")
+    @promissory_note_total_balance= @promissory_note_patients.sum(:balance)
+    @promissory_note_patients.paginate(page: params[:page], per_page: 10)
   end
 
   # Loads the details of a hmo record.

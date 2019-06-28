@@ -10,13 +10,55 @@
 
 .row
   .col-md-12
+    .row
+      .col-md-10
+        %h4.accordion-head INSURANCE COMPANIES
+      .col-md-2.pull-right
+        %h4.accordion-head-amount= number_to_currency( @hmo_total_balance, precision: 2, unit: "Php ")
     .panel-group#accordion-hmo
       - @hmos.each do |hmo|
         .panel.panel-default
           .panel-heading
-            %h4.panel-title
+            .panel-title
               = link_to hmo.name, "#collapse-#{hmo.id}", "data-toggle":"collapse", "data-parent":"#accordion-hmo"
               %span{"style" => "color:red"}= "( #{number_to_currency( hmo.total_balance_amount, precision: 2, unit: "Php ")} )"
           %div{id: "collapse-#{hmo.id}", class: "panel-collapse collapse"}
             .panel-body 
               = render partial: 'hmo_patients', locals: {hmo: hmo}
+
+  .col-md-12
+    .row
+      .col-md-10
+        %h4.accordion-head PHILHEALTH
+      .col-md-2.pull-right
+        %h4.accordion-head-amount= number_to_currency( @philhealth_total_balance, precision: 2, unit: "Php ")
+    .panel-group#accordion-hmo
+      - if @philhealth_patients.empty?
+        .panel.panel-default
+          .panel-heading
+            .panel-title
+              No Patient with Philhealth payment mode
+      - else
+        - @philhealth_patients.each do |patient|
+          .panel.panel-default
+            .panel-heading
+              .panel-title
+                = patient.full_name
+                %span{"style" => "color:red"}= "( #{number_to_currency( patient.balance, precision: 2, unit: "Php ")} )"
+
+  .col-md-12
+    .row
+      .col-md-10
+        %h4.accordion-head PROMISSORY NOTE
+      .col-md-2.pull-right
+        %h4.accordion-head-amount= number_to_currency( @promissory_note_total_balance, precision: 2, unit: "Php ")
+    .panel-group#accordion-hmo
+      - if @promissory_note_patients.empty?
+        No Patient with Promissory Note as payment mode
+      - else
+        - @promissory_note_patients.each do |patient|
+          .panel.panel-default
+            .panel-heading
+              .panel-title
+                = patient.full_name
+                %span{"style" => "color:red"}= "( #{number_to_currency( patient.balance, precision: 2, unit: "Php ")} )"

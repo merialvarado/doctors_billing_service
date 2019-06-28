@@ -39,20 +39,25 @@
           = f.input :patient_num, label: I18n.t('patient.patient_num')
       .form-inputs
         .col-md-3
-          = f.input :date_admitted, label: I18n.t('patient.date_admitted'), :as => :date_picker
+          = f.input :contact_num, label: I18n.t('patient.contact_num')
         .col-md-3
+          = f.input :date_admitted, label: I18n.t('patient.date_admitted'), :as => :date_picker
+        .col-md-6
           = f.input :procedure, label: I18n.t('patient.procedure')
+      .form-inputs
+        .col-md-3
+          #payment-method
+            = f.label "Payment Method"
+            = f.collection_radio_buttons :payment_method, [["HMO"], ["Philhealth"], ["Promissory Note"]], :first, :first, item_wrapper_tag: :div
         .col-md-3
           = f.input :hmo_id, label: I18n.t('patient.hmo'), collection: Hmo.order(:name)
         .col-md-3
-          = f.input :contact_num, label: I18n.t('patient.contact_num')
-      .form-inputs
-        .col-md-6
           = f.input :hospital_id, label: I18n.t('patient.hospital'), collection: Hospital.order(:name)
-        .col-md-6
+        .col-md-3
           = f.input :billing_amount, label: I18n.t('patient.billing_amount')
       .form-inputs
-        .col-md-12
+        .col-md-3
+        .col-md-9
           = f.input :remarks, input_html: {disabled: true}
 
         = f.input :state, as: :hidden
@@ -80,5 +85,15 @@
         };
 
         reader.readAsDataURL(input.prop('files')[0]);
+      }
+    }).change();
+
+    $("input[type='radio'][name='patient[payment_method]']").change(function() {
+      if(this.value == "HMO"){
+        $("#patient_hmo_id").attr("disabled", false)
+      }
+      else{
+        $("#patient_hmo_id").attr("disabled", true)
+        $("#patient_hmo_id").val("")
       }
     }).change();

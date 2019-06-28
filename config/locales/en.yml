@@ -166,6 +166,7 @@ en:
     remarks: "Remarks"
     patient_upload: "Patient Upload"
     uploaded_patient: "Uploaded Patient"
+    payment_method: "Payment Method"
 
   hospital: 
     hospital: "Hospital"  

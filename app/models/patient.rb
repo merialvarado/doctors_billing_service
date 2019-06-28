@@ -7,8 +7,9 @@ class Patient < ApplicationRecord
 	belongs_to :hmo, optional: true
 
 	validates :patient_picture, :procedure, :surgeon, :remarks, :doctor_id, presence: true, if: lambda{|o| o.state == "picture_uploaded" }
-	validates :first_name, :surname, :patient_num, :date_admitted, :contact_num, :hospital_id, :hmo_id, presence: true, if: lambda{|o| o.state == "record_created" }
-	#validates :billing_amount, numericality: { greater_than: 0 }
+	validates :first_name, :surname, :patient_num, :date_admitted, :contact_num, :hospital_id, :payment_method, presence: true, if: lambda{|o| o.state == "record_created" }
+	validates :hmo_id, presence: true, if: lambda{|o| o.payment_method == "HMO"}
+	validates :billing_amount, numericality: { greater_than_or_equal_to: 0 }
 
 	def full_name
 		"#{first_name} #{middle_name} #{surname}"
@@ -36,6 +37,16 @@ class Patient < ApplicationRecord
 
 	def total_payments
 		self.payments.sum(:amount)
+	end
+
+	def payment_method_with_details
+		payment = ""
+		if self.payment_method == "HMO"
+			payment = "#{self.payment_method} - #{self.hmo.name rescue ''}"
+		else
+			payment = self.payment_method
+		end
+		return payment
 	end
 
 	def self.get_total_billing_amount

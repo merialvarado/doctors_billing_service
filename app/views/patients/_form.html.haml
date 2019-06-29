@@ -60,7 +60,7 @@
         .col-md-3
           = f.input :hmo_id, label: I18n.t('patient.hmo'), collection: Hmo.order(:name)
         .col-md-9
-          = f.input :remarks, input_html: {disabled: true}
+          = f.input :remarks
 
         = f.input :state, as: :hidden
     .col-md-12

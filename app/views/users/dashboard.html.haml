@@ -2,41 +2,149 @@
 	%h1= I18n.t('welcome') + ", #{@user.full_name}!"
 
 #dashboard
-	.row
-		.col-md-4
-		.col-md-4.center
-			.panel.panel-primary
-				.panel-body
-					%span.icon-stat
-						.fa.fa-user.icon-stat
-						.icon-stat-number
-							- if current_user.is_role?("Doctor")
-								= current_user.patients.count
-							- else
-								= Patient.count
+	.panel.panel-default
+		.panel-body
+			.row
+				.col-md-1
+				.col-md-6.center
+					.panel.panel-primary
+						.panel-body
+							.col-md-3
+								%span.icon-stat
+									.fa.fa-user.icon-stat
+									 
+							.col-md-9
+								.icon-stat.pull-left
+									Total No. of Procedures
+				.col-md-4
+					.panel.panel-primary
+						.panel-body
+							.icon-stat
+								- if current_user.is_role?("Doctor")
+									= current_user.patients.count
+								- else
+									= Patient.count
+				.col-md-1
 
-	.row
-		.col-md-4
-		.col-md-4
-			.panel.panel-primary
-				.panel-body
-					%span.icon-stat 
-						&#8369
-						.icon-stat-number
-							- if current_user.is_role?("Doctor")
-								= number_to_currency( current_user.patients.get_total_billing_amount, precision:  2, unit: "" )
-							- else
-								= number_to_currency( Patient.get_total_billing_amount, precision:  2, unit: "" )
+			.row
+				.col-md-1
+				.col-md-6.center
+					.panel.panel-primary
+						.panel-body
+							.col-md-3
+								%span.icon-stat 
+									&#8369
+									
+							.col-md-9
+								.icon-stat.pull-left
+									Total Amount of Professional Fees
+				.col-md-4
+					.panel.panel-primary
+						.panel-body
+							.icon-stat
+								- if current_user.is_role?("Doctor")
+									= number_to_currency( current_user.patients.get_total_billing_amount, precision:  2, unit: "Php " )
+								- else
+									= number_to_currency( Patient.get_total_billing_amount, precision:  2, unit: "Php " )
+				.col-md-1
 
-	.row
-		.col-md-4
-		.col-md-4
-			.panel.panel-primary
-				.panel-body
-					%span.icon-stat
-						.fa.fa-university
-						.icon-stat-number
-							- if current_user.is_role?("Doctor")
-								= number_to_currency( current_user.patients.get_total_balance, precision: 2, unit: "" )
-							- else
-								= number_to_currency( Patient.get_total_balance, precision: 2, unit: "" )
+
+			.row
+				.col-md-1
+				.col-md-6.center
+					.panel.panel-primary
+						.panel-body
+							.col-md-3
+								%span.icon-stat 
+									.fa.fa-university
+									
+							.col-md-9
+								.icon-stat.pull-left
+									Total Amount Collected
+				.col-md-4
+					.panel.panel-primary
+						.panel-body
+							.icon-stat
+								- if current_user.is_role?("Doctor")
+									= number_to_currency( current_user.patients.get_total_balance, precision: 2, unit: "Php " )
+								- else
+									= number_to_currency( Patient.get_total_balance, precision: 2, unit: "Php " )
+				.col-md-1
+
+			.row
+				.col-md-1
+				.col-md-6.center
+					.panel.panel-primary
+						.panel-body
+							.col-md-3
+								%span.icon-stat 
+									.fa.fa-clock
+							.col-md-9
+								.icon-stat.pull-left
+									Average DSO
+				.col-md-4
+					.panel.panel-primary
+						.panel-body
+							.icon-stat
+								30 DAYS
+				.col-md-1
+
+
+	.panel.panel-default
+		.panel-body
+			.row
+				.col-md-1
+				.col-md-3.center
+					.panel.panel-primary
+						.panel-body
+							.icon-stat
+								Insurance
+				.col-md-4
+					.panel.panel-primary
+						.panel-body
+							.icon-stat
+								= number_to_currency( Patient.hmo_total_amount(current_user), precision: 2, unit: "Php " )
+				.col-md-3
+					.panel.panel-primary
+						.panel-body
+							.icon-stat
+								30 DAYS
+				.col-md-1
+
+			.row
+				.col-md-1
+				.col-md-3.center
+					.panel.panel-primary
+						.panel-body
+							.icon-stat
+								Philhealth
+				.col-md-4
+					.panel.panel-primary
+						.panel-body
+							.icon-stat
+								= number_to_currency( Patient.philhealth_total_amount(current_user), precision: 2, unit: "Php " )
+				.col-md-3
+					.panel.panel-primary
+						.panel-body
+							.icon-stat
+								30 DAYS
+				.col-md-1
+
+			.row
+				.col-md-1
+				.col-md-3.center
+					.panel.panel-primary
+						.panel-body
+							.icon-stat
+								Promissory Note
+				.col-md-4
+					.panel.panel-primary
+						.panel-body
+							.icon-stat
+								= number_to_currency( Patient.promissory_note_total_amount(current_user), precision: 2, unit: "Php " )
+				.col-md-3
+					.panel.panel-primary
+						.panel-body
+							.icon-stat
+								30 DAYS
+				.col-md-1

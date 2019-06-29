@@ -57,4 +57,28 @@ class Patient < ApplicationRecord
 	def self.get_total_balance
 		Patient.sum(:balance)
 	end
+
+	def self.hmo_total_amount(current_user)
+		unless current_user.is_role?"Doctor"
+			Patient.where(payment_method: "HMO").sum(:billing_amount)
+		else
+			Patient.where(payment_method: "HMO", doctor_id: current_user.id).sum(:billing_amount)
+		end
+	end
+
+	def self.philhealth_total_amount(current_user)
+		unless current_user.is_role?"Doctor"
+			Patient.where(payment_method: "Philhealth").sum(:billing_amount)
+		else
+			Patient.where(payment_method: "Philhealth", doctor_id: current_user.id).sum(:billing_amount)
+		end
+	end
+
+	def self.promissory_note_total_amount(current_user)
+		unless current_user.is_role?"Doctor"
+			Patient.where(payment_method: "Promissory Note").sum(:billing_amount)
+		else
+			Patient.where(payment_method: "Promissory Note", doctor_id: current_user.id).sum(:billing_amount)
+		end
+	end
 end

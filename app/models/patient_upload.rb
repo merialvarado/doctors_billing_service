@@ -63,6 +63,8 @@ class PatientUpload < ApplicationRecord
         # Process billing amount
         patient_info[:billing_amount] = BigDecimal.new("0") if patient_info[:billing_amount].blank?
 
+        # Add balance
+        patient_info[:balance] = patient_info[:billing_amount]
         # Add state
         patient_info[:state] = "record_created"
         # Add payment status

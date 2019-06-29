@@ -7,9 +7,10 @@ class Patient < ApplicationRecord
 	belongs_to :hmo, optional: true
 
 	validates :patient_picture, :procedure, :surgeon, :remarks, :doctor_id, presence: true, if: lambda{|o| o.state == "picture_uploaded" }
-	validates :first_name, :surname, :patient_num, :date_admitted, :contact_num, :hospital_id, :payment_method, presence: true, if: lambda{|o| o.state == "record_created" }
+	validates :first_name, :surname, :date_admitted, :hospital_id, :payment_method, presence: true, if: lambda{|o| o.state == "record_created" }
 	validates :hmo_id, presence: true, if: lambda{|o| o.payment_method == "HMO"}
 	validates :billing_amount, numericality: { greater_than_or_equal_to: 0 }
+	#validates :patient_num, :contact_num, presence: true, if: lambda{|o| o.state == "record_created" }
 
 	def full_name
 		"#{first_name} #{middle_name} #{surname}"

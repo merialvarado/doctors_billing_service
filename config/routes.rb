@@ -25,4 +25,9 @@ Rails.application.routes.draw do
       get :hmo_patients_index
     end
   end
+  resources :patient_uploads do
+    member do
+      put :process_csv
+    end
+  end
 end

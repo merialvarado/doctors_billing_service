@@ -38,7 +38,7 @@
               = link_to I18n.t('hospital.hospital'), hospitals_path
 
         %ul.nav.navbar-nav
-          - if ( can? :index, User )
+          - if ( can? :index, User ) || (can? :index, PatientUpload)
             %li.dropdown
               %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
                 = I18n.t("header.system_settings")
@@ -47,6 +47,9 @@
                 - if can? :index, User
                   %li
                     = link_to I18n.t('user.user'), users_path
+                - if can? :index, PatientUpload
+                  %li
+                    = link_to I18n.t('patient_upload.patient_upload'), patient_uploads_path
 
         %ul.nav.navbar-nav.navbar-right
           %li.user-profile

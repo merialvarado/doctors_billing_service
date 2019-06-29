@@ -1,0 +1,30 @@
+%h1.page-header
+  = I18n.t('patient_upload.patient_upload')
+  %small= I18n.t('details')
+.panel.panel-primary
+  .panel-heading
+    = @patient_upload.csv_file.identifier
+
+  .panel-body
+    %table.table.table-striped.table-bordered.table-hover
+      %tbody
+        %tr
+          %th
+            = I18n.t('patient_upload.uploaded_by')
+          %td
+            = @patient_upload.uploaded_by.full_name rescue nil
+        %tr
+          %th
+            = I18n.t('patient_upload.state')
+          %td
+            = @patient_upload.state
+
+
+
+= link_to edit_patient_upload_path(@patient_upload), :class => "btn btn-primary" do
+  %span.fa.fa-pencil
+  = I18n.t('edit')
+= link_to patient_uploads_path, :class => "btn btn-default" do
+  %span.fa.fa-list
+  = I18n.t('back')
+

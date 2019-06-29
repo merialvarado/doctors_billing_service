@@ -1,0 +1,31 @@
+.row
+  .col-md-12
+    .page-header
+      %h1 
+        Patient List Upload
+        %small List
+        = link_to new_patient_upload_path, class: "btn btn-primary" do
+          %span.fa.fa-plus
+          New Patient List Upload
+.row
+  .col-md-12
+    %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
+      %thead
+        %tr
+          %th File
+          %th Uploaded By
+          %th State 
+          %th Actions
+      %tbody
+        - @patient_uploads.each do |patient_upload|
+          %tr
+            %td= patient_upload.csv_file.identifier
+            %td= patient_upload.uploaded_by.full_name rescue nil
+            %td= patient_upload.state
+            %td
+              - if can? :edit, patient_upload
+                = link_to "Edit", edit_patient_upload_path(patient_upload), class: "btn btn-primary btn-outline btn-sm"
+              - if can? :process_csv, patient_upload
+                = link_to "Process", process_csv_patient_upload_path(patient_upload), method: :put, class: "btn btn-primary btn-outline btn-sm"
+
+= will_paginate @patient_uploads

@@ -19,12 +19,13 @@
             %th
               = I18n.t('patient.patient_picture')
             %td
-              = image_tag @patient.patient_picture.url, height: 900, width: 700
-              %br
-              = link_to download_image_patient_path(@patient), class: "btn btn-outline btn-primary btn-sm" do
-                %span
-                  .fa.fa-download
-                  Download
+              - if @patient.patient_picture.present?
+                = image_tag @patient.patient_picture.url, height: 900, width: 700
+                %br
+                = link_to download_image_patient_path(@patient), class: "btn btn-outline btn-primary btn-sm" do
+                  %span
+                    .fa.fa-download
+                    Download
           %tr
             %th
               = I18n.t('patient.doctor')

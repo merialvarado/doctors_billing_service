@@ -1,0 +1,12 @@
+.panel-body
+  = simple_form_for @patient_upload do |f|
+    .form-inputs
+      .col-md-6
+        = f.input :csv_file, as: :file, label: I18n.t('patient.csv_file')
+        = f.input :uploaded_by_id, as: :hidden
+        = f.input :state, as: :hidden
+        
+    .col-md-12
+      .form-actions
+        = f.button :submit, I18n.t('actions.upload'), :class => "btn btn-primary"
+        = link_to 'Cancel', patient_uploads_path, :class => "btn btn-default"

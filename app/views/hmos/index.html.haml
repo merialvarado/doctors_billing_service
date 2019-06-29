@@ -25,7 +25,7 @@
             %td= hmo.contact_num
             %td= hmo.contact_person.titleize rescue ""
             %td= hmo.address
-            %td= "WIP: Collection Amount"
+            %td= number_to_currency( hmo.total_balance_amount, precision: 2, unit: "Php ")
             %td
               = link_to "Edit", edit_hmo_path(hmo), class: "btn btn-primary btn-outline btn-sm"
 

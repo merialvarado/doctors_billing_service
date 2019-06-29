@@ -19,14 +19,15 @@
       = f.input :doctor_id, as: :hidden
 
     - else
-      .well
-        = link_to download_image_patient_path(@patient), class: "btn btn-outline btn-primary btn-sm" do
-          %span
-            .fa.fa-download
-            Download
-        = image_tag @patient.patient_picture.url, height: 900, width: 700
-        
-      %br/
+      - if @patient.patient_picture.present?
+        .well
+          = link_to download_image_patient_path(@patient), class: "btn btn-outline btn-primary btn-sm" do
+            %span
+              .fa.fa-download
+              Download
+          = image_tag @patient.patient_picture.url, height: 900, width: 700
+          
+        %br/
 
       .form-inputs
         .col-md-3
@@ -72,28 +73,30 @@
 
 %script{"type" => "text/javascript"}
   :plain
-    $("#patient_patient_picture").change(function() {
-      input = $(this);
-      if (input.prop('files') && input.prop('files')[0]) {
-        var reader = new FileReader();
+    $( document ).ready(function() {
+      $("#patient_patient_picture").change(function() {
+        input = $(this);
+        if (input.prop('files') && input.prop('files')[0]) {
+          var reader = new FileReader();
 
-        reader.onload = function (e) {
-          $('#img_prev')
-            .attr('src', e.target.result)
-            .width(300)
-            .height(400);
-        };
+          reader.onload = function (e) {
+            $('#img_prev')
+              .attr('src', e.target.result)
+              .width(300)
+              .height(400);
+          };
 
-        reader.readAsDataURL(input.prop('files')[0]);
-      }
-    }).change();
+          reader.readAsDataURL(input.prop('files')[0]);
+        }
+      }).change();
 
-    $("input[type='radio'][name='patient[payment_method]']").change(function() {
-      if(this.value == "HMO"){
-        $("#patient_hmo_id").attr("disabled", false)
-      }
-      else{
-        $("#patient_hmo_id").attr("disabled", true)
-        $("#patient_hmo_id").val("")
-      }
-    }).change();
+      $("input[type='radio'][name='patient[payment_method]']").change(function() {
+        if($("#patient_payment_method_hmo").attr("checked") == "checked"){
+          $("#patient_hmo_id").attr("disabled", false)
+        }
+        else{
+          $("#patient_hmo_id").attr("disabled", true)
+          $("#patient_hmo_id").val("")
+        }
+      }).change();
+    });

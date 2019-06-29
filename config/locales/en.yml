@@ -105,6 +105,7 @@ en:
     update_hmo: "Update HMO"
     create_hmo: "Create HMO"
     make_payment: "Make Payment"
+    upload: "Upload"
 
   user: 
     user: "User"  
@@ -167,6 +168,8 @@ en:
     patient_upload: "Patient Upload"
     uploaded_patient: "Uploaded Patient"
     payment_method: "Payment Method"
+    csv_file: "CSV File"
+    upload_patient_list: "Upload Patient List"
 
   hospital: 
     hospital: "Hospital"  
@@ -192,3 +195,8 @@ en:
     check_date: "Date Issued"
     bank: "Bank"
     amount: "Issued Amount"
+
+  patient_upload:
+    patient_upload: "Patient List Upload"
+    uploaded_by: "Uploaded By"
+    state: "State"

@@ -16,6 +16,10 @@ class Ability
       end
 
       can [:hmo_patients_index], Hmo
+
+      cannot [:edit, :destroy, :process_csv], PatientUpload do |pu|
+        pu.state == "processed"
+      end
     end
 
     if user.is_role? "Doctor"
@@ -32,6 +36,14 @@ class Ability
       end
       can [:update, :make_payment, :check_available, :uploaded_patients_index, :read, :download_image], Patient
       can [:hmo_patients_index], Hmo
+
+      can [:manage], Hmo
+      can [:manage], Hospital
+
+      can [:manage], PatientUpload
+      cannot [:edit, :destroy, :process_csv], PatientUpload do |pu|
+        pu.state == "processed"
+      end
     end
   end
 end

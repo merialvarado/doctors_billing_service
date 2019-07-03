@@ -16,21 +16,20 @@
       %table.table.table-striped.table-bordered.table-hover
         %tbody
           %tr
-            %th
-              = I18n.t('patient.patient_picture')
-            %td
+            %td{colspan: 2}
               - if @patient.patient_picture.present?
-                = image_tag @patient.patient_picture.url, height: 900, width: 700
+                = image_tag @patient.patient_picture.url, height: 350, width: 250
                 %br
                 = link_to download_image_patient_path(@patient), class: "btn btn-outline btn-primary btn-sm" do
                   %span
                     .fa.fa-download
                     Download
-          %tr
-            %th
-              = I18n.t('patient.doctor')
-            %td
-              = @patient.doctor.full_name rescue nil
+          - unless current_user.is_role?("Doctor")
+            %tr
+              %th
+                = I18n.t('patient.doctor')
+              %td
+                = @patient.doctor.full_name rescue nil
           %tr
             %th
               = I18n.t('patient.procedure')

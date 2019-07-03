@@ -10,18 +10,37 @@ class Patient < ApplicationRecord
 	validates :first_name, :surname, :date_admitted, :hospital_id, :payment_method, presence: true, if: lambda{|o| o.state == "record_created" }
 	validates :hmo_id, presence: true, if: lambda{|o| o.payment_method == "HMO"}
 	validates :billing_amount, numericality: { greater_than_or_equal_to: 0 }
+
+	PAYMENT_STATUS = {
+		:check_waiting => "CHECK WAITING",
+		:check_available => "CHECK AVAILABLE",
+		:check_waiting_for_full_payment => "CHECK WAITING FOR FULL PAYMENT",
+		:fully_paid => "FULLY PAID"
+	}
+
+	PAYMENT_METHOD = {
+		:hmo => "HMO",
+		:philhealth => "Philhealth",
+		:promissory_note => "Promissory Note"
+	}
 	#validates :patient_num, :contact_num, presence: true, if: lambda{|o| o.state == "record_created" }
 
 	def full_name
 		"#{first_name} #{middle_name} #{surname}"
 	end
 
+	def aging
+		end_date = self.date_paid.nil? ? Date.today : self.date_paid
+
+		(end_date - self.procedure_date).to_i
+	end
+
 	def check_available!
-		self.update_attribute(:payment_status, "CHECK AVAILABLE")
+		self.update_attribute(:payment_status, Patient::PAYMENT_STATUS[:check_available])
 	end
 
 	def is_check_waiting?
-		self.payment_status.upcase == "CHECK WAITING" || self.payment_status.upcase == "CHECK WAITING FOR FULL PAYMENT" rescue false
+		self.payment_status.upcase == Patient::PAYMENT_STATUS[:check_waiting] || self.payment_status.upcase == Patient::PAYMENT_STATUS[:check_waiting_for_full_payment] rescue false
 	end
 
 	def is_check_available?
@@ -30,9 +49,9 @@ class Patient < ApplicationRecord
 
 	def update_payment_status
 		if !self.balance.zero? && !self.payments.empty?
-			self.update_attribute(:payment_status, "CHECK WAITING FOR FULL PAYMENT") 
+			self.update_attribute(:payment_status, Patient::PAYMENT_STATUS[:check_waiting_for_full_payment]) 
 		elsif self.balance.zero?
-			self.update_attribute(:payment_status, "FULLY PAID") 
+			self.update_attributes(payment_status: Patient::PAYMENT_STATUS[:fully_paid], date_paid: Date.today)
 		end
 	end
 
@@ -43,7 +62,7 @@ class Patient < ApplicationRecord
 	def payment_method_with_details
 		payment = ""
 		if self.payment_method == "HMO"
-			payment = "#{self.payment_method} - #{self.hmo.name rescue ''}"
+			payment = self.hmo.name rescue ""
 		else
 			payment = self.payment_method
 		end

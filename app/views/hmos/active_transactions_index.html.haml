@@ -1,0 +1,51 @@
+.row
+  .col-md-12
+    = render "form_filter"
+
+
+.panel.panel-default
+  .panel-body
+    .row
+      .col-md-12
+        .row
+          .col-md-12
+            %h4.accordion-head 
+              INSURANCE COMPANIES
+              %span.pull-right
+                = "Total: #{@hmo_total_count}"
+        .panel-group#accordion-hmo
+          - @hmos.each do |hmo|
+            .panel.panel-default
+              .panel-heading
+                .panel-title
+                  = link_to hmo.name, payment_method_patients_index_patients_path(hmo_id: hmo.id, doctor_id: @doctor_id, hospital_ids: @hospital_ids, date: @date, active_tab: "Active Transactions")
+                  %span{"style" => "color:red"}= "( #{@patients.where(hmo_id: hmo.id).count} )"
+
+      .col-md-12
+        .row
+          .col-md-12
+            %h4.accordion-head 
+              PHILHEALTH
+              %span.pull-right
+                = "Total: #{@philhealth_total_count}"
+        .panel-group#accordion-hmo
+          .panel.panel-default
+            .panel-heading
+              .panel-title
+                = link_to Patient::PAYMENT_METHOD[:philhealth], payment_method_patients_index_patients_path(payment_method: Patient::PAYMENT_METHOD[:philhealth], doctor_id: @doctor_id, hospital_ids: @hospital_ids, date: @date, active_tab: "Active Transactions")
+                %span{"style" => "color:red"}= "( #{@philhealth_total_count} )"
+
+
+      .col-md-12
+        .row
+          .col-md-12
+            %h4.accordion-head 
+              PROMISSORY NOTE
+              %span.pull-right
+                = "Total: #{@promissory_note_total_count}"
+        .panel-group#accordion-hmo
+          .panel.panel-default
+            .panel-heading
+              .panel-title
+                = link_to Patient::PAYMENT_METHOD[:promissory_note], payment_method_patients_index_patients_path(payment_method: Patient::PAYMENT_METHOD[:promissory_note], doctor_id: @doctor_id, hospital_ids: @hospital_ids, date: @date, active_tab: "Active Transactions")
+                %span{"style" => "color:red"}= "( #{@promissory_note_total_count} )"

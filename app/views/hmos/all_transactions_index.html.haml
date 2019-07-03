@@ -1,0 +1,144 @@
+#all-transactions-div
+  .panel.panel-default
+    .panel-body
+      #statistics-div
+        .col-md-12
+          .col-md-6.center
+            .panel.panel-primary
+              .panel-body
+                .col-md-3
+                  %span.icon-stat
+                    .fa.fa-user.icon-stat
+                     
+                .col-md-9
+                  .icon-stat
+                    Total No. of Procedures
+          .col-md-6
+            .panel.panel-primary
+              .panel-body
+                .icon-stat
+                  - if current_user.is_role?("Doctor")
+                    = current_user.patients.count
+                  - else
+                    = Patient.count
+
+        .col-md-12
+          .col-md-6.center
+            .panel.panel-primary
+              .panel-body
+                .col-md-3
+                  %span.icon-stat 
+                    &#8369
+                    
+                .col-md-9
+                  .icon-stat
+                    Total Amount of Professional Fees
+          .col-md-6
+            .panel.panel-primary
+              .panel-body
+                .icon-stat
+                  - if current_user.is_role?("Doctor")
+                    = number_to_currency( current_user.patients.get_total_billing_amount, precision:  2, unit: "Php " )
+                  - else
+                    = number_to_currency( Patient.get_total_billing_amount, precision:  2, unit: "Php " )
+
+
+        .col-md-12
+          .col-md-6.center
+            .panel.panel-primary
+              .panel-body
+                .col-md-3
+                  %span.icon-stat 
+                    .fa.fa-university
+                    
+                .col-md-9
+                  .icon-stat
+                    Total Amount Collected
+          .col-md-6
+            .panel.panel-primary
+              .panel-body
+                .icon-stat
+                  - if current_user.is_role?("Doctor")
+                    = number_to_currency( current_user.patients.get_total_balance, precision: 2, unit: "Php " )
+                  - else
+                    = number_to_currency( Patient.get_total_balance, precision: 2, unit: "Php " )
+        
+        .col-md-12
+          .col-md-6.center
+            .panel.panel-primary
+              .panel-body
+                .col-md-3
+                  %span.icon-stat 
+                    .fa.fa-clock
+                .col-md-9
+                  .icon-stat
+                    Average DSO
+          .col-md-6
+            .panel.panel-primary
+              .panel-body
+                .icon-stat
+                  30 DAYS
+
+      #see-details-icon-div
+        = link_to patients_path( active_tab: TAB_NAMES[:all_transactions] ), title: "See details" do
+          %span.fa.fa-angle-right.fa-5x
+
+
+  / .panel.panel-default
+  /   .panel-body
+  /     .row
+  /       .col-md-1
+  /       .col-md-3.center
+  /         .panel.panel-primary
+  /           .panel-body
+  /             .icon-stat
+  /               Insurance
+  /       .col-md-4
+  /         .panel.panel-primary
+  /           .panel-body
+  /             .icon-stat
+  /               = number_to_currency( Patient.hmo_total_amount(current_user), precision: 2, unit: "Php " )
+  /       .col-md-3
+  /         .panel.panel-primary
+  /           .panel-body
+  /             .icon-stat
+  /               30 DAYS
+  /       .col-md-1
+
+  /     .row
+  /       .col-md-1
+  /       .col-md-3.center
+  /         .panel.panel-primary
+  /           .panel-body
+  /             .icon-stat
+  /               Philhealth
+  /       .col-md-4
+  /         .panel.panel-primary
+  /           .panel-body
+  /             .icon-stat
+  /               = number_to_currency( Patient.philhealth_total_amount(current_user), precision: 2, unit: "Php " )
+  /       .col-md-3
+  /         .panel.panel-primary
+  /           .panel-body
+  /             .icon-stat
+  /               30 DAYS
+  /       .col-md-1
+
+  /     .row
+  /       .col-md-1
+  /       .col-md-3.center
+  /         .panel.panel-primary
+  /           .panel-body
+  /             .icon-stat
+  /               Promissory Note
+  /       .col-md-4
+  /         .panel.panel-primary
+  /           .panel-body
+  /             .icon-stat
+  /               = number_to_currency( Patient.promissory_note_total_amount(current_user), precision: 2, unit: "Php " )
+  /       .col-md-3
+  /         .panel.panel-primary
+  /           .panel-body
+  /             .icon-stat
+  /               30 DAYS
+  /       .col-md-1

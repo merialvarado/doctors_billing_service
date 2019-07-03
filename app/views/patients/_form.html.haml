@@ -43,8 +43,10 @@
           = f.input :contact_num, label: I18n.t('patient.contact_num')
         .col-md-3
           = f.input :date_admitted, label: I18n.t('patient.date_admitted'), :as => :date_picker
-        .col-md-6
+        .col-md-3
           = f.input :procedure, label: I18n.t('patient.procedure')
+        .col-md-3
+          = f.input :procedure_date, label: I18n.t('patient.procedure_date'), :as => :date_picker
       .form-inputs
         .col-md-3
           = f.input :payment_method, label: I18n.t('patient.payment_method'), collection: ["HMO", "Promissory Note", "Philhealth"]

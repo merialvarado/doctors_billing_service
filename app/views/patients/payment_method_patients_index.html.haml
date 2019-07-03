@@ -1,0 +1,72 @@
+#payment-method-patients
+  - if @active_tab == TAB_NAMES[:active_transactions]
+    .panel.panel-default
+      .panel-body
+        .row
+          .col-md-12
+            %h4.accordion-head
+              = @payment_method
+              - if @hmo.blank?
+                %span= "( #{@patients.count} )"
+
+            - if @hmo.present?
+              .hmo-name
+                = @hmo.name
+                %span= "( #{@patients.count} )"
+
+            %table.table.dataTable.table-bordered.table-hover.index-table.compact
+              %thead
+                %tr
+                  %th Patient Name
+                  %th Procedure Date
+                  %th Surgeon
+                  %th Procedure
+              %tbody
+                - @patients.each do |patient|
+                  %tr
+                    %td
+                      = link_to patient.full_name.titleize, "#patient_show_modal_#{patient.id}", 'data-toggle': 'modal', 'data-target': "#patient_show_modal_#{patient.id}", title: "Click to view Patient Details"
+                      = render partial: 'show_modal', locals: {patient: patient}
+                    %td= patient.procedure_date
+                    %td= patient.surgeon
+                    %td= patient.procedure
+            
+            .pull-right
+              = link_to "Back", active_transactions_index_hmos_path, class: "btn btn-default"
+
+  - if @active_tab == TAB_NAMES[:collectibles]
+    .panel.panel-default
+      .panel-body
+        .row
+          .col-md-12
+            %h4.accordion-head
+              = @payment_method
+              - if @hmo.blank?
+                %span= "( #{number_to_currency( @patients.sum(:balance), precision: 2, unit: 'Php ') } )"
+
+            - if @hmo.present?
+              .hmo-name
+                = @hmo.name
+                %span= "( #{number_to_currency( @patients.sum(:balance), precision: 2, unit: 'Php ') } )"
+
+            %table.table.dataTable.table-bordered.table-hover.index-table.compact
+              %thead
+                %tr
+                  %th Patient Name
+                  %th Procedure Date
+                  %th Surgeon
+                  %th Procedure
+                  %th Balance
+              %tbody
+                - @patients.each do |patient|
+                  %tr
+                    %td
+                      = link_to patient.full_name.titleize, "#patient_show_modal_#{patient.id}", 'data-toggle': 'modal', 'data-target': "#patient_show_modal_#{patient.id}", title: "Click to view Patient Details"
+                      = render partial: 'show_modal', locals: {patient: patient}
+                    %td= patient.date_admitted
+                    %td= patient.surgeon
+                    %td= patient.procedure
+                    %td= number_to_currency( patient.balance, precision: 2, unit: '')
+            
+            .pull-right
+              = link_to "Back", collectibles_index_hmos_path, class: "btn btn-default"

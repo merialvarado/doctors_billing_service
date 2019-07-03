@@ -1,0 +1,51 @@
+.row
+  .col-md-12
+    = render "form_filter"
+
+
+.panel.panel-default
+  .panel-body
+    .row
+      .col-md-12
+        .row
+          .col-md-12
+            %h4.accordion-head 
+              INSURANCE COMPANIES
+              %span.pull-right
+                = "Total: #{number_to_currency( @hmo_total_amount, precision: 2, unit: 'Php ') }"
+        .panel-group#accordion-hmo
+          - @hmos.each do |hmo|
+            .panel.panel-default
+              .panel-heading
+                .panel-title
+                  = link_to hmo.name, payment_method_patients_index_patients_path(hmo_id: hmo.id, doctor_id: @doctor_id, hospital_ids: @hospital_ids, date: @date, active_tab: TAB_NAMES[:collectibles])
+                  %span{"style" => "color:red"}= "( #{number_to_currency(@patients.where(hmo_id: hmo.id).sum(:balance), precision: 2, unit: 'Php ' ) } )"
+
+      .col-md-12
+        .row
+          .col-md-12
+            %h4.accordion-head 
+              PHILHEALTH
+              %span.pull-right
+                = "Total: #{@philhealth_total_amount}"
+        .panel-group#accordion-hmo
+          .panel.panel-default
+            .panel-heading
+              .panel-title
+                = link_to Patient::PAYMENT_METHOD[:philhealth], payment_method_patients_index_patients_path(payment_method: Patient::PAYMENT_METHOD[:philhealth], doctor_id: @doctor_id, hospital_ids: @hospital_ids, date: @date, active_tab: TAB_NAMES[:collectibles])
+                %span{"style" => "color:red"}= "( #{number_to_currency( @philhealth_total_amount, precision: 2, unit: 'Php ') } )"
+
+
+      .col-md-12
+        .row
+          .col-md-12
+            %h4.accordion-head 
+              PROMISSORY NOTE
+              %span.pull-right
+                = "Total: #{@promissory_note_total_amount}"
+        .panel-group#accordion-hmo
+          .panel.panel-default
+            .panel-heading
+              .panel-title
+                = link_to Patient::PAYMENT_METHOD[:promissory_note], payment_method_patients_index_patients_path(payment_method: Patient::PAYMENT_METHOD[:promissory_note], doctor_id: @doctor_id, hospital_ids: @hospital_ids, date: @date, active_tab: TAB_NAMES[:collectibles])
+                %span{"style" => "color:red"}= "( #{number_to_currency( @promissory_note_total_amount, precision: 2, unit: 'Php ') } )"

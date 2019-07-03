@@ -170,6 +170,7 @@ en:
     payment_method: "Payment Method"
     csv_file: "CSV File"
     upload_patient_list: "Upload Patient List"
+    procedure_date: "Procedure Date"
 
   hospital: 
     hospital: "Hospital"  

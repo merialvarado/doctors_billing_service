@@ -42,6 +42,86 @@ class HmosController < ApplicationController
     @promissory_note_patients.paginate(page: params[:page], per_page: 10)
   end
 
+  def all_transactions_index
+  end
+
+  def active_transactions_index
+    @hospitals = current_user.is_role?("Doctor") ? Hospital.where(:id => Patient.where(:doctor_id => current_user).pluck(:hospital_id)).order(:name) : Hospital.order(:name)
+    @hmos = Hmo
+    @hospital_ids = []
+    @date = Date.today
+    @doctor_id = nil
+
+    if params[:search].present?
+      @hospital_ids = [params[:search][:hospital]] unless params[:search][:hospital].blank?
+      @date = params[:search][:date] unless params[:search][:date].blank?
+    end
+
+    if @hospital_ids.empty?
+      @hospital_ids = current_user.is_role?("Doctor") ? [current_user.hospital_id] : Hospital.pluck(:id)
+    end
+    
+    if current_user.is_role?("Doctor")
+      @doctor_id = current_user.id
+      @patients = Patient.where("doctor_id = ? AND hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", current_user.id, @hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], @date)
+    else
+      @patients = Patient.where("hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", @hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], @date)
+    end
+
+    # HMO 
+    hmo_ids = @patients.pluck(:hmo_id)
+    @hmos = Hmo.where(id: hmo_ids).order(:name)
+    @hmo_total_count = @patients.where(payment_method: Patient::PAYMENT_METHOD[:hmo]).uniq.count
+    #@hmos.paginate(page: params[:page], per_page: 1)
+
+    #PHILHEALTH
+    @philhealth_patients = @patients.where(payment_method: Patient::PAYMENT_METHOD[:philhealth])
+    @philhealth_total_count = @philhealth_patients.uniq.count
+    #@philhealth_patients.paginate(page: params[:page], per_page: 10)
+
+    #PROMISSORY NOTE
+    @promissory_note_patients = @patients.where(payment_method: Patient::PAYMENT_METHOD[:promissory_note])
+    @promissory_note_total_count = @promissory_note_patients.uniq.count
+    #@promissory_note_patients.paginate(page: params[:page], per_page: 10)
+  end
+
+  def collectibles_index
+    @hospitals = current_user.is_role?("Doctor") ? Hospital.where(:id => Patient.where(:doctor_id => current_user).pluck(:hospital_id)).order(:name) : Hospital.order(:name)
+    @hmos = Hmo
+    @hospital_ids = []
+    @date = Date.today
+    @doctor_id = nil
+
+    if params[:search].present?
+      @hospital_ids = [params[:search][:hospital]] unless params[:search][:hospital].blank?
+      @date = params[:search][:date] unless params[:search][:date].blank?
+    end
+
+    if @hospital_ids.empty?
+      @hospital_ids = current_user.is_role?("Doctor") ? [current_user.hospital_id] : Hospital.pluck(:id)
+    end
+    
+    if current_user.is_role?("Doctor")
+      @doctor_id = current_user.id
+      @patients = Patient.where("doctor_id = ? AND hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", current_user.id, @hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], @date)
+    else
+      @patients = Patient.where("hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", @hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], @date)
+    end
+
+    # HMO 
+    hmo_ids = @patients.pluck(:hmo_id)
+    @hmos = Hmo.where(id: hmo_ids).order(:name)
+    @hmo_total_amount = @patients.where(payment_method: Patient::PAYMENT_METHOD[:hmo]).sum(:balance)
+
+    #PHILHEALTH
+    @philhealth_patients = @patients.where(payment_method: Patient::PAYMENT_METHOD[:philhealth])
+    @philhealth_total_amount = @philhealth_patients.sum(:balance)
+
+    #PROMISSORY NOTE
+    @promissory_note_patients = @patients.where(payment_method: Patient::PAYMENT_METHOD[:promissory_note])
+    @promissory_note_total_amount = @promissory_note_patients.sum(:balance)
+  end
+
   # Loads the details of a hmo record.
   #   GET /hmos/1
   #   GET /hmos/1.json

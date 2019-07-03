@@ -1,0 +1,19 @@
+- if user_signed_in?
+  #subheader 
+    .row
+      .col-md-12
+        .page-header
+          %h3
+            PSS Tracking Report
+            .pull-right
+              - if can? :create, Patient
+                = link_to new_patient_path, class: "btn btn-primary" do
+                  %span.fa.fa-plus
+                  New Patient
+
+    .row
+      .col-md-12
+        %ul.nav.nav-tabs
+          = tab_creator("Active Transactions", active_transactions_index_hmos_path)
+          = tab_creator("Collectibles", collectibles_index_hmos_path)
+          = tab_creator("All Transactions", all_transactions_index_hmos_path)

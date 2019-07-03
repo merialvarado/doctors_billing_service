@@ -35,6 +35,35 @@ class PatientsController < ApplicationController
     @patients = @patients.paginate(page: params[:page], per_page: 10)
   end
 
+  def payment_method_patients_index
+    hmo_id = params[:hmo_id]
+    doctor_id = params[:doctor_id]
+    hospital_ids = params[:hospital_ids]
+    date = params[:date]
+    @payment_method = ""
+    @patients = []
+    @active_tab = params[:active_tab]
+
+    unless hmo_id.blank?
+      @hmo = Hmo.find(hmo_id)
+      @payment_method = "INSURANCE COMPANIES"
+      unless doctor_id.blank?
+        @patients = Patient.where("doctor_id = ? AND hmo_id = ? AND hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", doctor_id, hmo_id, hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], date)
+      else
+        @patients = Patient.where("hmo_id = ? AND hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", hmo_id, hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], date)
+      end
+
+    else
+      @payment_method = params[:payment_method]
+
+      unless doctor_id.blank?
+        @patients = Patient.where("doctor_id = ? AND payment_method = ? AND hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", doctor_id, @payment_method, hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], date)
+      else
+        @patients = Patient.where("payment_method = ? AND hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", @payment_method, hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], date)
+      end
+    end
+  end
+
   # Loads the details of a patient record.
   #   GET /patients/1
   #   GET /patients/1.json
@@ -176,7 +205,8 @@ class PatientsController < ApplicationController
         :surgeon,
         :remarks,
         :state,
-        :payment_method
+        :payment_method,
+        :procedure_date
       )
     end
 

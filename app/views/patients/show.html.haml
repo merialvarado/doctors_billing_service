@@ -69,8 +69,12 @@
               = @patient.doctor.full_name rescue nil
             %th
               = I18n.t('patient.hospital')
-            %td{colspan: 3}
+            %td
               = @patient.hospital.name rescue nil
+            %th
+              = I18n.t('patient.patient_num')
+            %td
+              = @patient.patient_num
           %tr
             %th
               = I18n.t('patient.billing_amount')
@@ -86,10 +90,6 @@
               = @patient.payment_status.upcase rescue nil
           %tr
             %th
-              = I18n.t('patient.patient_num')
-            %td
-              = @patient.patient_num
-            %th
               = I18n.t('patient.date_admitted')
             %td
               = @patient.date_admitted
@@ -97,6 +97,10 @@
               = I18n.t('patient.procedure')
             %td
               = @patient.procedure
+            %th
+              = I18n.t('patient.procedure_date')
+            %td
+              = @patient.procedure_date
           %tr
             %th
               = I18n.t('patient.surgeon')

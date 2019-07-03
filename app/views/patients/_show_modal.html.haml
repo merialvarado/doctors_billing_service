@@ -7,13 +7,7 @@
             &times
         %h4{class: "modal-title", id: "myModalLabel"}
           = "Patient Record: #{patient.full_name.upcase}"
-          - if patient.patient_picture.present?
-            .pull-right
-              = link_to download_image_patient_path(patient), class: "btn btn-outline btn-primary btn-sm" do
-                %span
-                  .fa.fa-download
-                  Download Picture
-              &nbsp;&nbsp;
+
       .modal-body
         %table.table.table-striped.table-bordered.table-hover
           %tbody
@@ -31,12 +25,12 @@
               %th
                 = I18n.t('patient.billing_amount')
               %td
-                = patient.billing_amount
+                = number_to_currency( patient.billing_amount, precision: 2, unit: "" )
             %tr
               %th
                 = I18n.t('patient.balance')
               %td
-                = patient.balance
+                = number_to_currency( patient.balance, precision: 2, unit: "" )
             %tr
               %th
                 = I18n.t('patient.payment_status')
@@ -49,9 +43,9 @@
                 = patient.patient_num
             %tr
               %th
-                = I18n.t('patient.date_admitted')
+                = I18n.t('patient.procedure_date')
               %td
-                = patient.date_admitted
+                = patient.procedure_date
             %tr
               %th
                 = I18n.t('patient.procedure')
@@ -95,5 +89,16 @@
                     %td= payment.check_num
                     %td= payment.check_date
                     %td= payment.bank
-                    %td= payment.amount
+                    %td= number_to_currency( payment.amount, precision: 2, unit: "" )
+
+        %br 
+        .row
+          .col-md-12
+            - if patient.patient_picture.present?
+              = image_tag patient.patient_picture.url, height: 300, width: 150
+              %br
+              = link_to download_image_patient_path(patient), class: "btn btn-outline btn-primary btn-sm" do
+                %span
+                  .fa.fa-download
+                  Download
                   

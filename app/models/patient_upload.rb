@@ -27,7 +27,7 @@ class PatientUpload < ApplicationRecord
           :payment_method => row[4],
           :surgeon => row[5],
           :procedure => row[6],
-          #:procedure_date => row[7],
+          :procedure_date => row[7],
           :billing_amount => row[8],
           :remarks => row[9]
         }

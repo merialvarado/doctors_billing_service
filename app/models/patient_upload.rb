@@ -33,7 +33,7 @@ class PatientUpload < ApplicationRecord
         }
 
         # Process Doctor info
-        doctor = User.where(:full_name => patient_info[:doctor]).first
+        doctor = User.where("LOWER(full_name) = ?", patient_info[:doctor].downcase).first
         if doctor.nil?
           errors << "ROW # #{row_counter}: Doctor is not yet registered to the system"
           return 400, errors
@@ -42,7 +42,7 @@ class PatientUpload < ApplicationRecord
         end
 
         # Process Hospital info
-        hospital = Hospital.where(:name => patient_info[:hospital]).first
+        hospital = Hospital.where("LOWER(name) = ?", patient_info[:hospital].downcase).first
         hospital = Hospital.create(:name => patient_info[:hospital]) if hospital .nil?
         patient_info[:hospital] = hospital
 
@@ -54,7 +54,7 @@ class PatientUpload < ApplicationRecord
           payment_method = "Philhealth"
         else
           payment_method = "HMO"
-          hmo = Hmo.where(:name => patient_info[:payment_method]).first
+          hmo = Hmo.where("LOWER(name) = ?", patient_info[:payment_method].downcase).first
           hmo = Hmo.create(:name => patient_info[:payment_method]) if hmo.nil?
           patient_info[:hmo] = hmo
         end

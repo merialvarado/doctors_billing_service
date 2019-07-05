@@ -19,4 +19,5 @@
           = tab_creator("Active Transactions", active_transactions_index_hmos_path)
           = tab_creator("Collectibles", collectibles_index_hmos_path)
           = tab_creator("All Transactions", all_transactions_index_hmos_path)
-          = tab_creator("System Settings", system_settings_users_path)
+          - unless current_user.is_role?("Doctor")
+            = tab_creator("System Settings", system_settings_users_path)

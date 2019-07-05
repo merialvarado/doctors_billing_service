@@ -3,7 +3,7 @@
     - if f.object.state == "picture_uploaded"
       .form-inputs
         .col-md-12
-          = f.input :patient_picture, label: I18n.t('patient.patient_picture'), as: :file, input_html: {accept: "image/*", capture: "camera"}
+          = f.input :patient_picture, label: I18n.t('patient.upload_photo'), as: :file, input_html: {accept: "image/*", capture: "camera"}
         .col-md-12
           %img{id:"img_prev", src:"#", alt:"Patient Record"}
       .form-iputs

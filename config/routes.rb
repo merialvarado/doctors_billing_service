@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users, :skip => [:registrations]
 
-  resources :users
+  resources :users do
+    collection do
+      get :system_settings
+    end
+  end
   authenticated :user do
     root :to => 'hmos#all_transactions_index', :as => :authenticated_root
   end

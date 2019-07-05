@@ -1,13 +1,13 @@
 - if @patient.state == "picture_uploaded"
-  .page-header
-    %h1
-      = I18n.t('patient.patient_upload')
-      %small= I18n.t('details')
+  / .page-header
+  /   %h1
+  /     = I18n.t('patient.patient_upload')
+  /     %small= I18n.t('details')
 
-      - if (can? :edit, @patient) && (@patient.state.upcase == "PICTURE_UPLOADED" rescue false )
-        = link_to edit_patient_path(@patient), :class => "btn btn-primary" do
-          %span.fa.fa-plus
-          Create Patient Record
+  /     - if (can? :edit, @patient) && (@patient.state.upcase == "PICTURE_UPLOADED" rescue false )
+  /       = link_to edit_patient_path(@patient), :class => "btn btn-primary" do
+  /         %span.fa.fa-plus
+  /         Create Patient Record
 
   .panel.panel-primary
     .panel-heading
@@ -46,7 +46,7 @@
             %td
               = @patient.remarks
 
-  = link_to uploaded_patients_index_patients_path, :class => "btn btn-default" do
+  = link_to uploaded_patients_index_patients_path(active_tab: TAB_NAMES[:uploaded_transactions]), :class => "btn btn-default" do
     %span.fa.fa-list
     = I18n.t('back')
 

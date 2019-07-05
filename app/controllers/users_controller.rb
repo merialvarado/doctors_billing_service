@@ -179,6 +179,9 @@ class UsersController < ApplicationController
     end
   end
 
+  def system_settings
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

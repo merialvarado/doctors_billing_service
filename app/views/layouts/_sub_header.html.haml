@@ -3,13 +3,11 @@
     .row
       .col-md-12
         .page-header
-          %h3
-            PSS Tracking Report
-            .pull-right
-              - if can? :create, Patient
-                = link_to new_patient_path, class: "btn btn-primary" do
-                  %span.fa.fa-plus
-                  New Patient
+          PSS Tracking Report
+          - if can? :create, Patient
+            = link_to new_patient_path, class: "btn btn-primary" do
+              %span.fa.fa-plus
+              New Patient
 
     .row
       .col-md-12

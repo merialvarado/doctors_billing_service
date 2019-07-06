@@ -1,16 +1,17 @@
-%table.table.dataTable.table-bordered.table-hover.index-table.compact
-  %thead
-    %tr
-      %th Patient Name
-      %th Procedure Date
-      %th Surgeon
-      %th Procedure
-      %th Balance
-  %tbody
-    - hmo.patients.where.not(:balance => 0).each do |patient|
+.table-responsive
+  %table.table.dataTable.table-bordered.table-hover.index-table.compact
+    %thead
       %tr
-        %td= patient.full_name.titleize
-        %td= patient.date_admitted
-        %td= patient.surgeon
-        %td= patient.procedure
-        %td= number_to_currency( patient.balance, precision: 2, unit: "")
+        %th Patient Name
+        %th Procedure Date
+        %th Surgeon
+        %th Procedure
+        %th Balance
+    %tbody
+      - hmo.patients.where.not(:balance => 0).each do |patient|
+        %tr
+          %td= patient.full_name.titleize
+          %td= patient.date_admitted
+          %td= patient.surgeon
+          %td= patient.procedure
+          %td= number_to_currency( patient.balance, precision: 2, unit: "")

@@ -15,43 +15,44 @@
     = render "form_filter"
 .row
   .col-md-12
-    %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
-      %thead
-        %tr
-          %th Name
-          - unless current_user.is_role?("Doctor")
-            %th Attending Doctor
-          %th Surgeon
-          %th Hospital
-          %th Payment Method
-          %th Payment Status
-          %th Billing Amount
-          %th Balance
-          %th Procedure Date
-          %th Aging
-          - unless current_user.is_role?("Doctor")
-            %th Actions
-          
-      %tbody
-        - @patients.each do |patient|
+    .table-responsive
+      %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
+        %thead
           %tr
-            %td
-              = link_to patient.full_name.titleize, "#patient_show_modal_#{patient.id}", 'data-toggle': 'modal', 'data-target': "#patient_show_modal_#{patient.id}", title: "Click to view Patient Details"
-              = render partial: 'show_modal', locals: {patient: patient}
+            %th Name
             - unless current_user.is_role?("Doctor")
-              %td= patient.doctor.full_name.titleize rescue nil
-            %td= patient.surgeon.titleize
-            %td= patient.hospital.name rescue nil
-            %td= patient.payment_method_with_details
-            %td= payment_status_viewer(patient.payment_status)
-            %td= number_to_currency( patient.billing_amount, precision: 2, unit: "")
-            %td= number_to_currency( patient.balance, precision: 2, unit: "")
-            %td= patient.procedure_date
-            %td= patient.aging
+              %th Attending Doctor
+            %th Surgeon
+            %th Hospital
+            %th Payment Method
+            %th Payment Status
+            %th Billing Amount
+            %th Balance
+            %th Procedure Date
+            %th Aging
             - unless current_user.is_role?("Doctor")
+              %th Actions
+            
+        %tbody
+          - @patients.each do |patient|
+            %tr
               %td
-                = edit_patient_buttons_helper(patient)
-                = check_buttons_helper(patient)
+                = link_to patient.full_name.titleize, "#patient_show_modal_#{patient.id}", 'data-toggle': 'modal', 'data-target': "#patient_show_modal_#{patient.id}", title: "Click to view Patient Details"
+                = render partial: 'show_modal', locals: {patient: patient}
+              - unless current_user.is_role?("Doctor")
+                %td= patient.doctor.full_name.titleize rescue nil
+              %td= patient.surgeon.titleize
+              %td= patient.hospital.name rescue nil
+              %td= patient.payment_method_with_details
+              %td= payment_status_viewer(patient.payment_status)
+              %td= number_to_currency( patient.billing_amount, precision: 2, unit: "")
+              %td= number_to_currency( patient.balance, precision: 2, unit: "")
+              %td= patient.procedure_date
+              %td= patient.aging
+              - unless current_user.is_role?("Doctor")
+                %td
+                  = edit_patient_buttons_helper(patient)
+                  = check_buttons_helper(patient)
 
 = will_paginate @patients
 

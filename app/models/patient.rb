@@ -5,8 +5,10 @@ class Patient < ApplicationRecord
 	belongs_to :doctor, class_name: "User", foreign_key: "doctor_id"
 	has_many :payments
 	belongs_to :hmo, optional: true
+	belongs_to :surgeon, optional: true
+	belongs_to :procedure_type, optional: true
 
-	validates :patient_picture, :procedure, :surgeon, :doctor_id, presence: true, if: lambda{|o| o.state == "picture_uploaded" }
+	validates :patient_picture, :procedure_type_id, :surgeon_id, :doctor_id, presence: true, if: lambda{|o| o.state == "picture_uploaded" }
 	validates :first_name, :surname, :date_admitted, :hospital_id, :payment_method, presence: true, if: lambda{|o| o.state == "record_created" }
 	validates :hmo_id, presence: true, if: lambda{|o| o.payment_method == "HMO"}
 	validates :billing_amount, numericality: { greater_than_or_equal_to: 0 }

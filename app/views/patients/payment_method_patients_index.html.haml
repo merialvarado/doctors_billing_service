@@ -28,8 +28,8 @@
                       = link_to patient.full_name.titleize, "#patient_show_modal_#{patient.id}", 'data-toggle': 'modal', 'data-target': "#patient_show_modal_#{patient.id}", title: "Click to view Patient Details"
                       = render partial: 'show_modal', locals: {patient: patient}
                     %td= patient.procedure_date
-                    %td= patient.surgeon
-                    %td= patient.procedure
+                    %td= patient.surgeon.full_name.titleize rescue nil
+                    %td= patient.procedure_type.name rescue nil
             
             .pull-right
               = link_to "Back", active_transactions_index_hmos_path, class: "btn btn-default"
@@ -64,8 +64,8 @@
                       = link_to patient.full_name.titleize, "#patient_show_modal_#{patient.id}", 'data-toggle': 'modal', 'data-target': "#patient_show_modal_#{patient.id}", title: "Click to view Patient Details"
                       = render partial: 'show_modal', locals: {patient: patient}
                     %td= patient.date_admitted
-                    %td= patient.surgeon
-                    %td= patient.procedure
+                    %td= patient.surgeon.full_name.titleize rescue nil
+                    %td= patient.procedure_type.name rescue nil
                     %td= number_to_currency( patient.balance, precision: 2, unit: '')
             
             .pull-right

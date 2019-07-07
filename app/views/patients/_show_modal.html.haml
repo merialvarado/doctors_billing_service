@@ -50,12 +50,12 @@
               %th
                 = I18n.t('patient.procedure')
               %td
-                = patient.procedure
+                = patient.procedure_type.name rescue nil
             %tr
               %th
                 = I18n.t('patient.surgeon')
               %td
-                = patient.surgeon
+                = patient.surgeon.full_name.titleize rescue nil
             %tr
               %th
                 = I18n.t('patient.payment_method')

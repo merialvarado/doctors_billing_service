@@ -41,7 +41,7 @@
                 = render partial: 'show_modal', locals: {patient: patient}
               - unless current_user.is_role?("Doctor")
                 %td= patient.doctor.full_name.titleize rescue nil
-              %td= patient.surgeon.titleize
+              %td= patient.surgeon.full_name.titleize rescue nil
               %td= patient.hospital.name rescue nil
               %td= patient.payment_method_with_details
               %td= payment_status_viewer(patient.payment_status)

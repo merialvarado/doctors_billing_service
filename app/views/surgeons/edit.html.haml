@@ -1,0 +1,6 @@
+%h1.page-header 
+  = I18n.t('surgeon.surgeon')
+  %small= I18n.t('edit')
+.panel.panel-default
+  .panel-heading= I18n.t('surgeon.surgeon') + ' ' + I18n.t('details')
+  = render 'form'

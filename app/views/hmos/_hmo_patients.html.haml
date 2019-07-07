@@ -12,6 +12,6 @@
         %tr
           %td= patient.full_name.titleize
           %td= patient.date_admitted
-          %td= patient.surgeon
-          %td= patient.procedure
+          %td= patient.surgeon.full_name rescue nil
+          %td= patient.procedure_type.name rescue nil
           %td= number_to_currency( patient.balance, precision: 2, unit: "")

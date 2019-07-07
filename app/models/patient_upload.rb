@@ -26,7 +26,7 @@ class PatientUpload < ApplicationRecord
           :surname => row[3].split(", ").first,
           :payment_method => row[4],
           :surgeon => row[5],
-          :procedure => row[6],
+          :procedure_type => row[6],
           :procedure_date => row[7],
           :billing_amount => row[8],
           :remarks => row[9]
@@ -43,7 +43,7 @@ class PatientUpload < ApplicationRecord
 
         # Process Hospital info
         hospital = Hospital.where("LOWER(name) = ?", patient_info[:hospital].downcase).first
-        hospital = Hospital.create(:name => patient_info[:hospital]) if hospital .nil?
+        hospital = Hospital.create(:name => patient_info[:hospital]) if hospital.nil?
         patient_info[:hospital] = hospital
 
         # Process payment method
@@ -59,6 +59,16 @@ class PatientUpload < ApplicationRecord
           patient_info[:hmo] = hmo
         end
         patient_info[:payment_method] = payment_method
+
+        # Process Procedure info
+        procedure_type = ProcedureType.where("LOWER(name) = ?", patient_info[:procedure_type].downcase).first
+        procedure_type = ProcedureType.create(:name => patient_info[:procedure_type]) if procedure_type.nil?
+        patient_info[:procedure_type] = procedure_type
+
+        # Process Surgeon info
+        surgeon = Surgeon.where("LOWER(full_name) = ?", patient_info[:surgeon].downcase).first
+        surgeon = Surgeon.create(:full_name => patient_info[:surgeon]) if surgeon.nil?
+        patient_info[:surgeon] = surgeon
 
         # Process billing amount
         patient_info[:billing_amount] = BigDecimal.new("0") if patient_info[:billing_amount].blank?

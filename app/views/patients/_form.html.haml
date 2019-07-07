@@ -8,10 +8,10 @@
           %img{id:"img_prev", src:"#", alt:"Patient Record"}
       .form-iputs
         .col-md-12
-          = f.input :procedure, label: I18n.t('patient.procedure')
+          = f.input :procedure_type_id, collection: ProcedureType.order(:name), label: I18n.t('patient.procedure')
       .form-iputs
         .col-md-12
-          = f.input :surgeon, label: I18n.t('patient.surgeon')
+          = f.input :surgeon_id, collection: Surgeon.order(:full_name), label: I18n.t('patient.surgeon'), label_method: :full_name
       .form-inputs
         .col-md-12
           = f.input :remarks, label: I18n.t('patient.remarks')
@@ -44,7 +44,7 @@
         .col-md-3
           = f.input :date_admitted, label: I18n.t('patient.date_admitted'), :as => :date_picker
         .col-md-3
-          = f.input :procedure, label: I18n.t('patient.procedure')
+          = f.input :procedure_type_id, collection: ProcedureType.order(:name), label: I18n.t('patient.procedure')
         .col-md-3
           = f.input :procedure_date, label: I18n.t('patient.procedure_date'), :as => :date_picker
       .form-inputs

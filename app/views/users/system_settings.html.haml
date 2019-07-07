@@ -9,5 +9,9 @@
             %li= link_to "HMO List", hmos_path(active_tab: TAB_NAMES[:system_settings]), class: "btn btn-default btn-lg"
           - if can? :index, Hospital
             %li= link_to "Hospital List", hospitals_path(active_tab: TAB_NAMES[:system_settings]), class: "btn btn-default btn-lg"
+          - if can? :index, Surgeon
+            %li= link_to "Surgeon List", surgeons_path(active_tab: TAB_NAMES[:system_settings]), class: "btn btn-default btn-lg"
+          - if can? :index, ProcedureType
+            %li= link_to "Procedure Type List", procedure_types_path(active_tab: TAB_NAMES[:system_settings]), class: "btn btn-default btn-lg"
           - if can? :index, PatientUpload
             %li= link_to I18n.t('patient_upload.patient_upload'), patient_uploads_path(active_tab: TAB_NAMES[:system_settings]), class: "btn btn-default btn-lg"

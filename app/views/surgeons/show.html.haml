@@ -1,0 +1,22 @@
+%h1.page-header
+  = I18n.t('surgeon.surgeon')
+  %small= I18n.t('details')
+.panel.panel-primary
+  .panel-body
+    %table.table.table-striped.table-bordered.table-hover
+      %tbody
+        %tr
+          %th
+            = I18n.t('surgeon.full_name')
+          %td
+            = @surgeon.full_name.titleize
+
+
+- if can? :edit, @surgeon
+  = link_to edit_surgeon_path(@surgeon, active_tab: TAB_NAMES[:system_settings]), :class => "btn btn-primary" do
+    %span.fa.fa-pencil
+    = I18n.t('edit')
+= link_to surgeons_path(active_tab: TAB_NAMES[:system_settings]), :class => "btn btn-default" do
+  %span.fa.fa-list
+  = I18n.t('back')
+

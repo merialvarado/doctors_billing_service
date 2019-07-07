@@ -104,6 +104,10 @@ en:
     create_hospital: "Create Hospital"
     update_hmo: "Update HMO"
     create_hmo: "Create HMO"
+    update_surgeon: "Update Surgeon"
+    create_surgeon: "Create Surgeon"
+    update_procedure_type: "Update Procedure Type"
+    create_procedure_type: "Create Procedure Type"
     make_payment: "Make Payment"
     upload: "Upload"
 
@@ -202,3 +206,17 @@ en:
     patient_upload: "Patient List Upload"
     uploaded_by: "Uploaded By"
     state: "State"
+
+  surgeon: 
+    surgeon: "Surgeon"  
+    edit_surgeon: "Edit Surgeon"
+    back_surgeon_list: "Back to Surgeon List"
+    update_surgeon: "Update Surgeon"
+    full_name: "Full Name"
+
+  procedure_type: 
+    procedure_type: "Procedure Type"  
+    edit_procedure_type: "Edit Procedure Type"
+    back_procedure_type_list: "Back to Procedure Type List"
+    update_procedure_type: "Update Procedure Type"
+    name: "Name"

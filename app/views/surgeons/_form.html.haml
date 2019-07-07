@@ -1,0 +1,14 @@
+.panel-body
+  = simple_form_for @surgeon do |f|
+    .form-inputs
+      .col-md-6
+        = f.input :full_name, label: I18n.t('surgeon.full_name')
+
+    .col-md-12
+      .form-actions
+        - if @surgeon.new_record?
+          = f.button :submit, I18n.t('actions.create_surgeon'), :class => "btn btn-primary"
+          = link_to 'Cancel', surgeons_path(active_tab: TAB_NAMES[:system_settings]), :class => "btn btn-default"
+        - else
+          = f.button :submit, I18n.t('actions.update_surgeon'), :class => "btn btn-primary"
+          = link_to 'Cancel', surgeon_path(@surgeon, active_tab: TAB_NAMES[:system_settings]), :class => "btn btn-default"

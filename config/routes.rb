@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     end
   end
   authenticated :user do
-    root :to => 'hmos#all_transactions_index', :as => :authenticated_root
+    root :to => 'hmos#active_transactions_index', :as => :authenticated_root
   end
   root :to => redirect('/users/sign_in')
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -38,4 +38,6 @@ Rails.application.routes.draw do
       put :process_csv
     end
   end
+  resources :surgeons
+  resources :procedure_types
 end

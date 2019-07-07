@@ -29,8 +29,8 @@
             %td= patient.created_at
             - if !current_user.is_role?("Doctor")
               %td= patient.doctor.full_name rescue ""
-            %td= patient.procedure
-            %td= patient.surgeon
+            %td= patient.procedure_type.name rescue nil
+            %td= patient.surgeon.full_name.titleize rescue nil
             %td= patient.remarks
             %td
               = link_to patient_path(patient), class: "btn btn-sm btn-primary btn-outline", title: "View Details", "data-toggle": "tooltip"  do

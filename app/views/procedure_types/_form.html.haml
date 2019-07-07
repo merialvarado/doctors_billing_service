@@ -1,0 +1,14 @@
+.panel-body
+  = simple_form_for @procedure_type do |f|
+    .form-inputs
+      .col-md-6
+        = f.input :name, label: I18n.t('procedure_type.name')
+
+    .col-md-12
+      .form-actions
+        - if @procedure_type.new_record?
+          = f.button :submit, I18n.t('actions.create_procedure_type'), :class => "btn btn-primary"
+          = link_to 'Cancel', procedure_types_path(active_tab: TAB_NAMES[:system_settings]), :class => "btn btn-default"
+        - else
+          = f.button :submit, I18n.t('actions.update_procedure_type'), :class => "btn btn-primary"
+          = link_to 'Cancel', procedure_type_path(@procedure_type, active_tab: TAB_NAMES[:system_settings]), :class => "btn btn-default"

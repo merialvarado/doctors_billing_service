@@ -78,15 +78,15 @@
             %th
               = I18n.t('patient.billing_amount')
             %td
-              = @patient.billing_amount
+              = number_to_currency( @patient.billing_amount, precision: 2, unit: "" )
             %th
               = I18n.t('patient.balance')
             %td
-              = @patient.balance
+              = number_to_currency( @patient.balance, precision: 2, unit: "" )
             %th
               = I18n.t('patient.payment_status')
             %td
-              = @patient.payment_status.upcase rescue nil
+              = payment_status_viewer(@patient.payment_status.upcase) rescue nil
           %tr
             %th
               = I18n.t('patient.date_admitted')

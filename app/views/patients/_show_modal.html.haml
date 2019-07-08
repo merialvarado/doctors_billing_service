@@ -91,14 +91,21 @@
                     %td= payment.bank
                     %td= number_to_currency( payment.amount, precision: 2, unit: "" )
 
-        %br 
+        - if patient.patient_picture.present?
+          %br 
+          .row
+            .col-md-12
+              .panel.panel-default.panel-body
+                = image_tag patient.patient_picture.url, height: 300, width: 150
+                %br
+                = link_to download_image_patient_path(patient), class: "btn btn-outline btn-primary btn-sm" do
+                  %span
+                    .fa.fa-download
+                    Download
+
+      .modal-footer
         .row
           .col-md-12
-            - if patient.patient_picture.present?
-              = image_tag patient.patient_picture.url, height: 300, width: 150
-              %br
-              = link_to download_image_patient_path(patient), class: "btn btn-outline btn-primary btn-sm" do
-                %span
-                  .fa.fa-download
-                  Download
+            - if can? :edit, patient
+              = link_to "Edit", edit_patient_path(patient), class: "btn btn-primary btn-outline col-md-6"
                   

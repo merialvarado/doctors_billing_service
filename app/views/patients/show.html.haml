@@ -13,38 +13,39 @@
     .panel-heading
       Record Details
     .panel-body
-      %table.table.table-striped.table-bordered.table-hover
-        %tbody
-          %tr
-            %td{colspan: 2}
-              - if @patient.patient_picture.present?
-                = image_tag @patient.patient_picture.url, height: 350, width: 250
-                %br
-                = link_to download_image_patient_path(@patient), class: "btn btn-outline btn-primary btn-sm" do
-                  %span
-                    .fa.fa-download
-                    Download
-          - unless current_user.is_role?("Doctor")
+      .table-responsive
+        %table.table.table-striped.table-bordered.table-hover
+          %tbody
+            %tr
+              %td{colspan: 2}
+                - if @patient.patient_picture.present?
+                  = image_tag @patient.patient_picture.url, height: 350, width: 250
+                  %br
+                  = link_to download_image_patient_path(@patient), class: "btn btn-outline btn-primary btn-sm" do
+                    %span
+                      .fa.fa-download
+                      Download
+            - unless current_user.is_role?("Doctor")
+              %tr
+                %th
+                  = I18n.t('patient.doctor')
+                %td
+                  = @patient.doctor.full_name rescue nil
             %tr
               %th
-                = I18n.t('patient.doctor')
+                = I18n.t('patient.procedure')
               %td
-                = @patient.doctor.full_name rescue nil
-          %tr
-            %th
-              = I18n.t('patient.procedure')
-            %td
-              = @patient.procedure_type.name rescue nil
-          %tr
-            %th
-              = I18n.t('patient.surgeon')
-            %td
-              = @patient.surgeon.full_name.titleize rescue nil
-          %tr
-            %th
-              = I18n.t('patient.remarks')
-            %td
-              = @patient.remarks
+                = @patient.procedure_type.name rescue nil
+            %tr
+              %th
+                = I18n.t('patient.surgeon')
+              %td
+                = @patient.surgeon.full_name.titleize rescue nil
+            %tr
+              %th
+                = I18n.t('patient.remarks')
+              %td
+                = @patient.remarks
 
   = link_to uploaded_patients_index_patients_path(active_tab: TAB_NAMES[:uploaded_transactions]), :class => "btn btn-default" do
     %span.fa.fa-list
@@ -59,76 +60,77 @@
       = @patient.full_name
 
     .panel-body
-      %table.table.table-striped.table-bordered.table-hover
-        %tbody
-          %tr
-            %th
-              = I18n.t('patient.doctor')
-            %td
-              = @patient.doctor.full_name rescue nil
-            %th
-              = I18n.t('patient.hospital')
-            %td
-              = @patient.hospital.name rescue nil
-            %th
-              = I18n.t('patient.patient_num')
-            %td
-              = @patient.patient_num
-          %tr
-            %th
-              = I18n.t('patient.billing_amount')
-            %td
-              = number_to_currency( @patient.billing_amount, precision: 2, unit: "" )
-            %th
-              = I18n.t('patient.balance')
-            %td
-              = number_to_currency( @patient.balance, precision: 2, unit: "" )
-            %th
-              = I18n.t('patient.payment_status')
-            %td
-              = payment_status_viewer(@patient.payment_status.upcase) rescue nil
-          %tr
-            %th
-              = I18n.t('patient.date_admitted')
-            %td
-              = @patient.date_admitted
-            %th
-              = I18n.t('patient.procedure')
-            %td
-              = @patient.procedure_type.name rescue nil
-            %th
-              = I18n.t('patient.procedure_date')
-            %td
-              = @patient.procedure_date
-          %tr
-            %th
-              = I18n.t('patient.surgeon')
-            %td
-              = @patient.surgeon.full_name.titleize rescue nil
-            %th
-              = I18n.t('patient.payment_method')
-            %td
-              = @patient.payment_method_with_details
-            %th
-              = I18n.t('patient.contact_num')
-            %td
-              = @patient.contact_num
-          %tr
-            %th
-              = I18n.t('patient.remarks')
-            %td{colspan:5}
-              = @patient.remarks
-          %tr
-            %th
-              = I18n.t('patient.patient_picture')
-            %td{colspan:5}
-              - if @patient.patient_picture.present?
-                = image_tag @patient.patient_picture.url, height: 900, width: 700
-                %br
-                = link_to download_image_patient_path(@patient), class: "btn btn-outline btn-primary btn-sm" do
-                  %span
-                    .fa.fa-download
-                    Download
+      .table-responsive
+        %table.table.table-striped.table-bordered.table-hover.table-responsive
+          %tbody
+            %tr
+              %th
+                = I18n.t('patient.doctor')
+              %td
+                = @patient.doctor.full_name rescue nil
+              %th
+                = I18n.t('patient.hospital')
+              %td
+                = @patient.hospital.name rescue nil
+              %th
+                = I18n.t('patient.patient_num')
+              %td
+                = @patient.patient_num
+            %tr
+              %th
+                = I18n.t('patient.billing_amount')
+              %td
+                = number_to_currency( @patient.billing_amount, precision: 2, unit: "" )
+              %th
+                = I18n.t('patient.balance')
+              %td
+                = number_to_currency( @patient.balance, precision: 2, unit: "" )
+              %th
+                = I18n.t('patient.payment_status')
+              %td
+                = payment_status_viewer(@patient.payment_status.upcase) rescue nil
+            %tr
+              %th
+                = I18n.t('patient.date_admitted')
+              %td
+                = @patient.date_admitted
+              %th
+                = I18n.t('patient.procedure')
+              %td
+                = @patient.procedure_type.name rescue nil
+              %th
+                = I18n.t('patient.procedure_date')
+              %td
+                = @patient.procedure_date
+            %tr
+              %th
+                = I18n.t('patient.surgeon')
+              %td
+                = @patient.surgeon.full_name.titleize rescue nil
+              %th
+                = I18n.t('patient.payment_method')
+              %td
+                = @patient.payment_method_with_details
+              %th
+                = I18n.t('patient.contact_num')
+              %td
+                = @patient.contact_num
+            %tr
+              %th
+                = I18n.t('patient.remarks')
+              %td{colspan:5}
+                = @patient.remarks
+            %tr
+              %th
+                = I18n.t('patient.patient_picture')
+              %td{colspan:5}
+                - if @patient.patient_picture.present?
+                  = image_tag @patient.patient_picture.url, height: 350, width: 250
+                  %br
+                  = link_to download_image_patient_path(@patient), class: "btn btn-outline btn-primary btn-sm" do
+                    %span
+                      .fa.fa-download
+                      Download
 
 
   - if can? :edit, @patient

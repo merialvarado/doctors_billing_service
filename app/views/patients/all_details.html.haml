@@ -1,0 +1,61 @@
+.row
+  .col-md-12
+    #all-details-filter-div
+      = render "all_details_form_filter"
+
+.row
+  .col-md-12
+    .table-responsive
+      %table.table.table-bordered.table-hover.table-striped
+        %thead
+          %tr
+            %th{style: "width: 155px;"}
+              = I18n.t('patient.anesthesiologist')
+              = sort_link(@q, :doctor)
+            %th{style: "width: 100px"}            
+              = I18n.t('patient.hospital')
+              = sort_link(@q, :hospital)
+            %th{style: "width: 150px;"}
+              = I18n.t('patient.admission_date')
+              = sort_link(@q, :date_admitted)
+            %th
+              = I18n.t('patient.patient_name')
+              = sort_link(@q, :full_name)
+            %th
+              = I18n.t('patient.insurance')
+              = sort_link(@q, :insurance)
+            %th{style: "width: 100px;"}
+              = I18n.t('patient.surgeon')
+              = sort_link(@q, :surgeon)
+            %th
+              = I18n.t('patient.procedure')
+              = sort_link(@q, :procedure_type)
+            %th{style: "width: 140px;"}
+              = I18n.t('patient.procedure_date')
+              = sort_link(@q, :procedure_date)
+            %th{style: "width: 145px;"}
+              = I18n.t('patient.payment_status')
+              = sort_link(@q, :payment_status)
+            %th= I18n.t('actions.actions')
+            
+        %tbody
+          - @patients.each do |patient|
+            %tr
+              %td= patient.doctor.titleize rescue nil
+              %td= patient.hospital
+              %td= patient.date_admitted
+              %td
+                = link_to patient.full_name.titleize, "#patient_show_modal_#{patient.id}", 'data-toggle': 'modal', 'data-target': "#patient_show_modal_#{patient.id}", title: "Click to view Patient Details"
+                = render partial: 'all_detail_show_modal', locals: {patient: patient}
+              %td= patient.insurance
+              %td= patient.surgeon.titleize rescue nil
+              %td= patient.procedure_type
+              %td= patient.procedure_date
+              %td= payment_status_viewer(patient.payment_status)
+              %td
+                - patient_info = Patient.find(patient.id)
+                = edit_patient_buttons_helper(patient_info)
+                = check_buttons_helper(patient_info)
+
+= will_paginate @patients
+        

@@ -15,26 +15,31 @@
     %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
       %thead
         %tr
+          %th #
           %th Upload Date
           - if !current_user.is_role?("Doctor")
-            %th Doctor
+            %th Doctor's Name
           %th Type of Procedure
           %th Surgeon
           %th Remarks
           %th Actions
           
       %tbody
+        - counter = 0
         - @patients.each do |patient|
+          - counter += 1
           %tr
+            %td= counter
             %td= patient.created_at
             - if !current_user.is_role?("Doctor")
               %td= patient.doctor.full_name rescue ""
             %td= patient.procedure_type.name rescue nil
             %td= patient.surgeon.full_name.titleize rescue nil
-            %td= patient.remarks
+            %td= link_to patient.patient_picture.identifier, download_image_patient_path(patient)
             %td
               = link_to patient_path(patient), class: "btn btn-sm btn-primary btn-outline", title: "View Details", "data-toggle": "tooltip"  do
-                %span.fa.fa-eye
+                Show
+                
               %span
               = edit_patient_buttons_helper(patient)
 

@@ -55,6 +55,7 @@ class HmosController < ApplicationController
     if params[:search].present?
       @hospital_ids = [params[:search][:hospital]] unless params[:search][:hospital].blank?
       @date = params[:search][:date] unless params[:search][:date].blank?
+      @doctor_id = params[:search][:doctor] unless params[:search][:doctor].blank?
     end
 
     if @hospital_ids.empty?
@@ -63,10 +64,10 @@ class HmosController < ApplicationController
     
     if current_user.is_role?("Doctor")
       @doctor_id = current_user.id
-      @patients = Patient.where("doctor_id = ? AND hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", current_user.id, @hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], @date)
-    else
-      @patients = Patient.where("hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", @hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], @date)
     end
+
+    @patients = Patient.where("hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", @hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], @date)
+    @patients = @patients.where(:doctor_id => @doctor_id) unless @doctor_id.nil?
 
     # HMO 
     hmo_ids = @patients.pluck(:hmo_id)
@@ -95,6 +96,7 @@ class HmosController < ApplicationController
     if params[:search].present?
       @hospital_ids = [params[:search][:hospital]] unless params[:search][:hospital].blank?
       @date = params[:search][:date] unless params[:search][:date].blank?
+      @doctor_id = params[:search][:doctor] unless params[:search][:doctor].blank?
     end
 
     if @hospital_ids.empty?
@@ -103,10 +105,10 @@ class HmosController < ApplicationController
     
     if current_user.is_role?("Doctor")
       @doctor_id = current_user.id
-      @patients = Patient.where("doctor_id = ? AND hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", current_user.id, @hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], @date)
-    else
-      @patients = Patient.where("hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", @hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], @date)
     end
+    
+    @patients = Patient.where("hospital_id IN (?) AND payment_status != ? AND date_admitted <= ?", @hospital_ids, Patient::PAYMENT_STATUS[:fully_paid], @date)
+    @patients = @patients.where(:doctor_id => @doctor_id) unless @doctor_id.nil?
 
     # HMO 
     hmo_ids = @patients.pluck(:hmo_id)

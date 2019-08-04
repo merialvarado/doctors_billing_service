@@ -1,0 +1,3 @@
+class PatientDetail < ApplicationRecord
+  ransack_alias :all_search, :full_name_or_payment_status_or_payment_method_or_doctor_or_hospital_or_surgeon_or_procedure_type_or_insurance
+end

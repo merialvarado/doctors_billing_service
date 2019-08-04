@@ -15,7 +15,8 @@ module PatientsHelper
     state = patient.state
     if (can?(:edit, patient)) && (state.upcase == "PICTURE_UPLOADED" rescue false )
       content_tag( :a, href: edit_patient_path(patient), class: "btn btn-primary btn-sm btn-outline", title: "Create Patient Record", "data-toggle": "tooltip") do
-        content_tag :span, "", class: "fa fa-plus"
+        # content_tag :span, "", class: "fa fa-edit"
+        content_tag :span, "Edit"
       end
     elsif (can?(:edit, patient)) && (state.upcase == "RECORD_CREATED" rescue false)
       content_tag( :a, href: edit_patient_path(patient), class: "btn btn-primary btn-sm btn-outline", title: "Edit Patient Record", "data-toggle": "tooltip") do

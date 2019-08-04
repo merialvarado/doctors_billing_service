@@ -110,6 +110,7 @@ en:
     create_procedure_type: "Create Procedure Type"
     make_payment: "Make Payment"
     upload: "Upload"
+    actions: "Actions"
 
   user: 
     user: "User"  
@@ -157,7 +158,7 @@ en:
     full_name: "Name"
     patient_num: "Patient No."
     date_admitted: "Date Admitted"
-    procedure: "Type of Procedure"
+    procedure: "Procedure"
     hmo: "HMO"
     contact_num: "Contact No."
     doctor: "Attending Doctor"
@@ -176,6 +177,11 @@ en:
     upload_patient_list: "Upload Patient List"
     procedure_date: "Procedure Date"
     upload_photo: "Upload Photo"
+    anesthesiologist: "Anesthesiologist"
+    admission_date: "Admission Date"
+    patient_name: "Patient Name"
+    insurance: "Insurance"
+    procedure_date: "Procedure Date"
 
   hospital: 
     hospital: "Hospital"  
@@ -220,3 +226,7 @@ en:
     back_procedure_type_list: "Back to Procedure Type List"
     update_procedure_type: "Update Procedure Type"
     name: "Name"
+
+  report:
+    transactional_report: "Transactional Report"
+    collection_detailed_report: "Collection Detailed Report"

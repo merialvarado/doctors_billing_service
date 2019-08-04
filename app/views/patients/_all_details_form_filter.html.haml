@@ -1,0 +1,41 @@
+.panel.panel-default
+  .panel-body
+    = simple_form_for @q, url: all_details_patients_path, html: { class: 'form-inline' }, method: :get do |f|
+      .col-md-6
+        .search-label-div
+          = f.label :search
+          = f.label :doctor
+          = f.label :hospital
+        .search-field-div
+          = f.input_field :all_search_cont
+          = f.input_field :doctor_eq, collection: User.doctors.order(:full_name).pluck(:full_name)
+          = f.input_field :hospital_eq, collection: Hospital.order(:name).pluck(:name)
+      .col-md-6
+        .search-label-div
+          = f.label :date_range
+          = f.label :insurance
+          = f.label :payment_status
+        .search-field-div
+          .date-range
+            = f.input :procedure_date_gteq, as: :date_picker, label: false, required: false, input_html: {placeholder: "From Date"}
+          .date-range
+            = f.input :procedure_date_lteq, as: :date_picker, label: false, required: false, input_html: {placeholder: "Thru Date"}
+          = f.input_field :insurance_eq, collection: (Hmo.order(:name).pluck(:name) << "Promissory Note" << "Philhealth" )
+          = f.input_field :payment_status_eq, collection: Patient::PAYMENT_STATUS.map{|a| a.last}
+      .row
+        .col-md-12
+          #export-report-div
+            %a.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-download
+              Export Report
+            %ul.dropdown-menu
+              %li
+                = link_to transactional_report_patients_path, method: :post do
+                  = I18n.t('report.transactional_report')
+              %li
+                = link_to collection_detailed_report_patients_path, method: :post do
+                  = I18n.t('report.collection_detailed_report')
+          #search-patients-button-div
+            = f.submit "Seach Patients", class: "btn btn-primary"
+            = link_to all_details_patients_path, :class => "btn btn-default" do
+              = I18n.t('clear')

@@ -29,41 +29,6 @@ $.rails.showConfirmDialog = function(link) {
 };
 
 $( document ).ready(function() {
-  $('.dataTable').DataTable({
-    "dom": '<"top"<"dt-row"<"col-sm-6 new-button"><"col-sm-6" f>><"dt-row"<"col-sm-6" l><"col-sm-6" p>>rt<"bottom"<"dt-row"<"col-sm-6 deactivate-button"><"col-sm-6 pull-right" i>>><"clear">',
-    responsive: true,
-    "aaSorting": [],
-    "columnDefs": [ {
-      "targets": 'no-sort',
-      "orderable": false,
-    } ],
-    "oLanguage": {
-      "sEmptyTable": I18n.t('sEmptyTable'),
-      "sInfo": I18n.t('sInfo'),
-      "sInfoEmpty": I18n.t('sInfoEmpty'),
-      "sInfoFiltered": I18n.t('sInfoFiltered'),
-      "sInfoPostFix": I18n.t('sInfoPostFix'),
-      "sInfoThousands": I18n.t('sInfoThousands'),
-      "sLengthMenu": I18n.t('sLengthMenu'),
-      "sLoadingRecords": I18n.t('sLoadingRecords'),
-      "sProcessing": I18n.t('sProcessing'),
-      "sSearch": I18n.t('sSearch'),
-      "sZeroRecords": I18n.t('sZeroRecords'),
-      "oPaginate": {
-        "sFirst": I18n.t('oPaginate.sFirst'),
-        "sLast": I18n.t('oPaginate.sLast'),
-        "sNext": I18n.t('oPaginate.sNext'),
-        "sPrevious": I18n.t('oPaginate.sPrevious')
-      },
-      "oAria": {
-        "sSortAscending": I18n.t('oArias.sSortAscending'),
-        "sSortDescending": I18n.t('oArias.sSortDescending')
-      }
-    }  
-  });
-  $("div.new-button").html($(".link-to-new").html());
-  $("div.deactivate-button").html($("#deactivate_button").html());
-
   if( $(".index-table").length!=0 ){ 
     if( $(".read-only-table").length!=0 ){
       $('table').on( 'click', 'tbody tr td', function () {

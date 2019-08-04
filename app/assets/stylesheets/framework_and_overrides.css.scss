@@ -323,52 +323,12 @@ table.dataTable thead th {
 }
 */
  
-table.dataTable thead th.sorting:after,
-table.dataTable thead th.sorting_asc:after,
-table.dataTable thead th.sorting_desc:after {
-    position: absolute;
-    top: 12px;
-    right: 8px;
-    display: block;
-    font-family: FontAwesome;
-}
-table.dataTable thead th.sorting:after {
-    content: "\f0dc";
-    //color: #ddd;
-    font-size: 0.8em;
-    padding-top: 0.12em;
-}
-table.dataTable thead th.sorting_asc:after {
-    content: "\f0de";
-}
-table.dataTable thead th.sorting_desc:after {
-    content: "\f0dd";
-}
 .colspan3{
   colspan: 3;
 }
 
 .btn-danger a{ color: #fff; }
 .btn-danger a:visited{ color: #fff; }
-.dataTables_filter {
-   float: right;
-   text-align: right;
-}
-.dataTables_paginate .paging_simple_numbers {
-   float: right;
-   text-align: right;
-   margin-right: 0;
-}
-/*.dataTables_wrapper .dataTables_info {
-   float: right !important;
-   text-align: right !important;
-}*/
-.dataTables_length{
-  margin-bottom: 0;
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button{
-  padding: 0 !important;
-}
 
 .page-header .btn{
   float: right;
@@ -686,4 +646,49 @@ h1{
 .patient-show-modal .modal-footer{
   background-color: #E8E8E8;
   border-top: 1px solid #707070;
+}
+
+#export-report-div{
+  float: left;
+}
+
+#all-details-filter-div label{
+  height: 30px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+#all-details-filter-div input.string, #all-details-filter-div select {
+  display: block;
+  width: 100%;
+  height: 30px;
+  padding: 4px 9px;
+  font-size: 13px;
+  line-height: 1.428571429;
+  color: #555555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+}
+
+#search-patients-button-div{
+  margin-top: 5px;
+  text-align: right;
+  margin-right: 60px;
+}
+
+.search-label-div{
+  width: 30%;
+  display: inline-block;
+}
+
+.search-field-div{
+  width: 60%;
+  display: inline-block;
+}
+
+.date-range{
+  width: 49%;
+  display: inline-block;
 }

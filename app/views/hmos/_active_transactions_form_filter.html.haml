@@ -1,0 +1,12 @@
+.panel.panel-default
+  .panel-body
+    = simple_form_for :search, url: active_transactions_index_hmos_path, method: :get do |f|
+      .col-md-3
+        = f.input :hospital, as: :select, collection: @hospitals,label: false, required: false, include_blank: "All Hospitals"
+      .col-md-3
+        = f.input :date, as: :date_picker, label: false, required: false, input_html: { value: Date.today.strftime("%Y-%m-%d") }
+      - unless current_user.is_role?("Doctor")
+        .col-md-3
+          = f.input :doctor, as: :select, collection: User.doctors.order(:full_name) ,label: false, required: false, include_blank: "All Doctors", label_method: :full_name
+      .col-md-2
+        = f.button :submit, "Search", class: "btn btn-primary"

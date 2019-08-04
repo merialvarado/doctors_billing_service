@@ -1,0 +1,112 @@
+.modal.fade{id: "patient_show_modal_#{patient.id}", class: "patient-show-modal", tabindex: "-1", role: "dialog", "aria-labelledby":"#{patient.id}_label", "aria-hidden": true}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{type:"button", class:"close", "data-dismiss": "modal", "aria-label": "Close"}
+          %span{"aria-hidden": "true"}
+            &times
+        %h4{class: "modal-title", id: "myModalLabel"}
+          = "Patient Record: #{patient.full_name.upcase}"
+
+      .modal-body
+        %table.table.table-striped.table-bordered.table-hover
+          %tbody
+            %tr
+              %th
+                = I18n.t('patient.doctor')
+              %td
+                = patient.doctor.titleize rescue nil
+            %tr
+              %th
+                = I18n.t('patient.hospital')
+              %td
+                = patient.hospital
+            %tr
+              %th
+                = I18n.t('patient.billing_amount')
+              %td
+                = number_to_currency( patient.billing_amount, precision: 2, unit: "" )
+            %tr
+              %th
+                = I18n.t('patient.balance')
+              %td
+                = number_to_currency( patient.balance, precision: 2, unit: "" )
+            %tr
+              %th
+                = I18n.t('patient.payment_status')
+              %td
+                = payment_status_viewer(patient.payment_status)
+            %tr
+              %th
+                = I18n.t('patient.patient_num')
+              %td
+                = patient.patient_num
+            %tr
+              %th
+                = I18n.t('patient.procedure_date')
+              %td
+                = patient.procedure_date
+            %tr
+              %th
+                = I18n.t('patient.procedure')
+              %td
+                = patient.procedure_type
+            %tr
+              %th
+                = I18n.t('patient.surgeon')
+              %td
+                = patient.surgeon.titleize rescue nil
+            %tr
+              %th
+                = I18n.t('patient.payment_method')
+              %td
+                = patient.insurance
+            %tr
+              %th
+                = I18n.t('patient.contact_num')
+              %td
+                = patient.contact_num
+            %tr
+              %th
+                = I18n.t('patient.remarks')
+              %td
+                = patient.remarks
+
+        .row
+          .col-md-12
+            %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
+              %thead
+                %tr
+                  %th{colspan: 4} PAYMENTS
+                %tr
+                  %th Check No
+                  %th Date Issued
+                  %th Bank
+                  %th Amount
+              %tbody
+                - Patient.find(patient.id).payments.each do |payment|
+                  %tr
+                    %td= payment.check_num
+                    %td= payment.check_date
+                    %td= payment.bank
+                    %td= number_to_currency( payment.amount, precision: 2, unit: "" )
+
+        - if (patient_info = Patient.find(patient.id)).patient_picture.present?
+          %br 
+          .row
+            .col-md-12
+              .panel.panel-default.panel-body
+                = image_tag patient_info.patient_picture.url, height: 300, width: 150
+                %br
+                = link_to download_image_patient_path(patient_info), class: "btn btn-outline btn-primary btn-sm" do
+                  %span
+                    .fa.fa-download
+                    Download
+
+      .modal-footer
+        .row
+          .col-md-6
+            - if can? :edit, patient_info
+              = link_to "Edit", edit_patient_path(patient_info), class: "btn btn-primary btn-outline btn-block"
+
+                  

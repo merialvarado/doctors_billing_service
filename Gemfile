@@ -53,6 +53,7 @@ gem 'react-rails'
 gem 'will_paginate', '>= 3.1'
 gem 'rails_12factor', group: :production
 gem 'carrierwave', '>= 2.0.0.rc', '< 3.0'
+gem 'ransack', github: 'activerecord-hackery/ransack'
 
 
 group :development, :test do

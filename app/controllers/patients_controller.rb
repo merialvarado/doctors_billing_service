@@ -64,6 +64,12 @@ class PatientsController < ApplicationController
     end
   end
 
+  def all_details
+    @q = PatientDetail.where("state IS NULL or state != 'picture_uploaded'").ransack(params[:q])
+    @patients = @q.result
+    @patients = @patients.order("created_at desc").paginate(page: params[:page], per_page: 10)
+  end
+
   # Loads the details of a patient record.
   #   GET /patients/1
   #   GET /patients/1.json
@@ -179,6 +185,14 @@ class PatientsController < ApplicationController
       @patient.patient_picture.path,
       filename: "Patient_#{@patient.id}_picture"
     )
+  end
+
+  def transactional_report
+    send_data Report.transactional_report, filename: "TransactionalReport-#{Date.today}.csv"
+  end
+
+  def collection_detailed_report
+    send_data Report.collection_detailed_report, filename: "CollectionDetailedReport-#{Date.today}.csv"
   end
 
   private

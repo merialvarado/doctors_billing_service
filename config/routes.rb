@@ -22,6 +22,9 @@ Rails.application.routes.draw do
       post :pay
       get :uploaded_patients_index
       get :payment_method_patients_index
+      get :all_details
+      post :transactional_report
+      post :collection_detailed_report
     end
   end
   resources :hospitals

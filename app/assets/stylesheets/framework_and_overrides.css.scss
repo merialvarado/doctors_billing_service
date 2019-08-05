@@ -611,9 +611,9 @@ h1{
   background-color: #B9D3EE;
 }
 
-/*#payment-method-patients thead > tr {
+#payment-method-patients thead > tr {
   background-color: #B9D3EE;
-}*/
+}
 
 #payment-method-patients .hmo-name{
   color: #337ab7;
@@ -691,4 +691,8 @@ h1{
 .date-range{
   width: 49%;
   display: inline-block;
+}
+
+#activity-logs-table{
+  margin-top: 10px;
 }

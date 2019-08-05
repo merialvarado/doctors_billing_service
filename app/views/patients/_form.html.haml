@@ -65,6 +65,11 @@
           = f.input :remarks
 
         = f.input :state, as: :hidden
+
+      .row
+        .col-md-12
+          = render partial: "activity_logs/show", locals: {activity_logs: @activity_logs}
+
     .col-md-12
       .form-actions
         - if @patient.new_record?

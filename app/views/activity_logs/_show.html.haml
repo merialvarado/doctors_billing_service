@@ -1,0 +1,19 @@
+#activity-logs-table
+  .table-responsive
+    %table#activity-logs-table.table.table-bordered.table-hover.table-responsive
+      %thead
+        %tr
+          %th{colspan: 3} Activity Logs
+        %tr
+          %th= I18n.t('activity_log.date')
+          %th= I18n.t('activity_log.action')
+          %th= I18n.t('activity_log.user')
+      %tbody
+        - activity_logs.each do |log|
+          %tr
+            %td
+              = log.created_at
+            %td
+              = log.action
+            %td
+              = log.user.email rescue nil

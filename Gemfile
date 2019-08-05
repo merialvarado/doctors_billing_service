@@ -54,6 +54,8 @@ gem 'will_paginate', '>= 3.1'
 gem 'rails_12factor', group: :production
 gem 'carrierwave', '>= 2.0.0.rc', '< 3.0'
 gem 'ransack', github: 'activerecord-hackery/ransack'
+gem 'figaro'
+gem 'delayed_job_active_record'
 
 
 group :development, :test do

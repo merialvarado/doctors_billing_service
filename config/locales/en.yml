@@ -230,3 +230,8 @@ en:
   report:
     transactional_report: "Transactional Report"
     collection_detailed_report: "Collection Detailed Report"
+
+  activity_log:
+    date: "Date & Time Stamp"
+    action: "Action Performed"
+    user: "User ID"

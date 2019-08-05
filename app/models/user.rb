@@ -24,6 +24,7 @@ class User < ApplicationRecord
   validates_presence_of      :hospital_id, if: proc{ |user| user.user_role == "Doctor" }
 
   scope :doctors, -> { where(:user_role => "Doctor") }
+  scope :encoders, -> { where(:user_role => "Encoder") }
 
    # The available roles that can be assigned to the users of the system. 
   ROLES = ["Administrator", "Encoder", "Doctor"]

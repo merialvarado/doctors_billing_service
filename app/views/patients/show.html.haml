@@ -47,6 +47,11 @@
               %td
                 = @patient.remarks
 
+  .row
+    .col-md-12
+      = render partial: "activity_logs/show", locals: {activity_logs: @activity_logs}
+
+
   = link_to uploaded_patients_index_patients_path(active_tab: TAB_NAMES[:uploaded_transactions]), :class => "btn btn-default" do
     %span.fa.fa-list
     = I18n.t('back')
@@ -131,6 +136,10 @@
                     %span
                       .fa.fa-download
                       Download
+
+  .row
+    .col-md-12
+      = render partial: "activity_logs/show", locals: {activity_logs: @activity_logs}
 
 
   - if can? :edit, @patient

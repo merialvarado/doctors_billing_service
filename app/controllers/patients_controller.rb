@@ -74,6 +74,7 @@ class PatientsController < ApplicationController
   #   GET /patients/1
   #   GET /patients/1.json
   def show
+    @activity_logs = ActivityLog.where(:object_name => "Patient", :object_id => @patient.id)
   end
 
   # Loads the form for creating a new patient record.
@@ -88,6 +89,7 @@ class PatientsController < ApplicationController
   #   GET /patients/1/edit
   def edit
     @patient.state = "record_created"
+    @activity_logs = ActivityLog.where(object_name: "Patient", object_id: @patient.id)
   end
 
   # Creates a new patient record.
@@ -98,6 +100,11 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.save
+        ActivityLog.record_activity(current_user, ActivityLog::ACTIONS[:create], "Patient", @patient.id)
+
+        # Sends email to user when user is created.
+        SendEmailJob.perform_later(@patient)
+
         format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
         format.json { render :show, status: :created, location: @patient }
       else
@@ -118,6 +125,7 @@ class PatientsController < ApplicationController
     respond_to do |format|
       if @patient.update(patient_params)
         @patient.update_attribute(:balance, @patient.billing_amount - @patient.total_payments)
+        ActivityLog.record_activity(current_user, ActivityLog::ACTIONS[:edit], "Patient", @patient.id)
 
         format.html { redirect_to @patient, notice: 'Patient was updated' }
         format.json { render :show, status: :ok, location: @patient }

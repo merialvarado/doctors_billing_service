@@ -11,10 +11,9 @@ class Report
 
       patients = Patient.where("state IS NULL or state != 'picture_uploaded'").order("procedure_date asc")
 
-      counter = 1
       patients.each do |patient|
         patient_attr = []
-        patient_attr << counter
+        patient_attr << patient.formatted_patient_num
         patient_attr << (patient.doctor.full_name rescue "")
         patient_attr << (patient.hospital.name rescue "")
         patient_attr << (patient.date_admitted.strftime("%Y-%m-%d") rescue "")
@@ -32,13 +31,12 @@ class Report
         patient_attr << patient.remarks
 
         csv << patient_attr
-        counter += 1
       end
     end
   end
 
   def self.collection_detailed_report
-    attributes = ["ID", "Patient Name", "Insurance", "Check No.", "Date Issued", "Bank Deposit", "Amount"]
+    attributes = ["ID", "Record No.", "Patient Name", "Check No.", "Date Issued", "Bank Deposit", "Amount"]
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
@@ -49,8 +47,8 @@ class Report
       payments.each do |payment|
         payment_attr = []
         payment_attr << counter
+        payment_attr << (payment.patient.formatted_patient_num rescue "")
         payment_attr << (payment.patient.full_name rescue "")
-        payment_attr << (payment.patient.payment_method_with_details rescue "")
         payment_attr << payment.check_num
         payment_attr << (payment.check_date.strftime("%Y-%m-%d") rescue "")
         payment_attr << (payment.bank.upcase rescue "")

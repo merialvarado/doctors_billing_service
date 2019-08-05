@@ -11,7 +11,7 @@
 
   .panel.panel-primary
     .panel-heading
-      Record Details
+      Record Details: #{@patient.formatted_patient_num}
     .panel-body
       .table-responsive
         %table.table.table-striped.table-bordered.table-hover
@@ -136,6 +136,25 @@
                     %span
                       .fa.fa-download
                       Download
+
+  .row
+    .col-md-12
+      %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
+        %thead
+          %tr
+            %th{colspan: 4} PAYMENTS
+          %tr
+            %th Check No
+            %th Date Issued
+            %th Bank
+            %th Amount
+        %tbody
+          - @patient.payments.each do |payment|
+            %tr
+              %td= payment.check_num
+              %td= payment.check_date
+              %td= payment.bank
+              %td= number_to_currency( payment.amount, precision: 2, unit: "" )
 
   .row
     .col-md-12

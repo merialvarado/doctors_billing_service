@@ -156,7 +156,7 @@ en:
     middle_name: "Middle Name"
     surname: "Surname"
     full_name: "Name"
-    patient_num: "Patient No."
+    patient_num: "Record No."
     date_admitted: "Date Admitted"
     procedure: "Procedure"
     hmo: "HMO"
@@ -182,6 +182,7 @@ en:
     patient_name: "Patient Name"
     insurance: "Insurance"
     procedure_date: "Procedure Date"
+    file_upload_id: "File Upload ID"
 
   hospital: 
     hospital: "Hospital"  

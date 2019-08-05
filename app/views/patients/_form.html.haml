@@ -1,5 +1,6 @@
 .panel-body
   = simple_form_for @patient do |f|
+    = f.input :state, as: :hidden
     - if f.object.state == "picture_uploaded"
       .form-inputs
         .col-md-12
@@ -20,55 +21,10 @@
 
     - else
       - if @patient.patient_picture.present?
-        .well
-          = link_to download_image_patient_path(@patient), class: "btn btn-outline btn-primary btn-sm" do
-            %span
-              .fa.fa-download
-              Download
-          = image_tag @patient.patient_picture.url, height: 900, width: 700
-          
-        %br/
+        = render partial: 'edit_patient_form', locals: {f: f}
 
-      .form-inputs
-        .col-md-3
-          = f.input :first_name, label: I18n.t('patient.first_name')
-        .col-md-3
-          = f.input :middle_name, label: I18n.t('patient.middle_name')
-        .col-md-3
-          = f.input :surname, label: I18n.t('patient.surname')
-        .col-md-3
-          = f.input :patient_num, label: I18n.t('patient.patient_num')
-      .form-inputs
-        .col-md-3
-          = f.input :contact_num, label: I18n.t('patient.contact_num')
-        .col-md-3
-          = f.input :date_admitted, label: I18n.t('patient.date_admitted'), :as => :date_picker
-        .col-md-3
-          = f.input :procedure_type_id, collection: ProcedureType.order(:name), label: I18n.t('patient.procedure')
-        .col-md-3
-          = f.input :procedure_date, label: I18n.t('patient.procedure_date'), :as => :date_picker
-      .form-inputs
-        .col-md-3
-          = f.input :payment_method, label: I18n.t('patient.payment_method'), collection: ["HMO", "Promissory Note", "Philhealth"]
-          / #payment-method
-          /   = f.label "Payment Method"
-          /   = f.collection_radio_buttons :payment_method, [["HMO"], ["Philhealth"], ["Promissory Note"]], :first, :first, item_wrapper_tag: :div, input_html: {checked: (f.object.payment_method == f.object.payment_method)}
-          /   = f.object.payment_method
-        .col-md-6
-          = f.input :hospital_id, label: I18n.t('patient.hospital'), collection: Hospital.order(:name)
-        .col-md-3
-          = f.input :billing_amount, label: I18n.t('patient.billing_amount')
-      .form-inputs
-        .col-md-3
-          = f.input :hmo_id, label: I18n.t('patient.hmo'), collection: Hmo.order(:name)
-        .col-md-9
-          = f.input :remarks
-
-        = f.input :state, as: :hidden
-
-      .row
-        .col-md-12
-          = render partial: "activity_logs/show", locals: {activity_logs: @activity_logs}
+      .col-md-12
+        = render partial: "activity_logs/show", locals: {activity_logs: @activity_logs}
 
     .col-md-12
       .form-actions

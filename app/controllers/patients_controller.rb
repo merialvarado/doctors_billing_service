@@ -30,7 +30,7 @@ class PatientsController < ApplicationController
   end
 
   def uploaded_patients_index
-    @patients = Patient.where(state: "picture_uploaded")
+    @patients = Patient.where(state: "picture_uploaded").order("created_at desc")
 
     @patients = @patients.paginate(page: params[:page], per_page: 10)
   end
@@ -97,6 +97,7 @@ class PatientsController < ApplicationController
   #   POST /patients.json
   def create
     @patient = Patient.new(patient_params)
+    @patient.patient_num = @patient.generate_patient_num
 
     respond_to do |format|
       if @patient.save

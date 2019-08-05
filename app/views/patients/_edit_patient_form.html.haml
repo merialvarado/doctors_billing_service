@@ -1,0 +1,60 @@
+.col-md-12
+  .table-responsive
+    %table.table.table-bordered.table-hover.table-striped
+      %tr
+        %th= I18n.t('patient.patient_name')
+        %td
+          %div{style: "width: 30%; display: inline-block;"}
+            = f.input :first_name, label: false, input_html: {placeholder: "First Name"}
+          %div{style: "width: 30%; display: inline-block;"}
+            = f.input :middle_name, label: false, input_html: {placeholder: "Middle Name"}
+          %div{style: "width: 30%; display: inline-block;"}
+            = f.input :surname, label: false, input_html: {placeholder: "Surname"}
+      %tr
+        %th= I18n.t('patient.doctor')
+        %td
+          = f.input :doctor_id, label: false, collection: User.doctors, label_method: :full_name
+      %tr
+        %th= I18n.t('patient.hospital')
+        %td
+          = f.input :hospital_id, label: false, collection: Hospital.order(:name)
+      %tr
+        %th= I18n.t('patient.billing_amount')
+        %td
+          = f.input :billing_amount, label: false
+      %tr
+        %th= I18n.t('patient.procedure')
+        %td
+          = f.input :procedure_type_id, label: false, collection: ProcedureType.order(:name)
+      %tr
+        %th= I18n.t('patient.procedure_date')
+        %td
+          = f.input :procedure_date, label: false, :as => :date_picker, input_html: {value: @patient.created_at}
+      %tr
+        %th= I18n.t('patient.admission_date')
+        %td
+          = f.input :date_admitted, label: false, :as => :date_picker
+      %tr
+        %th= I18n.t('patient.surgeon')
+        %td
+          = f.input :surgeon_id, label: false, collection: Surgeon.order(:full_name), label_method: :full_name
+      %tr
+        %th= I18n.t('patient.payment_method')
+        %td
+          = f.input :payment_method, label: false, collection: ["HMO", "Promissory Note", "Philhealth"]
+      %tr
+        %th= I18n.t('patient.insurance')
+        %td
+          = f.input :hmo_id, label: false, collection: Hmo.order(:name)
+      %tr
+        %th= I18n.t('patient.contact_num')
+        %td
+          = f.input :contact_num, label: false
+      %tr
+        %th= I18n.t('patient.file_upload_id')
+        %td= link_to f.object.patient_picture.identifier, download_image_patient_path(@patient)
+      %tr
+        %th= I18n.t('patient.remarks')
+        %td
+          = f.input :remarks, label: false, as: :text
+      

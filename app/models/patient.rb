@@ -37,6 +37,14 @@ class Patient < ApplicationRecord
 		(end_date - self.procedure_date).to_i
 	end
 
+	def generate_patient_num
+		Patient.count + 1
+	end
+
+	def formatted_patient_num
+		self.patient_num.rjust(8, '0') rescue ""
+	end
+
 	def check_available!
 		self.update_attribute(:payment_status, Patient::PAYMENT_STATUS[:check_available])
 	end

@@ -39,6 +39,8 @@ class Ability
 
       can [:manage], Hmo
       can [:manage], Hospital
+      can [:manage], Surgeon
+      can [:manage], ProcedureType
 
       can [:manage], PatientUpload
       cannot [:edit, :destroy, :process_csv], PatientUpload do |pu|

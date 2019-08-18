@@ -6,7 +6,11 @@ before_action :set_procedure_type, only: [:show, :edit, :update, :destroy]
   #   GET /procedure_types
   #   GET /procedure_types.json
   def index
-    @procedure_types = ProcedureType.all.paginate(page: params[:page], per_page: 10)
+    if current_user.is_role? "Doctor"
+      @procedure_types = ProcedureType.where(doctor_id: current_user.id).paginate(page: params[:page], per_page: 10)
+    else
+      @procedure_types = ProcedureType.all.paginate(page: params[:page], per_page: 10)
+    end
   end
 
   # Loads the details of a procedure_type record.
@@ -85,7 +89,8 @@ before_action :set_procedure_type, only: [:show, :edit, :update, :destroy]
     # Never trust parameters from the scary internet, only allow the white list through.
     def procedure_type_params
       params.require(:procedure_type).permit(
-        :name
+        :name,
+        :doctor_id
       )
     end
 end

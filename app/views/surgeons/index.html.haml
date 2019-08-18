@@ -12,12 +12,16 @@
     %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
       %thead
         %tr
-          %th Name
+          %th= I18n.t("surgeon.full_name")
+          - unless current_user.is_role? "Doctor"
+            %th= I18n.t("surgeon.doctor")
           %th Actions
       %tbody
         - @surgeons.each do |surgeon|
           %tr
             %td= surgeon.full_name.titleize
+            - unless current_user.is_role? "Doctor"
+              %td= surgeon.doctor.full_name.titleize rescue nil
             %td
               = link_to "Edit", edit_surgeon_path(surgeon), class: "btn btn-primary btn-outline btn-sm"
 

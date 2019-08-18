@@ -6,7 +6,11 @@ class SurgeonsController < ApplicationController
   #   GET /surgeons
   #   GET /surgeons.json
   def index
-    @surgeons = Surgeon.all.paginate(page: params[:page], per_page: 10)
+    if current_user.is_role? "Doctor"
+      @surgeons = Surgeon.where(doctor_id: current_user.id).paginate(page: params[:page], per_page: 10)
+    else
+      @surgeons = Surgeon.all.paginate(page: params[:page], per_page: 10)
+    end
   end
 
   # Loads the details of a surgeon record.
@@ -85,7 +89,8 @@ class SurgeonsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def surgeon_params
       params.require(:surgeon).permit(
-        :full_name
+        :full_name,
+        :doctor_id
       )
     end
 end

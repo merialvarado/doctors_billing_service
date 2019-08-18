@@ -12,12 +12,16 @@
     %table.table.dataTable.table-bordered.table-hover.table-striped.index-table
       %thead
         %tr
-          %th Name
+          %th= I18n.t("procedure_type.name")
+          - unless current_user.is_role? "Doctor"
+            %th= I18n.t("procedure_type.doctor")
           %th Actions
       %tbody
         - @procedure_types.each do |procedure_type|
           %tr
             %td= procedure_type.name
+            - unless current_user.is_role? "Doctor"
+              %td= procedure_type.doctor.full_name.titleize rescue nil
             %td
               = link_to "Edit", edit_procedure_type_path(procedure_type), class: "btn btn-primary btn-outline btn-sm"
 

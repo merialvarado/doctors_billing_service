@@ -9,10 +9,16 @@
           %img{id:"img_prev", src:"#", alt:"Patient Record"}
       .form-iputs
         .col-md-12
-          = f.input :procedure_type_id, collection: ProcedureType.order(:name), label: I18n.t('patient.procedure')
+          - if current_user.is_role? "Doctor"
+            = f.input :procedure_type_id, collection: ProcedureType.where(doctor_id: current_user.id).order(:name), label: I18n.t('patient.procedure')
+          - else
+            = f.input :procedure_type_id, collection: ProcedureType.order(:name), label: I18n.t('patient.procedure')
       .form-iputs
         .col-md-12
-          = f.input :surgeon_id, collection: Surgeon.order(:full_name), label: I18n.t('patient.surgeon'), label_method: :full_name
+          - if current_user.is_role? "Doctor"
+            = f.input :surgeon_id, collection: Surgeon.where(doctor_id: current_user.id).order(:full_name), label: I18n.t('patient.surgeon'), label_method: :full_name
+          - else
+            = f.input :surgeon_id, collection: Surgeon.order(:full_name), label: I18n.t('patient.surgeon'), label_method: :full_name
       .form-inputs
         .col-md-12
           = f.input :remarks, label: I18n.t('patient.remarks')

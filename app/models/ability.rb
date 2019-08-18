@@ -28,6 +28,11 @@ class Ability
       end
       can [:create, :update, :destroy, :uploaded_patients_index, :read, :download_image], Patient
       can [:hmo_patients_index], Hmo
+      can [:update], User do |user_object|
+        user_object == user
+      end
+      can [:manage], Surgeon
+      can [:manage], ProcedureType
     end
 
     if user.is_role? "Encoder"
@@ -45,6 +50,10 @@ class Ability
       can [:manage], PatientUpload
       cannot [:edit, :destroy, :process_csv], PatientUpload do |pu|
         pu.state == "processed"
+      end
+
+      can [:update], User do |user_object|
+        user_object == user
       end
     end
   end

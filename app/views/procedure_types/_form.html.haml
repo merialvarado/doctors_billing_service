@@ -3,6 +3,11 @@
     .form-inputs
       .col-md-6
         = f.input :name, label: I18n.t('procedure_type.name')
+      - if current_user.is_role? "Doctor"
+        = f.input :doctor_id, as: :hidden, input_html: { value: current_user.id }
+      - else
+        .col-md-6
+          = f.input :doctor_id, as: :select, collection: User.doctors, label_method: :full_name, label: I18n.t('procedure_type.doctor')
 
     .col-md-12
       .form-actions

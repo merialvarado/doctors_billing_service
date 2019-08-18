@@ -23,7 +23,12 @@
               %li
                 %a{:href => edit_user_path(current_user)} 
                   = I18n.t('user.edit_profile')
-              / %li
-              /   =link_to I18n.t('user.change_password'), edit_password_user_path(current_user)
+              - if current_user.is_role? "Doctor"
+                %li.divider
+                %li
+                  =link_to I18n.t('surgeon.surgeon_list'), surgeons_path
+                %li
+                  =link_to I18n.t('procedure_type.procedure_type_list'), procedure_types_path
+                %li.divider
               %li
                 =link_to I18n.t('user.logout'), destroy_user_session_path, method: :delete

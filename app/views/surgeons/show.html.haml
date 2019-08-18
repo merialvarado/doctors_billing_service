@@ -10,6 +10,12 @@
             = I18n.t('surgeon.full_name')
           %td
             = @surgeon.full_name.titleize
+        - unless current_user.is_role? "Doctor"
+          %tr
+            %th
+              = I18n.t('surgeon.doctor')
+            %td
+              = @surgeon.doctor.full_name.titleize
 
 
 - if can? :edit, @surgeon

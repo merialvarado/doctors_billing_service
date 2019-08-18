@@ -220,6 +220,8 @@ en:
     back_surgeon_list: "Back to Surgeon List"
     update_surgeon: "Update Surgeon"
     full_name: "Full Name"
+    doctor: "Anesthesiologist"
+    surgeon_list: "Surgeon List"
 
   procedure_type: 
     procedure_type: "Procedure Type"  
@@ -227,6 +229,8 @@ en:
     back_procedure_type_list: "Back to Procedure Type List"
     update_procedure_type: "Update Procedure Type"
     name: "Name"
+    doctor: "Anesthesiologist"
+    procedure_type_list: "Procedure Type List"
 
   report:
     transactional_report: "Transactional Report"

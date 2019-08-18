@@ -61,13 +61,13 @@ class PatientUpload < ApplicationRecord
         patient_info[:payment_method] = payment_method
 
         # Process Procedure info
-        procedure_type = ProcedureType.where("LOWER(name) = ?", patient_info[:procedure_type].downcase).first
-        procedure_type = ProcedureType.create(:name => patient_info[:procedure_type]) if procedure_type.nil?
+        procedure_type = ProcedureType.where("LOWER(name) = ? and doctor_id = ?", patient_info[:procedure_type].downcase, doctor.id).first
+        procedure_type = ProcedureType.create(:name => patient_info[:procedure_type], :doctor_id=> doctor.id) if procedure_type.nil?
         patient_info[:procedure_type] = procedure_type
 
         # Process Surgeon info
-        surgeon = Surgeon.where("LOWER(full_name) = ?", patient_info[:surgeon].downcase).first
-        surgeon = Surgeon.create(:full_name => patient_info[:surgeon]) if surgeon.nil?
+        surgeon = Surgeon.where("LOWER(full_name) = ? and doctor_id = ?", patient_info[:surgeon].downcase, doctor.id).first
+        surgeon = Surgeon.create(:full_name => patient_info[:surgeon], :doctor_id => doctor.id) if surgeon.nil?
         patient_info[:surgeon] = surgeon
 
         # Process billing amount

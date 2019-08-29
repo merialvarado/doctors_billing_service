@@ -1,0 +1,121 @@
+.col-md-12
+  .table-responsive
+    %table.table.table-bordered.table-hover.table-striped
+      %tr
+        %th
+          = I18n.t('patient.take_picture')
+          = f.input :patient_picture, label: false, as: :file, input_html: {accept: "image/*", capture: "camera", class: 'patient-picture1'}
+          or
+          = I18n.t('patient.select_picture')
+          = f.input :patient_picture, label: false, as: :file, input_html: {accept: "image/*", class: 'patient-picture2'}
+          = f.input :state, as: :hidden
+
+          .hidden
+            / = f.input :patient_picture, label: false, as: :file, input_html: {accept: "image/*"}
+
+        %td
+          %img{id:"img_prev", src:"#"}
+          
+      %tr
+        %th= I18n.t('patient.patient_name')
+        %td
+          %div{style: "width: 30%; display: inline-block;"}
+            = f.input :first_name, label: false, input_html: {placeholder: "First Name"}
+          %div{style: "width: 30%; display: inline-block;"}
+            = f.input :middle_name, label: false, input_html: {placeholder: "Middle Name"}
+          %div{style: "width: 30%; display: inline-block;"}
+            = f.input :surname, label: false, input_html: {placeholder: "Surname"}
+      - if current_user.id != f.object.doctor_id
+        %tr
+          %th= I18n.t('patient.doctor')
+          %td
+            = f.input :doctor_id, label: false, collection: User.doctors, label_method: :full_name
+      - else
+        = f.input :doctor_id, as: :hidden
+      %tr
+        %th= I18n.t('patient.hospital')
+        %td
+          = f.input :hospital_id, label: false, collection: Hospital.order(:name)
+      %tr
+        %th= I18n.t('patient.billing_amount')
+        %td
+          = f.input :billing_amount, label: false
+      %tr
+        %th= I18n.t('patient.procedure')
+        %td
+          - if current_user.is_role?("Doctor")
+            = f.input :procedure_type_id, label: false, collection: ProcedureType.where(doctor_id: current_user.id).order(:name)
+          - else
+            = f.input :procedure_type_id, label: false, collection: ProcedureType.order(:name)
+      %tr
+        %th= I18n.t('patient.procedure_date')
+        %td
+          = f.input :procedure_date, label: false, :as => :date_picker, input_html: {value: @patient.created_at}
+      %tr
+        %th= I18n.t('patient.admission_date')
+        %td
+          = f.input :date_admitted, label: false, :as => :date_picker
+      %tr
+        %th= I18n.t('patient.surgeon')
+        %td
+          - if current_user.is_role?("Doctor")
+            = f.input :surgeon_id, label: false, collection: Surgeon.where(doctor_id: current_user.id).order(:full_name), label_method: :full_name
+          - else
+            = f.input :surgeon_id, label: false, collection: Surgeon.order(:full_name), label_method: :full_name
+      %tr
+        %th= I18n.t('patient.payment_method')
+        %td
+          = f.input :payment_method, label: false, collection: ["HMO", "Promissory Note", "Philhealth"]
+      %tr
+        %th= I18n.t('patient.insurance')
+        %td
+          = f.input :hmo_id, label: false, collection: Hmo.order(:name)
+      %tr
+        %th= I18n.t('patient.contact_num')
+        %td
+          = f.input :contact_num, label: false
+      %tr
+        %th= I18n.t('patient.remarks')
+        %td
+          = f.input :remarks, label: false, as: :text
+          = f.input :payment_status, as: :hidden, input_html: {value: Patient::PAYMENT_STATUS[:check_waiting]}
+      
+%script{"type" => "text/javascript"}
+  :plain
+    $(".patient-picture1").change(function() {
+      input = $(this);
+
+      $(".patient-picture2").val("");
+
+      if (input.prop('files') && input.prop('files')[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $('#img_prev')
+            .attr('src', e.target.result)
+            .width(300)
+            .height(400);
+        };
+
+        reader.readAsDataURL(input.prop('files')[0]);
+      }
+    }).change
+
+    $(".patient-picture2").change(function() {
+      input = $(this);
+
+      $(".patient-picture1").val("");
+
+      if (input.prop('files') && input.prop('files')[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $('#img_prev')
+            .attr('src', e.target.result)
+            .width(300)
+            .height(400);
+        };
+
+        reader.readAsDataURL(input.prop('files')[0]);
+      }
+    }).change();

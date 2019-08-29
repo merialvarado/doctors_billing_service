@@ -82,7 +82,9 @@ class PatientsController < ApplicationController
   def new
     @patient = Patient.new
     @patient.state = "picture_uploaded"
+    @patient.state = params[:state] if params[:state].present?
     @patient.doctor_id = current_user.id
+    @activity_logs = []
   end
 
   # Loads the form for editing details of an existing patient record.
@@ -109,8 +111,8 @@ class PatientsController < ApplicationController
         format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
         format.json { render :show, status: :created, location: @patient }
       else
-        @patient.state = "picture_uploaded"
         @patient.doctor_id = current_user.id
+        @activity_logs = []
         format.html { render :new }
         format.json { render json: @patient.errors, status: :unprocessable_entity }
       end
@@ -132,6 +134,7 @@ class PatientsController < ApplicationController
         format.json { render :show, status: :ok, location: @patient }
       else
         @patient.state = "record_created"
+        @activity_logs = ActivityLog.where(object_name: "Patient", object_id: @patient.id)
         format.html { render :edit }
         format.json { render json: @patient.errors, status: :unprocessable_entity }
       end
@@ -229,7 +232,8 @@ class PatientsController < ApplicationController
         :remarks,
         :state,
         :payment_method,
-        :procedure_date
+        :procedure_date,
+        :payment_status
       )
     end
 

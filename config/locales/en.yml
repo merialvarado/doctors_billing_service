@@ -183,6 +183,8 @@ en:
     insurance: "Insurance"
     procedure_date: "Procedure Date"
     file_upload_id: "File Upload ID"
+    take_picture: "Take Picture"
+    select_picture: "Select Picture"
 
   hospital: 
     hospital: "Hospital"  

@@ -26,7 +26,7 @@ class Ability
       can [:show], User do |user_object|
         user_object == user
       end
-      can [:create, :update, :destroy, :uploaded_patients_index, :read, :download_image], Patient
+      can [:create, :update, :destroy, :uploaded_patients_index, :read, :download_image, :upload_picture], Patient
       can [:hmo_patients_index], Hmo
       can [:update], User do |user_object|
         user_object == user

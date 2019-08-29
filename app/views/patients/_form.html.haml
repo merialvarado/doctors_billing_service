@@ -26,8 +26,10 @@
       = f.input :doctor_id, as: :hidden
 
     - else
-      - if @patient.patient_picture.present?
+      - if current_user.is_role? "Encoder"
         = render partial: 'edit_patient_form', locals: {f: f}
+      - else
+        = render partial: 'new_patient_form', locals: {f: f}
 
       .col-md-12
         = render partial: "activity_logs/show", locals: {activity_logs: @activity_logs}

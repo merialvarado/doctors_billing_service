@@ -25,7 +25,7 @@
       %tr
         %th= I18n.t('patient.procedure')
         %td
-          = f.input :procedure_type_id, label: false, collection: ProcedureType.order(:name)
+          = f.input :procedure_type_id, label: false, collection: ProcedureType.where(doctor_id: f.object.doctor_id).order(:name)
       %tr
         %th= I18n.t('patient.procedure_date')
         %td
@@ -37,7 +37,7 @@
       %tr
         %th= I18n.t('patient.surgeon')
         %td
-          = f.input :surgeon_id, label: false, collection: Surgeon.order(:full_name), label_method: :full_name
+          = f.input :surgeon_id, label: false, collection: Surgeon.where(doctor_id: f.object.doctor_id).order(:full_name), label_method: :full_name
       %tr
         %th= I18n.t('patient.payment_method')
         %td

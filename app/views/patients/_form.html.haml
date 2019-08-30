@@ -1,4 +1,8 @@
 .panel-body
+
+  = render partial: 'new_procedure_type_modal'
+  = render partial: 'new_surgeon_modal'
+
   = simple_form_for @patient do |f|
     = f.input :state, as: :hidden
     - if f.object.state == "picture_uploaded"
@@ -6,19 +10,32 @@
         .col-md-12
           = f.input :patient_picture, label: I18n.t('patient.upload_photo'), as: :file, input_html: {accept: "image/*", capture: "camera"}
         .col-md-12
-          %img{id:"img_prev", src:"#", alt:"Patient Record"}
+          %img{id:"img_prev", src:"#"}
       .form-iputs
         .col-md-12
+          = f.label I18n.t('patient.procedure')
+          .dropdown-add-button
+            = link_to "#new_procedure_type_modal", 'data-toggle': 'modal', 'data-target': "#new_procedure_type_modal", title: "Add New Procedure Type", class: 'btn btn-default btn-xs' do
+              %span.fa.fa-plus.fa-sm
+
           - if current_user.is_role? "Doctor"
-            = f.input :procedure_type_id, collection: ProcedureType.where(doctor_id: current_user.id).order(:name), label: I18n.t('patient.procedure')
+            = f.input :procedure_type_id, collection: ProcedureType.where(doctor_id: current_user.id).order(:name), label: false
           - else
             = f.input :procedure_type_id, collection: ProcedureType.order(:name), label: I18n.t('patient.procedure')
+          
+
       .form-iputs
         .col-md-12
+          = f.label I18n.t('patient.surgeon')
+          .dropdown-add-button
+            = link_to "#new_surgeon_modal", 'data-toggle': 'modal', 'data-target': "#new_surgeon_modal", title: "Add New Surgeon", class: 'btn btn-default btn-xs' do
+              %span.fa.fa-plus.fa-sm
+
+
           - if current_user.is_role? "Doctor"
-            = f.input :surgeon_id, collection: Surgeon.where(doctor_id: current_user.id).order(:full_name), label: I18n.t('patient.surgeon'), label_method: :full_name
+            = f.input :surgeon_id, collection: Surgeon.where(doctor_id: current_user.id).order(:full_name), label: false, label_method: :full_name
           - else
-            = f.input :surgeon_id, collection: Surgeon.order(:full_name), label: I18n.t('patient.surgeon'), label_method: :full_name
+            = f.input :surgeon_id, collection: Surgeon.order(:full_name), label: false, label_method: :full_name
       .form-inputs
         .col-md-12
           = f.input :remarks, label: I18n.t('patient.remarks')

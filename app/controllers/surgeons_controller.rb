@@ -7,9 +7,9 @@ class SurgeonsController < ApplicationController
   #   GET /surgeons.json
   def index
     if current_user.is_role? "Doctor"
-      @surgeons = Surgeon.where(doctor_id: current_user.id).paginate(page: params[:page], per_page: 10)
+      @surgeons = Surgeon.where(doctor_id: current_user.id).order(:full_name).paginate(page: params[:page], per_page: 10)
     else
-      @surgeons = Surgeon.all.paginate(page: params[:page], per_page: 10)
+      @surgeons = Surgeon.order(:full_name).paginate(page: params[:page], per_page: 10)
     end
   end
 
@@ -39,8 +39,9 @@ class SurgeonsController < ApplicationController
     respond_to do |format|
       if @surgeon.save
         format.html { redirect_to surgeon_path(@surgeon, active_tab: TAB_NAMES[:system_settings]), notice: 'Surgeon was successfully created.' }
-        format.json { render :show, status: :created, location: @surgeon }
+        format.json { render json: @surgeon.to_json, status: :created, location: @surgeon }
       else
+        puts @surgeon.errors.first
         format.html { render :new }
         format.json { render json: @surgeon.errors, status: :unprocessable_entity }
       end

@@ -7,9 +7,9 @@ before_action :set_procedure_type, only: [:show, :edit, :update, :destroy]
   #   GET /procedure_types.json
   def index
     if current_user.is_role? "Doctor"
-      @procedure_types = ProcedureType.where(doctor_id: current_user.id).paginate(page: params[:page], per_page: 10)
+      @procedure_types = ProcedureType.where(doctor_id: current_user.id).order(:name).paginate(page: params[:page], per_page: 10)
     else
-      @procedure_types = ProcedureType.all.paginate(page: params[:page], per_page: 10)
+      @procedure_types = ProcedureType.order(:name).paginate(page: params[:page], per_page: 10)
     end
   end
 
@@ -39,8 +39,9 @@ before_action :set_procedure_type, only: [:show, :edit, :update, :destroy]
     respond_to do |format|
       if @procedure_type.save
         format.html { redirect_to procedure_type_path(@procedure_type, active_tab: TAB_NAMES[:system_settings]), notice: 'Procedure Type was successfully created.' }
-        format.json { render :show, status: :created, location: @procedure_type }
+        format.json { render json: @procedure_type.to_json, status: :created, location: @procedure_type }
       else
+        puts @procedure_type.errors.first
         format.html { render :new }
         format.json { render json: @procedure_type.errors, status: :unprocessable_entity }
       end

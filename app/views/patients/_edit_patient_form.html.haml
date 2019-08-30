@@ -26,6 +26,9 @@
         %th= I18n.t('patient.procedure')
         %td
           = f.input :procedure_type_id, label: false, collection: ProcedureType.where(doctor_id: f.object.doctor_id).order(:name)
+          .dropdown-add-button
+            = link_to "#new_procedure_type_modal", 'data-toggle': 'modal', 'data-target': "#new_procedure_type_modal", title: "Add New Procedure Type", class: 'btn btn-default btn-xs' do
+              %span.fa.fa-plus.fa-sm
       %tr
         %th= I18n.t('patient.procedure_date')
         %td
@@ -38,6 +41,9 @@
         %th= I18n.t('patient.surgeon')
         %td
           = f.input :surgeon_id, label: false, collection: Surgeon.where(doctor_id: f.object.doctor_id).order(:full_name), label_method: :full_name
+          .dropdown-add-button
+            = link_to "#new_surgeon_modal", 'data-toggle': 'modal', 'data-target': "#new_surgeon_modal", title: "Add New Surgeon", class: 'btn btn-default btn-xs' do
+              %span.fa.fa-plus.fa-sm
       %tr
         %th= I18n.t('patient.payment_method')
         %td

@@ -1,0 +1,60 @@
+.modal.fade{id: "new_surgeon_modal", class: "patient-show-modal", tabindex: "-1", role: "dialog", "aria-labelledby":"#new_surgeon_modal_label", "aria-hidden": true}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{type:"button", class:"close", "data-dismiss": "modal", "aria-label": "Close"}
+          %span{"aria-hidden": "true"}
+            &times
+        %h4{class: "modal-title", id: "myModalLabel"}
+          New Surgeon
+
+      = simple_form_for Surgeon.new do |f|
+        .modal-body
+          .panel-body
+            .form-inputs
+              .col-md-12#error-messages-surgeon.alert.alert-danger.hide
+              .col-md-12
+                = f.input :full_name, label: I18n.t('surgeon.full_name')
+              - if current_user.is_role? "Doctor"
+                = f.input :doctor_id, as: :hidden, input_html: { value: current_user.id }
+              - else
+                .col-md-12
+                  = f.input :doctor_id, as: :select, collection: User.doctors, label_method: :full_name, label: I18n.t('procedure_type.doctor')
+        .modal-footer
+          %button{type:"button", class:"btn btn-default", "data-dismiss": "modal", "aria-label": "Close"}
+            %span{"aria-hidden": "true"}
+              Cancel
+          = f.button :submit, I18n.t('actions.create_surgeon'), :class => "btn btn-primary", id: "submit-surgeon-button"
+            
+
+%script{"type" => "text/javascript"}
+  :plain
+    $( document ).ready(function() {
+      $("#new_surgeon").submit( function(e) {
+        e.preventDefault();
+        
+        $.ajax({
+          type: "POST",
+          url: this.action,
+          data: $(this).serialize(),
+          success: function(data){
+            options = $("#patient_surgeon_id").html();
+            options += "<option value='" + data['id'] + "' selected='true'>" + data['full_name'] + "</option>";
+
+            $("#patient_surgeon_id").html(options);
+            $('#new_surgeon_modal').modal('hide');
+          },
+          error: function(data){
+            errors = data.responseJSON;
+            error_messages = "<div> Please review the following errors: </div>";
+            for (x in errors) {
+              error_messages += "<div><li>" + x + " : " + errors[x] + "</li></div>";
+            }
+            $("#error-messages-surgeon").html(error_messages).removeClass('hide');
+          },
+          dataType: "json"
+        });
+
+        return false;
+      });
+    });
